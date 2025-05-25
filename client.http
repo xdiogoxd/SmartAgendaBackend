@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "Diogo Saran",
-  "email": "DiogoSaran@didi.com.br",
+  "email": "DiogoSaran1@didi.com.br",
   "password": "123456"
 }
 
@@ -18,5 +18,5 @@ Content-Type: application/json
 
 {
   "email": "DiogoSaran@didi.com.br",
-  "password": "123456"
+  "password": "1234561"
 }

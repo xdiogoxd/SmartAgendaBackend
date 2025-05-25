@@ -1,0 +1,13 @@
+services:
+  postgres:
+    container_name: smart-agenda-postgres
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: smart-agenda
+      POSTGRES_PASSWORD: smart-agenda1
+      POSTGRES_DB: smart-agenda-db
+      PGDATA: /data/postgres
+    volumes:
+      - ./data/pg:/data/postgres

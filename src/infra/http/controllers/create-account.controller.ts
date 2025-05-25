@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -11,6 +12,8 @@ import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { CreateAccountUseCase } from '@/domain/application/use-cases/user/create-account';
+import { UserAlreadyExistsError } from '@/domain/application/use-cases/errors/user-already-exists-error';
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -22,7 +25,7 @@ type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
 
 @Controller('/accounts')
 export class CreateAccountController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createAccount: CreateAccountUseCase) {}
 
   @Post()
   @HttpCode(201)
@@ -30,26 +33,21 @@ export class CreateAccountController {
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, email, password } = body;
 
-    const userWithSameEmail = await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
+    const result = await this.createAccount.execute({
+      name,
+      email,
+      password,
     });
 
-    if (userWithSameEmail) {
-      throw new ConflictException(
-        'User with same e-mail address already exists.',
-      );
+    if (result.isLeft()) {
+      const error = result.value;
+
+      switch (error.constructor) {
+        case UserAlreadyExistsError:
+          throw new ConflictException(error.message);
+        default:
+          throw new BadRequestException(error.message);
+      }
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await this.prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
-    });
   }
 }

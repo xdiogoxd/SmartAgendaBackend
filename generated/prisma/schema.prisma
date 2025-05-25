@@ -8,25 +8,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model service {
-  id           String    @id @default(uuid())
-  name         String
-  description  String
-  price        Int
-  duration     Int
-  image        String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime?
-  observations String?
+model organization {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  ownerId   String
+  services  service[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 
-  @@map("services")
+  owner   user   @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  members user[] @relation("OrganizationMembers")
+
+  @@map("organizations")
 }
 
 model user {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+
+  ownedOrganizations organization[] @relation("OrganizationOwner")
+  memberOf           organization[] @relation("OrganizationMembers")
 
   @@map("users")
+}
+
+model service {
+  id             String    @id @default(uuid())
+  name           String
+  description    String
+  price          Int
+  duration       Int
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime?
+  observations   String?
+  organizationId String
+
+  organization organization @relation(fields: [organizationId], references: [id])
+
+  @@map("services")
 }

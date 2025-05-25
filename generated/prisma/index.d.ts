@@ -14,15 +14,20 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model service
+ * Model organization
  * 
  */
-export type service = $Result.DefaultSelection<Prisma.$servicePayload>
+export type organization = $Result.DefaultSelection<Prisma.$organizationPayload>
 /**
  * Model user
  * 
  */
 export type user = $Result.DefaultSelection<Prisma.$userPayload>
+/**
+ * Model service
+ * 
+ */
+export type service = $Result.DefaultSelection<Prisma.$servicePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -31,8 +36,8 @@ export type user = $Result.DefaultSelection<Prisma.$userPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Services
- * const services = await prisma.service.findMany()
+ * // Fetch zero or more Organizations
+ * const organizations = await prisma.organization.findMany()
  * ```
  *
  *
@@ -52,8 +57,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Services
-   * const services = await prisma.service.findMany()
+   * // Fetch zero or more Organizations
+   * const organizations = await prisma.organization.findMany()
    * ```
    *
    *
@@ -150,14 +155,14 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.service`: Exposes CRUD operations for the **service** model.
+   * `prisma.organization`: Exposes CRUD operations for the **organization** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Services
-    * const services = await prisma.service.findMany()
+    * // Fetch zero or more Organizations
+    * const organizations = await prisma.organization.findMany()
     * ```
     */
-  get service(): Prisma.serviceDelegate<ExtArgs, ClientOptions>;
+  get organization(): Prisma.organizationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **user** model.
@@ -168,6 +173,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.userDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.service`: Exposes CRUD operations for the **service** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Services
+    * const services = await prisma.service.findMany()
+    * ```
+    */
+  get service(): Prisma.serviceDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -608,8 +623,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    service: 'service',
-    user: 'user'
+    organization: 'organization',
+    user: 'user',
+    service: 'service'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -628,81 +644,81 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "service" | "user"
+      modelProps: "organization" | "user" | "service"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      service: {
-        payload: Prisma.$servicePayload<ExtArgs>
-        fields: Prisma.serviceFieldRefs
+      organization: {
+        payload: Prisma.$organizationPayload<ExtArgs>
+        fields: Prisma.organizationFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.serviceFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload> | null
+            args: Prisma.organizationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.serviceFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+            args: Prisma.organizationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>
           }
           findFirst: {
-            args: Prisma.serviceFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload> | null
+            args: Prisma.organizationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.serviceFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+            args: Prisma.organizationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>
           }
           findMany: {
-            args: Prisma.serviceFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>[]
+            args: Prisma.organizationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>[]
           }
           create: {
-            args: Prisma.serviceCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+            args: Prisma.organizationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>
           }
           createMany: {
-            args: Prisma.serviceCreateManyArgs<ExtArgs>
+            args: Prisma.organizationCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.serviceCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>[]
+            args: Prisma.organizationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>[]
           }
           delete: {
-            args: Prisma.serviceDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+            args: Prisma.organizationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>
           }
           update: {
-            args: Prisma.serviceUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+            args: Prisma.organizationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>
           }
           deleteMany: {
-            args: Prisma.serviceDeleteManyArgs<ExtArgs>
+            args: Prisma.organizationDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.serviceUpdateManyArgs<ExtArgs>
+            args: Prisma.organizationUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.serviceUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>[]
+            args: Prisma.organizationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>[]
           }
           upsert: {
-            args: Prisma.serviceUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+            args: Prisma.organizationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$organizationPayload>
           }
           aggregate: {
-            args: Prisma.ServiceAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateService>
+            args: Prisma.OrganizationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrganization>
           }
           groupBy: {
-            args: Prisma.serviceGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ServiceGroupByOutputType>[]
+            args: Prisma.organizationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrganizationGroupByOutputType>[]
           }
           count: {
-            args: Prisma.serviceCountArgs<ExtArgs>
-            result: $Utils.Optional<ServiceCountAggregateOutputType> | number
+            args: Prisma.organizationCountArgs<ExtArgs>
+            result: $Utils.Optional<OrganizationCountAggregateOutputType> | number
           }
         }
       }
@@ -777,6 +793,80 @@ export namespace Prisma {
           count: {
             args: Prisma.userCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      service: {
+        payload: Prisma.$servicePayload<ExtArgs>
+        fields: Prisma.serviceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.serviceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.serviceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+          }
+          findFirst: {
+            args: Prisma.serviceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.serviceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+          }
+          findMany: {
+            args: Prisma.serviceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>[]
+          }
+          create: {
+            args: Prisma.serviceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+          }
+          createMany: {
+            args: Prisma.serviceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.serviceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>[]
+          }
+          delete: {
+            args: Prisma.serviceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+          }
+          update: {
+            args: Prisma.serviceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+          }
+          deleteMany: {
+            args: Prisma.serviceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.serviceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.serviceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>[]
+          }
+          upsert: {
+            args: Prisma.serviceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$servicePayload>
+          }
+          aggregate: {
+            args: Prisma.ServiceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateService>
+          }
+          groupBy: {
+            args: Prisma.serviceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ServiceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.serviceCountArgs<ExtArgs>
+            result: $Utils.Optional<ServiceCountAggregateOutputType> | number
           }
         }
       }
@@ -864,8 +954,9 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    service?: serviceOmit
+    organization?: organizationOmit
     user?: userOmit
+    service?: serviceOmit
   }
 
   /* Types for Logging */
@@ -955,428 +1046,443 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type OrganizationCountOutputType
+   */
+
+  export type OrganizationCountOutputType = {
+    services: number
+    members: number
+  }
+
+  export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    services?: boolean | OrganizationCountOutputTypeCountServicesArgs
+    members?: boolean | OrganizationCountOutputTypeCountMembersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationCountOutputType
+     */
+    select?: OrganizationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountServicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: serviceWhereInput
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: userWhereInput
+  }
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    ownedOrganizations: number
+    memberOf: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ownedOrganizations?: boolean | UserCountOutputTypeCountOwnedOrganizationsArgs
+    memberOf?: boolean | UserCountOutputTypeCountMemberOfArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOwnedOrganizationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: organizationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMemberOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: organizationWhereInput
+  }
+
 
   /**
    * Models
    */
 
   /**
-   * Model service
+   * Model organization
    */
 
-  export type AggregateService = {
-    _count: ServiceCountAggregateOutputType | null
-    _avg: ServiceAvgAggregateOutputType | null
-    _sum: ServiceSumAggregateOutputType | null
-    _min: ServiceMinAggregateOutputType | null
-    _max: ServiceMaxAggregateOutputType | null
+  export type AggregateOrganization = {
+    _count: OrganizationCountAggregateOutputType | null
+    _min: OrganizationMinAggregateOutputType | null
+    _max: OrganizationMaxAggregateOutputType | null
   }
 
-  export type ServiceAvgAggregateOutputType = {
-    price: number | null
-    duration: number | null
-  }
-
-  export type ServiceSumAggregateOutputType = {
-    price: number | null
-    duration: number | null
-  }
-
-  export type ServiceMinAggregateOutputType = {
+  export type OrganizationMinAggregateOutputType = {
     id: string | null
     name: string | null
-    description: string | null
-    price: number | null
-    duration: number | null
-    image: string | null
+    ownerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    observations: string | null
   }
 
-  export type ServiceMaxAggregateOutputType = {
+  export type OrganizationMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    description: string | null
-    price: number | null
-    duration: number | null
-    image: string | null
+    ownerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    observations: string | null
   }
 
-  export type ServiceCountAggregateOutputType = {
+  export type OrganizationCountAggregateOutputType = {
     id: number
     name: number
-    description: number
-    price: number
-    duration: number
-    image: number
+    ownerId: number
     createdAt: number
     updatedAt: number
-    observations: number
     _all: number
   }
 
 
-  export type ServiceAvgAggregateInputType = {
-    price?: true
-    duration?: true
-  }
-
-  export type ServiceSumAggregateInputType = {
-    price?: true
-    duration?: true
-  }
-
-  export type ServiceMinAggregateInputType = {
+  export type OrganizationMinAggregateInputType = {
     id?: true
     name?: true
-    description?: true
-    price?: true
-    duration?: true
-    image?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
-    observations?: true
   }
 
-  export type ServiceMaxAggregateInputType = {
+  export type OrganizationMaxAggregateInputType = {
     id?: true
     name?: true
-    description?: true
-    price?: true
-    duration?: true
-    image?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
-    observations?: true
   }
 
-  export type ServiceCountAggregateInputType = {
+  export type OrganizationCountAggregateInputType = {
     id?: true
     name?: true
-    description?: true
-    price?: true
-    duration?: true
-    image?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
-    observations?: true
     _all?: true
   }
 
-  export type ServiceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type OrganizationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which service to aggregate.
+     * Filter which organization to aggregate.
      */
-    where?: serviceWhereInput
+    where?: organizationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of services to fetch.
+     * Determine the order of organizations to fetch.
      */
-    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    orderBy?: organizationOrderByWithRelationInput | organizationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: serviceWhereUniqueInput
+    cursor?: organizationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` services from the position of the cursor.
+     * Take `±n` organizations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` services.
+     * Skip the first `n` organizations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned services
+     * Count returned organizations
     **/
-    _count?: true | ServiceCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ServiceAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ServiceSumAggregateInputType
+    _count?: true | OrganizationCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ServiceMinAggregateInputType
+    _min?: OrganizationMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ServiceMaxAggregateInputType
+    _max?: OrganizationMaxAggregateInputType
   }
 
-  export type GetServiceAggregateType<T extends ServiceAggregateArgs> = {
-        [P in keyof T & keyof AggregateService]: P extends '_count' | 'count'
+  export type GetOrganizationAggregateType<T extends OrganizationAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrganization]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateService[P]>
-      : GetScalarType<T[P], AggregateService[P]>
+        : GetScalarType<T[P], AggregateOrganization[P]>
+      : GetScalarType<T[P], AggregateOrganization[P]>
   }
 
 
 
 
-  export type serviceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: serviceWhereInput
-    orderBy?: serviceOrderByWithAggregationInput | serviceOrderByWithAggregationInput[]
-    by: ServiceScalarFieldEnum[] | ServiceScalarFieldEnum
-    having?: serviceScalarWhereWithAggregatesInput
+  export type organizationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: organizationWhereInput
+    orderBy?: organizationOrderByWithAggregationInput | organizationOrderByWithAggregationInput[]
+    by: OrganizationScalarFieldEnum[] | OrganizationScalarFieldEnum
+    having?: organizationScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ServiceCountAggregateInputType | true
-    _avg?: ServiceAvgAggregateInputType
-    _sum?: ServiceSumAggregateInputType
-    _min?: ServiceMinAggregateInputType
-    _max?: ServiceMaxAggregateInputType
+    _count?: OrganizationCountAggregateInputType | true
+    _min?: OrganizationMinAggregateInputType
+    _max?: OrganizationMaxAggregateInputType
   }
 
-  export type ServiceGroupByOutputType = {
+  export type OrganizationGroupByOutputType = {
     id: string
     name: string
-    description: string
-    price: number
-    duration: number
-    image: string | null
+    ownerId: string
     createdAt: Date
     updatedAt: Date | null
-    observations: string | null
-    _count: ServiceCountAggregateOutputType | null
-    _avg: ServiceAvgAggregateOutputType | null
-    _sum: ServiceSumAggregateOutputType | null
-    _min: ServiceMinAggregateOutputType | null
-    _max: ServiceMaxAggregateOutputType | null
+    _count: OrganizationCountAggregateOutputType | null
+    _min: OrganizationMinAggregateOutputType | null
+    _max: OrganizationMaxAggregateOutputType | null
   }
 
-  type GetServiceGroupByPayload<T extends serviceGroupByArgs> = Prisma.PrismaPromise<
+  type GetOrganizationGroupByPayload<T extends organizationGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ServiceGroupByOutputType, T['by']> &
+      PickEnumerable<OrganizationGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ServiceGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof OrganizationGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ServiceGroupByOutputType[P]>
-            : GetScalarType<T[P], ServiceGroupByOutputType[P]>
+              : GetScalarType<T[P], OrganizationGroupByOutputType[P]>
+            : GetScalarType<T[P], OrganizationGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type serviceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type organizationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
-    price?: boolean
-    duration?: boolean
-    image?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    observations?: boolean
-  }, ExtArgs["result"]["service"]>
+    services?: boolean | organization$servicesArgs<ExtArgs>
+    owner?: boolean | userDefaultArgs<ExtArgs>
+    members?: boolean | organization$membersArgs<ExtArgs>
+    _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organization"]>
 
-  export type serviceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type organizationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
-    price?: boolean
-    duration?: boolean
-    image?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    observations?: boolean
-  }, ExtArgs["result"]["service"]>
+    owner?: boolean | userDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organization"]>
 
-  export type serviceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type organizationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
-    price?: boolean
-    duration?: boolean
-    image?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    observations?: boolean
-  }, ExtArgs["result"]["service"]>
+    owner?: boolean | userDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organization"]>
 
-  export type serviceSelectScalar = {
+  export type organizationSelectScalar = {
     id?: boolean
     name?: boolean
-    description?: boolean
-    price?: boolean
-    duration?: boolean
-    image?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    observations?: boolean
   }
 
-  export type serviceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "duration" | "image" | "createdAt" | "updatedAt" | "observations", ExtArgs["result"]["service"]>
+  export type organizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+  export type organizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    services?: boolean | organization$servicesArgs<ExtArgs>
+    owner?: boolean | userDefaultArgs<ExtArgs>
+    members?: boolean | organization$membersArgs<ExtArgs>
+    _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type organizationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | userDefaultArgs<ExtArgs>
+  }
+  export type organizationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | userDefaultArgs<ExtArgs>
+  }
 
-  export type $servicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "service"
-    objects: {}
+  export type $organizationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "organization"
+    objects: {
+      services: Prisma.$servicePayload<ExtArgs>[]
+      owner: Prisma.$userPayload<ExtArgs>
+      members: Prisma.$userPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      description: string
-      price: number
-      duration: number
-      image: string | null
+      ownerId: string
       createdAt: Date
       updatedAt: Date | null
-      observations: string | null
-    }, ExtArgs["result"]["service"]>
+    }, ExtArgs["result"]["organization"]>
     composites: {}
   }
 
-  type serviceGetPayload<S extends boolean | null | undefined | serviceDefaultArgs> = $Result.GetResult<Prisma.$servicePayload, S>
+  type organizationGetPayload<S extends boolean | null | undefined | organizationDefaultArgs> = $Result.GetResult<Prisma.$organizationPayload, S>
 
-  type serviceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<serviceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ServiceCountAggregateInputType | true
+  type organizationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<organizationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OrganizationCountAggregateInputType | true
     }
 
-  export interface serviceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['service'], meta: { name: 'service' } }
+  export interface organizationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['organization'], meta: { name: 'organization' } }
     /**
-     * Find zero or one Service that matches the filter.
-     * @param {serviceFindUniqueArgs} args - Arguments to find a Service
+     * Find zero or one Organization that matches the filter.
+     * @param {organizationFindUniqueArgs} args - Arguments to find a Organization
      * @example
-     * // Get one Service
-     * const service = await prisma.service.findUnique({
+     * // Get one Organization
+     * const organization = await prisma.organization.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends serviceFindUniqueArgs>(args: SelectSubset<T, serviceFindUniqueArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends organizationFindUniqueArgs>(args: SelectSubset<T, organizationFindUniqueArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Service that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Organization that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {serviceFindUniqueOrThrowArgs} args - Arguments to find a Service
+     * @param {organizationFindUniqueOrThrowArgs} args - Arguments to find a Organization
      * @example
-     * // Get one Service
-     * const service = await prisma.service.findUniqueOrThrow({
+     * // Get one Organization
+     * const organization = await prisma.organization.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends serviceFindUniqueOrThrowArgs>(args: SelectSubset<T, serviceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends organizationFindUniqueOrThrowArgs>(args: SelectSubset<T, organizationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Service that matches the filter.
+     * Find the first Organization that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {serviceFindFirstArgs} args - Arguments to find a Service
+     * @param {organizationFindFirstArgs} args - Arguments to find a Organization
      * @example
-     * // Get one Service
-     * const service = await prisma.service.findFirst({
+     * // Get one Organization
+     * const organization = await prisma.organization.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends serviceFindFirstArgs>(args?: SelectSubset<T, serviceFindFirstArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends organizationFindFirstArgs>(args?: SelectSubset<T, organizationFindFirstArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Service that matches the filter or
+     * Find the first Organization that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {serviceFindFirstOrThrowArgs} args - Arguments to find a Service
+     * @param {organizationFindFirstOrThrowArgs} args - Arguments to find a Organization
      * @example
-     * // Get one Service
-     * const service = await prisma.service.findFirstOrThrow({
+     * // Get one Organization
+     * const organization = await prisma.organization.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends serviceFindFirstOrThrowArgs>(args?: SelectSubset<T, serviceFindFirstOrThrowArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends organizationFindFirstOrThrowArgs>(args?: SelectSubset<T, organizationFindFirstOrThrowArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Services that matches the filter.
+     * Find zero or more Organizations that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {serviceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {organizationFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Services
-     * const services = await prisma.service.findMany()
+     * // Get all Organizations
+     * const organizations = await prisma.organization.findMany()
      * 
-     * // Get first 10 Services
-     * const services = await prisma.service.findMany({ take: 10 })
+     * // Get first 10 Organizations
+     * const organizations = await prisma.organization.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const serviceWithIdOnly = await prisma.service.findMany({ select: { id: true } })
+     * const organizationWithIdOnly = await prisma.organization.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends serviceFindManyArgs>(args?: SelectSubset<T, serviceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends organizationFindManyArgs>(args?: SelectSubset<T, organizationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Service.
-     * @param {serviceCreateArgs} args - Arguments to create a Service.
+     * Create a Organization.
+     * @param {organizationCreateArgs} args - Arguments to create a Organization.
      * @example
-     * // Create one Service
-     * const Service = await prisma.service.create({
+     * // Create one Organization
+     * const Organization = await prisma.organization.create({
      *   data: {
-     *     // ... data to create a Service
+     *     // ... data to create a Organization
      *   }
      * })
      * 
      */
-    create<T extends serviceCreateArgs>(args: SelectSubset<T, serviceCreateArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends organizationCreateArgs>(args: SelectSubset<T, organizationCreateArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Services.
-     * @param {serviceCreateManyArgs} args - Arguments to create many Services.
+     * Create many Organizations.
+     * @param {organizationCreateManyArgs} args - Arguments to create many Organizations.
      * @example
-     * // Create many Services
-     * const service = await prisma.service.createMany({
+     * // Create many Organizations
+     * const organization = await prisma.organization.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends serviceCreateManyArgs>(args?: SelectSubset<T, serviceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends organizationCreateManyArgs>(args?: SelectSubset<T, organizationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Services and returns the data saved in the database.
-     * @param {serviceCreateManyAndReturnArgs} args - Arguments to create many Services.
+     * Create many Organizations and returns the data saved in the database.
+     * @param {organizationCreateManyAndReturnArgs} args - Arguments to create many Organizations.
      * @example
-     * // Create many Services
-     * const service = await prisma.service.createManyAndReturn({
+     * // Create many Organizations
+     * const organization = await prisma.organization.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Services and only return the `id`
-     * const serviceWithIdOnly = await prisma.service.createManyAndReturn({
+     * // Create many Organizations and only return the `id`
+     * const organizationWithIdOnly = await prisma.organization.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1386,28 +1492,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends serviceCreateManyAndReturnArgs>(args?: SelectSubset<T, serviceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends organizationCreateManyAndReturnArgs>(args?: SelectSubset<T, organizationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Service.
-     * @param {serviceDeleteArgs} args - Arguments to delete one Service.
+     * Delete a Organization.
+     * @param {organizationDeleteArgs} args - Arguments to delete one Organization.
      * @example
-     * // Delete one Service
-     * const Service = await prisma.service.delete({
+     * // Delete one Organization
+     * const Organization = await prisma.organization.delete({
      *   where: {
-     *     // ... filter to delete one Service
+     *     // ... filter to delete one Organization
      *   }
      * })
      * 
      */
-    delete<T extends serviceDeleteArgs>(args: SelectSubset<T, serviceDeleteArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends organizationDeleteArgs>(args: SelectSubset<T, organizationDeleteArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Service.
-     * @param {serviceUpdateArgs} args - Arguments to update one Service.
+     * Update one Organization.
+     * @param {organizationUpdateArgs} args - Arguments to update one Organization.
      * @example
-     * // Update one Service
-     * const service = await prisma.service.update({
+     * // Update one Organization
+     * const organization = await prisma.organization.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1417,30 +1523,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends serviceUpdateArgs>(args: SelectSubset<T, serviceUpdateArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends organizationUpdateArgs>(args: SelectSubset<T, organizationUpdateArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Services.
-     * @param {serviceDeleteManyArgs} args - Arguments to filter Services to delete.
+     * Delete zero or more Organizations.
+     * @param {organizationDeleteManyArgs} args - Arguments to filter Organizations to delete.
      * @example
-     * // Delete a few Services
-     * const { count } = await prisma.service.deleteMany({
+     * // Delete a few Organizations
+     * const { count } = await prisma.organization.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends serviceDeleteManyArgs>(args?: SelectSubset<T, serviceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends organizationDeleteManyArgs>(args?: SelectSubset<T, organizationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Services.
+     * Update zero or more Organizations.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {serviceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {organizationUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Services
-     * const service = await prisma.service.updateMany({
+     * // Update many Organizations
+     * const organization = await prisma.organization.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1450,14 +1556,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends serviceUpdateManyArgs>(args: SelectSubset<T, serviceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends organizationUpdateManyArgs>(args: SelectSubset<T, organizationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Services and returns the data updated in the database.
-     * @param {serviceUpdateManyAndReturnArgs} args - Arguments to update many Services.
+     * Update zero or more Organizations and returns the data updated in the database.
+     * @param {organizationUpdateManyAndReturnArgs} args - Arguments to update many Organizations.
      * @example
-     * // Update many Services
-     * const service = await prisma.service.updateManyAndReturn({
+     * // Update many Organizations
+     * const organization = await prisma.organization.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1466,8 +1572,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Services and only return the `id`
-     * const serviceWithIdOnly = await prisma.service.updateManyAndReturn({
+     * // Update zero or more Organizations and only return the `id`
+     * const organizationWithIdOnly = await prisma.organization.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -1480,56 +1586,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends serviceUpdateManyAndReturnArgs>(args: SelectSubset<T, serviceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends organizationUpdateManyAndReturnArgs>(args: SelectSubset<T, organizationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Service.
-     * @param {serviceUpsertArgs} args - Arguments to update or create a Service.
+     * Create or update one Organization.
+     * @param {organizationUpsertArgs} args - Arguments to update or create a Organization.
      * @example
-     * // Update or create a Service
-     * const service = await prisma.service.upsert({
+     * // Update or create a Organization
+     * const organization = await prisma.organization.upsert({
      *   create: {
-     *     // ... data to create a Service
+     *     // ... data to create a Organization
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Service we want to update
+     *     // ... the filter for the Organization we want to update
      *   }
      * })
      */
-    upsert<T extends serviceUpsertArgs>(args: SelectSubset<T, serviceUpsertArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends organizationUpsertArgs>(args: SelectSubset<T, organizationUpsertArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Services.
+     * Count the number of Organizations.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {serviceCountArgs} args - Arguments to filter Services to count.
+     * @param {organizationCountArgs} args - Arguments to filter Organizations to count.
      * @example
-     * // Count the number of Services
-     * const count = await prisma.service.count({
+     * // Count the number of Organizations
+     * const count = await prisma.organization.count({
      *   where: {
-     *     // ... the filter for the Services we want to count
+     *     // ... the filter for the Organizations we want to count
      *   }
      * })
     **/
-    count<T extends serviceCountArgs>(
-      args?: Subset<T, serviceCountArgs>,
+    count<T extends organizationCountArgs>(
+      args?: Subset<T, organizationCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ServiceCountAggregateOutputType>
+          : GetScalarType<T['select'], OrganizationCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Service.
+     * Allows you to perform aggregations operations on a Organization.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ServiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {OrganizationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1549,13 +1655,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ServiceAggregateArgs>(args: Subset<T, ServiceAggregateArgs>): Prisma.PrismaPromise<GetServiceAggregateType<T>>
+    aggregate<T extends OrganizationAggregateArgs>(args: Subset<T, OrganizationAggregateArgs>): Prisma.PrismaPromise<GetOrganizationAggregateType<T>>
 
     /**
-     * Group by Service.
+     * Group by Organization.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {serviceGroupByArgs} args - Group by arguments.
+     * @param {organizationGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1570,14 +1676,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends serviceGroupByArgs,
+      T extends organizationGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: serviceGroupByArgs['orderBy'] }
-        : { orderBy?: serviceGroupByArgs['orderBy'] },
+        ? { orderBy: organizationGroupByArgs['orderBy'] }
+        : { orderBy?: organizationGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1626,21 +1732,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, serviceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetServiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, organizationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrganizationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the service model
+   * Fields of the organization model
    */
-  readonly fields: serviceFieldRefs;
+  readonly fields: organizationFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for service.
+   * The delegate class that acts as a "Promise-like" for organization.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__serviceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__organizationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    services<T extends organization$servicesArgs<ExtArgs> = {}>(args?: Subset<T, organization$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    owner<T extends userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, userDefaultArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    members<T extends organization$membersArgs<ExtArgs> = {}>(args?: Subset<T, organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1667,381 +1776,473 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the service model
+   * Fields of the organization model
    */
-  interface serviceFieldRefs {
-    readonly id: FieldRef<"service", 'String'>
-    readonly name: FieldRef<"service", 'String'>
-    readonly description: FieldRef<"service", 'String'>
-    readonly price: FieldRef<"service", 'Int'>
-    readonly duration: FieldRef<"service", 'Int'>
-    readonly image: FieldRef<"service", 'String'>
-    readonly createdAt: FieldRef<"service", 'DateTime'>
-    readonly updatedAt: FieldRef<"service", 'DateTime'>
-    readonly observations: FieldRef<"service", 'String'>
+  interface organizationFieldRefs {
+    readonly id: FieldRef<"organization", 'String'>
+    readonly name: FieldRef<"organization", 'String'>
+    readonly ownerId: FieldRef<"organization", 'String'>
+    readonly createdAt: FieldRef<"organization", 'DateTime'>
+    readonly updatedAt: FieldRef<"organization", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * service findUnique
+   * organization findUnique
    */
-  export type serviceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organizationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the service
+     * Select specific fields to fetch from the organization
      */
-    select?: serviceSelect<ExtArgs> | null
+    select?: organizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Omit specific fields from the organization
      */
-    omit?: serviceOmit<ExtArgs> | null
+    omit?: organizationOmit<ExtArgs> | null
     /**
-     * Filter, which service to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: serviceWhereUniqueInput
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * Filter, which organization to fetch.
+     */
+    where: organizationWhereUniqueInput
   }
 
   /**
-   * service findUniqueOrThrow
+   * organization findUniqueOrThrow
    */
-  export type serviceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organizationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the service
+     * Select specific fields to fetch from the organization
      */
-    select?: serviceSelect<ExtArgs> | null
+    select?: organizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Omit specific fields from the organization
      */
-    omit?: serviceOmit<ExtArgs> | null
+    omit?: organizationOmit<ExtArgs> | null
     /**
-     * Filter, which service to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: serviceWhereUniqueInput
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * Filter, which organization to fetch.
+     */
+    where: organizationWhereUniqueInput
   }
 
   /**
-   * service findFirst
+   * organization findFirst
    */
-  export type serviceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organizationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the service
+     * Select specific fields to fetch from the organization
      */
-    select?: serviceSelect<ExtArgs> | null
+    select?: organizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Omit specific fields from the organization
      */
-    omit?: serviceOmit<ExtArgs> | null
+    omit?: organizationOmit<ExtArgs> | null
     /**
-     * Filter, which service to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: serviceWhereInput
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * Filter, which organization to fetch.
+     */
+    where?: organizationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of services to fetch.
+     * Determine the order of organizations to fetch.
      */
-    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    orderBy?: organizationOrderByWithRelationInput | organizationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for services.
+     * Sets the position for searching for organizations.
      */
-    cursor?: serviceWhereUniqueInput
+    cursor?: organizationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` services from the position of the cursor.
+     * Take `±n` organizations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` services.
+     * Skip the first `n` organizations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of services.
+     * Filter by unique combinations of organizations.
      */
-    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
+    distinct?: OrganizationScalarFieldEnum | OrganizationScalarFieldEnum[]
   }
 
   /**
-   * service findFirstOrThrow
+   * organization findFirstOrThrow
    */
-  export type serviceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organizationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the service
+     * Select specific fields to fetch from the organization
      */
-    select?: serviceSelect<ExtArgs> | null
+    select?: organizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Omit specific fields from the organization
      */
-    omit?: serviceOmit<ExtArgs> | null
+    omit?: organizationOmit<ExtArgs> | null
     /**
-     * Filter, which service to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: serviceWhereInput
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * Filter, which organization to fetch.
+     */
+    where?: organizationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of services to fetch.
+     * Determine the order of organizations to fetch.
      */
-    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    orderBy?: organizationOrderByWithRelationInput | organizationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for services.
+     * Sets the position for searching for organizations.
      */
-    cursor?: serviceWhereUniqueInput
+    cursor?: organizationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` services from the position of the cursor.
+     * Take `±n` organizations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` services.
+     * Skip the first `n` organizations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of services.
+     * Filter by unique combinations of organizations.
      */
-    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
+    distinct?: OrganizationScalarFieldEnum | OrganizationScalarFieldEnum[]
   }
 
   /**
-   * service findMany
+   * organization findMany
    */
-  export type serviceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organizationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the service
+     * Select specific fields to fetch from the organization
      */
-    select?: serviceSelect<ExtArgs> | null
+    select?: organizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Omit specific fields from the organization
      */
-    omit?: serviceOmit<ExtArgs> | null
+    omit?: organizationOmit<ExtArgs> | null
     /**
-     * Filter, which services to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: serviceWhereInput
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * Filter, which organizations to fetch.
+     */
+    where?: organizationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of services to fetch.
+     * Determine the order of organizations to fetch.
      */
-    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    orderBy?: organizationOrderByWithRelationInput | organizationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing services.
+     * Sets the position for listing organizations.
      */
-    cursor?: serviceWhereUniqueInput
+    cursor?: organizationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` services from the position of the cursor.
+     * Take `±n` organizations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` services.
+     * Skip the first `n` organizations.
      */
+    skip?: number
+    distinct?: OrganizationScalarFieldEnum | OrganizationScalarFieldEnum[]
+  }
+
+  /**
+   * organization create
+   */
+  export type organizationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a organization.
+     */
+    data: XOR<organizationCreateInput, organizationUncheckedCreateInput>
+  }
+
+  /**
+   * organization createMany
+   */
+  export type organizationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many organizations.
+     */
+    data: organizationCreateManyInput | organizationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * organization createManyAndReturn
+   */
+  export type organizationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * The data used to create many organizations.
+     */
+    data: organizationCreateManyInput | organizationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * organization update
+   */
+  export type organizationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a organization.
+     */
+    data: XOR<organizationUpdateInput, organizationUncheckedUpdateInput>
+    /**
+     * Choose, which organization to update.
+     */
+    where: organizationWhereUniqueInput
+  }
+
+  /**
+   * organization updateMany
+   */
+  export type organizationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update organizations.
+     */
+    data: XOR<organizationUpdateManyMutationInput, organizationUncheckedUpdateManyInput>
+    /**
+     * Filter which organizations to update
+     */
+    where?: organizationWhereInput
+    /**
+     * Limit how many organizations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * organization updateManyAndReturn
+   */
+  export type organizationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * The data used to update organizations.
+     */
+    data: XOR<organizationUpdateManyMutationInput, organizationUncheckedUpdateManyInput>
+    /**
+     * Filter which organizations to update
+     */
+    where?: organizationWhereInput
+    /**
+     * Limit how many organizations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * organization upsert
+   */
+  export type organizationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the organization to update in case it exists.
+     */
+    where: organizationWhereUniqueInput
+    /**
+     * In case the organization found by the `where` argument doesn't exist, create a new organization with this data.
+     */
+    create: XOR<organizationCreateInput, organizationUncheckedCreateInput>
+    /**
+     * In case the organization was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<organizationUpdateInput, organizationUncheckedUpdateInput>
+  }
+
+  /**
+   * organization delete
+   */
+  export type organizationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationInclude<ExtArgs> | null
+    /**
+     * Filter which organization to delete.
+     */
+    where: organizationWhereUniqueInput
+  }
+
+  /**
+   * organization deleteMany
+   */
+  export type organizationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which organizations to delete
+     */
+    where?: organizationWhereInput
+    /**
+     * Limit how many organizations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * organization.services
+   */
+  export type organization$servicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    where?: serviceWhereInput
+    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    cursor?: serviceWhereUniqueInput
+    take?: number
     skip?: number
     distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
   }
 
   /**
-   * service create
+   * organization.members
    */
-  export type serviceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organization$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the service
+     * Select specific fields to fetch from the user
      */
-    select?: serviceSelect<ExtArgs> | null
+    select?: userSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Omit specific fields from the user
      */
-    omit?: serviceOmit<ExtArgs> | null
+    omit?: userOmit<ExtArgs> | null
     /**
-     * The data needed to create a service.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<serviceCreateInput, serviceUncheckedCreateInput>
+    include?: userInclude<ExtArgs> | null
+    where?: userWhereInput
+    orderBy?: userOrderByWithRelationInput | userOrderByWithRelationInput[]
+    cursor?: userWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * service createMany
+   * organization without action
    */
-  export type serviceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type organizationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many services.
+     * Select specific fields to fetch from the organization
      */
-    data: serviceCreateManyInput | serviceCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * service createManyAndReturn
-   */
-  export type serviceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    select?: organizationSelect<ExtArgs> | null
     /**
-     * Select specific fields to fetch from the service
+     * Omit specific fields from the organization
      */
-    select?: serviceSelectCreateManyAndReturn<ExtArgs> | null
+    omit?: organizationOmit<ExtArgs> | null
     /**
-     * Omit specific fields from the service
+     * Choose, which related nodes to fetch as well
      */
-    omit?: serviceOmit<ExtArgs> | null
-    /**
-     * The data used to create many services.
-     */
-    data: serviceCreateManyInput | serviceCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * service update
-   */
-  export type serviceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the service
-     */
-    select?: serviceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the service
-     */
-    omit?: serviceOmit<ExtArgs> | null
-    /**
-     * The data needed to update a service.
-     */
-    data: XOR<serviceUpdateInput, serviceUncheckedUpdateInput>
-    /**
-     * Choose, which service to update.
-     */
-    where: serviceWhereUniqueInput
-  }
-
-  /**
-   * service updateMany
-   */
-  export type serviceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update services.
-     */
-    data: XOR<serviceUpdateManyMutationInput, serviceUncheckedUpdateManyInput>
-    /**
-     * Filter which services to update
-     */
-    where?: serviceWhereInput
-    /**
-     * Limit how many services to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * service updateManyAndReturn
-   */
-  export type serviceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the service
-     */
-    select?: serviceSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the service
-     */
-    omit?: serviceOmit<ExtArgs> | null
-    /**
-     * The data used to update services.
-     */
-    data: XOR<serviceUpdateManyMutationInput, serviceUncheckedUpdateManyInput>
-    /**
-     * Filter which services to update
-     */
-    where?: serviceWhereInput
-    /**
-     * Limit how many services to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * service upsert
-   */
-  export type serviceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the service
-     */
-    select?: serviceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the service
-     */
-    omit?: serviceOmit<ExtArgs> | null
-    /**
-     * The filter to search for the service to update in case it exists.
-     */
-    where: serviceWhereUniqueInput
-    /**
-     * In case the service found by the `where` argument doesn't exist, create a new service with this data.
-     */
-    create: XOR<serviceCreateInput, serviceUncheckedCreateInput>
-    /**
-     * In case the service was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<serviceUpdateInput, serviceUncheckedUpdateInput>
-  }
-
-  /**
-   * service delete
-   */
-  export type serviceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the service
-     */
-    select?: serviceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the service
-     */
-    omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Filter which service to delete.
-     */
-    where: serviceWhereUniqueInput
-  }
-
-  /**
-   * service deleteMany
-   */
-  export type serviceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which services to delete
-     */
-    where?: serviceWhereInput
-    /**
-     * Limit how many services to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * service without action
-   */
-  export type serviceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the service
-     */
-    select?: serviceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the service
-     */
-    omit?: serviceOmit<ExtArgs> | null
+    include?: organizationInclude<ExtArgs> | null
   }
 
 
@@ -2060,6 +2261,8 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2067,6 +2270,8 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2074,6 +2279,8 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -2083,6 +2290,8 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2090,6 +2299,8 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2097,6 +2308,8 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -2177,6 +2390,8 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    createdAt: Date
+    updatedAt: Date | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2201,6 +2416,11 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    ownedOrganizations?: boolean | user$ownedOrganizationsArgs<ExtArgs>
+    memberOf?: boolean | user$memberOfArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type userSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2208,6 +2428,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type userSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2215,6 +2437,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type userSelectScalar = {
@@ -2222,18 +2446,32 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password", ExtArgs["result"]["user"]>
+  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ownedOrganizations?: boolean | user$ownedOrganizationsArgs<ExtArgs>
+    memberOf?: boolean | user$memberOfArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type userIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type userIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $userPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "user"
-    objects: {}
+    objects: {
+      ownedOrganizations: Prisma.$organizationPayload<ExtArgs>[]
+      memberOf: Prisma.$organizationPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       email: string
       password: string
+      createdAt: Date
+      updatedAt: Date | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2628,6 +2866,8 @@ export namespace Prisma {
    */
   export interface Prisma__userClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    ownedOrganizations<T extends user$ownedOrganizationsArgs<ExtArgs> = {}>(args?: Subset<T, user$ownedOrganizationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    memberOf<T extends user$memberOfArgs<ExtArgs> = {}>(args?: Subset<T, user$memberOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2661,6 +2901,8 @@ export namespace Prisma {
     readonly name: FieldRef<"user", 'String'>
     readonly email: FieldRef<"user", 'String'>
     readonly password: FieldRef<"user", 'String'>
+    readonly createdAt: FieldRef<"user", 'DateTime'>
+    readonly updatedAt: FieldRef<"user", 'DateTime'>
   }
     
 
@@ -2677,6 +2919,10 @@ export namespace Prisma {
      * Omit specific fields from the user
      */
     omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
     /**
      * Filter, which user to fetch.
      */
@@ -2696,6 +2942,10 @@ export namespace Prisma {
      */
     omit?: userOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
      * Filter, which user to fetch.
      */
     where: userWhereUniqueInput
@@ -2713,6 +2963,10 @@ export namespace Prisma {
      * Omit specific fields from the user
      */
     omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
     /**
      * Filter, which user to fetch.
      */
@@ -2762,6 +3016,10 @@ export namespace Prisma {
      */
     omit?: userOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
      * Filter, which user to fetch.
      */
     where?: userWhereInput
@@ -2810,6 +3068,10 @@ export namespace Prisma {
      */
     omit?: userOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where?: userWhereInput
@@ -2852,6 +3114,10 @@ export namespace Prisma {
      * Omit specific fields from the user
      */
     omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
     /**
      * The data needed to create a user.
      */
@@ -2900,6 +3166,10 @@ export namespace Prisma {
      * Omit specific fields from the user
      */
     omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
     /**
      * The data needed to update a user.
      */
@@ -2967,6 +3237,10 @@ export namespace Prisma {
      */
     omit?: userOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
      * The filter to search for the user to update in case it exists.
      */
     where: userWhereUniqueInput
@@ -2993,6 +3267,10 @@ export namespace Prisma {
      */
     omit?: userOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+    /**
      * Filter which user to delete.
      */
     where: userWhereUniqueInput
@@ -3013,6 +3291,54 @@ export namespace Prisma {
   }
 
   /**
+   * user.ownedOrganizations
+   */
+  export type user$ownedOrganizationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationInclude<ExtArgs> | null
+    where?: organizationWhereInput
+    orderBy?: organizationOrderByWithRelationInput | organizationOrderByWithRelationInput[]
+    cursor?: organizationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrganizationScalarFieldEnum | OrganizationScalarFieldEnum[]
+  }
+
+  /**
+   * user.memberOf
+   */
+  export type user$memberOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the organization
+     */
+    select?: organizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the organization
+     */
+    omit?: organizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: organizationInclude<ExtArgs> | null
+    where?: organizationWhereInput
+    orderBy?: organizationOrderByWithRelationInput | organizationOrderByWithRelationInput[]
+    cursor?: organizationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrganizationScalarFieldEnum | OrganizationScalarFieldEnum[]
+  }
+
+  /**
    * user without action
    */
   export type userDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3024,6 +3350,1171 @@ export namespace Prisma {
      * Omit specific fields from the user
      */
     omit?: userOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: userInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model service
+   */
+
+  export type AggregateService = {
+    _count: ServiceCountAggregateOutputType | null
+    _avg: ServiceAvgAggregateOutputType | null
+    _sum: ServiceSumAggregateOutputType | null
+    _min: ServiceMinAggregateOutputType | null
+    _max: ServiceMaxAggregateOutputType | null
+  }
+
+  export type ServiceAvgAggregateOutputType = {
+    price: number | null
+    duration: number | null
+  }
+
+  export type ServiceSumAggregateOutputType = {
+    price: number | null
+    duration: number | null
+  }
+
+  export type ServiceMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    price: number | null
+    duration: number | null
+    image: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    observations: string | null
+    organizationId: string | null
+  }
+
+  export type ServiceMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    price: number | null
+    duration: number | null
+    image: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    observations: string | null
+    organizationId: string | null
+  }
+
+  export type ServiceCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    price: number
+    duration: number
+    image: number
+    createdAt: number
+    updatedAt: number
+    observations: number
+    organizationId: number
+    _all: number
+  }
+
+
+  export type ServiceAvgAggregateInputType = {
+    price?: true
+    duration?: true
+  }
+
+  export type ServiceSumAggregateInputType = {
+    price?: true
+    duration?: true
+  }
+
+  export type ServiceMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    price?: true
+    duration?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+    observations?: true
+    organizationId?: true
+  }
+
+  export type ServiceMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    price?: true
+    duration?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+    observations?: true
+    organizationId?: true
+  }
+
+  export type ServiceCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    price?: true
+    duration?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+    observations?: true
+    organizationId?: true
+    _all?: true
+  }
+
+  export type ServiceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which service to aggregate.
+     */
+    where?: serviceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of services to fetch.
+     */
+    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: serviceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` services from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` services.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned services
+    **/
+    _count?: true | ServiceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ServiceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ServiceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ServiceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ServiceMaxAggregateInputType
+  }
+
+  export type GetServiceAggregateType<T extends ServiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateService]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateService[P]>
+      : GetScalarType<T[P], AggregateService[P]>
+  }
+
+
+
+
+  export type serviceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: serviceWhereInput
+    orderBy?: serviceOrderByWithAggregationInput | serviceOrderByWithAggregationInput[]
+    by: ServiceScalarFieldEnum[] | ServiceScalarFieldEnum
+    having?: serviceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ServiceCountAggregateInputType | true
+    _avg?: ServiceAvgAggregateInputType
+    _sum?: ServiceSumAggregateInputType
+    _min?: ServiceMinAggregateInputType
+    _max?: ServiceMaxAggregateInputType
+  }
+
+  export type ServiceGroupByOutputType = {
+    id: string
+    name: string
+    description: string
+    price: number
+    duration: number
+    image: string | null
+    createdAt: Date
+    updatedAt: Date | null
+    observations: string | null
+    organizationId: string
+    _count: ServiceCountAggregateOutputType | null
+    _avg: ServiceAvgAggregateOutputType | null
+    _sum: ServiceSumAggregateOutputType | null
+    _min: ServiceMinAggregateOutputType | null
+    _max: ServiceMaxAggregateOutputType | null
+  }
+
+  type GetServiceGroupByPayload<T extends serviceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ServiceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ServiceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ServiceGroupByOutputType[P]>
+            : GetScalarType<T[P], ServiceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type serviceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    price?: boolean
+    duration?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    observations?: boolean
+    organizationId?: boolean
+    organization?: boolean | organizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["service"]>
+
+  export type serviceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    price?: boolean
+    duration?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    observations?: boolean
+    organizationId?: boolean
+    organization?: boolean | organizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["service"]>
+
+  export type serviceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    price?: boolean
+    duration?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    observations?: boolean
+    organizationId?: boolean
+    organization?: boolean | organizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["service"]>
+
+  export type serviceSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    price?: boolean
+    duration?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    observations?: boolean
+    organizationId?: boolean
+  }
+
+  export type serviceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "duration" | "image" | "createdAt" | "updatedAt" | "observations" | "organizationId", ExtArgs["result"]["service"]>
+  export type serviceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | organizationDefaultArgs<ExtArgs>
+  }
+  export type serviceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | organizationDefaultArgs<ExtArgs>
+  }
+  export type serviceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | organizationDefaultArgs<ExtArgs>
+  }
+
+  export type $servicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "service"
+    objects: {
+      organization: Prisma.$organizationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string
+      price: number
+      duration: number
+      image: string | null
+      createdAt: Date
+      updatedAt: Date | null
+      observations: string | null
+      organizationId: string
+    }, ExtArgs["result"]["service"]>
+    composites: {}
+  }
+
+  type serviceGetPayload<S extends boolean | null | undefined | serviceDefaultArgs> = $Result.GetResult<Prisma.$servicePayload, S>
+
+  type serviceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<serviceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ServiceCountAggregateInputType | true
+    }
+
+  export interface serviceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['service'], meta: { name: 'service' } }
+    /**
+     * Find zero or one Service that matches the filter.
+     * @param {serviceFindUniqueArgs} args - Arguments to find a Service
+     * @example
+     * // Get one Service
+     * const service = await prisma.service.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends serviceFindUniqueArgs>(args: SelectSubset<T, serviceFindUniqueArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Service that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {serviceFindUniqueOrThrowArgs} args - Arguments to find a Service
+     * @example
+     * // Get one Service
+     * const service = await prisma.service.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends serviceFindUniqueOrThrowArgs>(args: SelectSubset<T, serviceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Service that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {serviceFindFirstArgs} args - Arguments to find a Service
+     * @example
+     * // Get one Service
+     * const service = await prisma.service.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends serviceFindFirstArgs>(args?: SelectSubset<T, serviceFindFirstArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Service that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {serviceFindFirstOrThrowArgs} args - Arguments to find a Service
+     * @example
+     * // Get one Service
+     * const service = await prisma.service.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends serviceFindFirstOrThrowArgs>(args?: SelectSubset<T, serviceFindFirstOrThrowArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Services that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {serviceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Services
+     * const services = await prisma.service.findMany()
+     * 
+     * // Get first 10 Services
+     * const services = await prisma.service.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const serviceWithIdOnly = await prisma.service.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends serviceFindManyArgs>(args?: SelectSubset<T, serviceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Service.
+     * @param {serviceCreateArgs} args - Arguments to create a Service.
+     * @example
+     * // Create one Service
+     * const Service = await prisma.service.create({
+     *   data: {
+     *     // ... data to create a Service
+     *   }
+     * })
+     * 
+     */
+    create<T extends serviceCreateArgs>(args: SelectSubset<T, serviceCreateArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Services.
+     * @param {serviceCreateManyArgs} args - Arguments to create many Services.
+     * @example
+     * // Create many Services
+     * const service = await prisma.service.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends serviceCreateManyArgs>(args?: SelectSubset<T, serviceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Services and returns the data saved in the database.
+     * @param {serviceCreateManyAndReturnArgs} args - Arguments to create many Services.
+     * @example
+     * // Create many Services
+     * const service = await prisma.service.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Services and only return the `id`
+     * const serviceWithIdOnly = await prisma.service.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends serviceCreateManyAndReturnArgs>(args?: SelectSubset<T, serviceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Service.
+     * @param {serviceDeleteArgs} args - Arguments to delete one Service.
+     * @example
+     * // Delete one Service
+     * const Service = await prisma.service.delete({
+     *   where: {
+     *     // ... filter to delete one Service
+     *   }
+     * })
+     * 
+     */
+    delete<T extends serviceDeleteArgs>(args: SelectSubset<T, serviceDeleteArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Service.
+     * @param {serviceUpdateArgs} args - Arguments to update one Service.
+     * @example
+     * // Update one Service
+     * const service = await prisma.service.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends serviceUpdateArgs>(args: SelectSubset<T, serviceUpdateArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Services.
+     * @param {serviceDeleteManyArgs} args - Arguments to filter Services to delete.
+     * @example
+     * // Delete a few Services
+     * const { count } = await prisma.service.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends serviceDeleteManyArgs>(args?: SelectSubset<T, serviceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Services.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {serviceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Services
+     * const service = await prisma.service.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends serviceUpdateManyArgs>(args: SelectSubset<T, serviceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Services and returns the data updated in the database.
+     * @param {serviceUpdateManyAndReturnArgs} args - Arguments to update many Services.
+     * @example
+     * // Update many Services
+     * const service = await prisma.service.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Services and only return the `id`
+     * const serviceWithIdOnly = await prisma.service.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends serviceUpdateManyAndReturnArgs>(args: SelectSubset<T, serviceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Service.
+     * @param {serviceUpsertArgs} args - Arguments to update or create a Service.
+     * @example
+     * // Update or create a Service
+     * const service = await prisma.service.upsert({
+     *   create: {
+     *     // ... data to create a Service
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Service we want to update
+     *   }
+     * })
+     */
+    upsert<T extends serviceUpsertArgs>(args: SelectSubset<T, serviceUpsertArgs<ExtArgs>>): Prisma__serviceClient<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Services.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {serviceCountArgs} args - Arguments to filter Services to count.
+     * @example
+     * // Count the number of Services
+     * const count = await prisma.service.count({
+     *   where: {
+     *     // ... the filter for the Services we want to count
+     *   }
+     * })
+    **/
+    count<T extends serviceCountArgs>(
+      args?: Subset<T, serviceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ServiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Service.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ServiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ServiceAggregateArgs>(args: Subset<T, ServiceAggregateArgs>): Prisma.PrismaPromise<GetServiceAggregateType<T>>
+
+    /**
+     * Group by Service.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {serviceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends serviceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: serviceGroupByArgs['orderBy'] }
+        : { orderBy?: serviceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, serviceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetServiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the service model
+   */
+  readonly fields: serviceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for service.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__serviceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organization<T extends organizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, organizationDefaultArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the service model
+   */
+  interface serviceFieldRefs {
+    readonly id: FieldRef<"service", 'String'>
+    readonly name: FieldRef<"service", 'String'>
+    readonly description: FieldRef<"service", 'String'>
+    readonly price: FieldRef<"service", 'Int'>
+    readonly duration: FieldRef<"service", 'Int'>
+    readonly image: FieldRef<"service", 'String'>
+    readonly createdAt: FieldRef<"service", 'DateTime'>
+    readonly updatedAt: FieldRef<"service", 'DateTime'>
+    readonly observations: FieldRef<"service", 'String'>
+    readonly organizationId: FieldRef<"service", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * service findUnique
+   */
+  export type serviceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * Filter, which service to fetch.
+     */
+    where: serviceWhereUniqueInput
+  }
+
+  /**
+   * service findUniqueOrThrow
+   */
+  export type serviceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * Filter, which service to fetch.
+     */
+    where: serviceWhereUniqueInput
+  }
+
+  /**
+   * service findFirst
+   */
+  export type serviceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * Filter, which service to fetch.
+     */
+    where?: serviceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of services to fetch.
+     */
+    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for services.
+     */
+    cursor?: serviceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` services from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` services.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of services.
+     */
+    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
+  }
+
+  /**
+   * service findFirstOrThrow
+   */
+  export type serviceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * Filter, which service to fetch.
+     */
+    where?: serviceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of services to fetch.
+     */
+    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for services.
+     */
+    cursor?: serviceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` services from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` services.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of services.
+     */
+    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
+  }
+
+  /**
+   * service findMany
+   */
+  export type serviceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * Filter, which services to fetch.
+     */
+    where?: serviceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of services to fetch.
+     */
+    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing services.
+     */
+    cursor?: serviceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` services from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` services.
+     */
+    skip?: number
+    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
+  }
+
+  /**
+   * service create
+   */
+  export type serviceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a service.
+     */
+    data: XOR<serviceCreateInput, serviceUncheckedCreateInput>
+  }
+
+  /**
+   * service createMany
+   */
+  export type serviceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many services.
+     */
+    data: serviceCreateManyInput | serviceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * service createManyAndReturn
+   */
+  export type serviceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * The data used to create many services.
+     */
+    data: serviceCreateManyInput | serviceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * service update
+   */
+  export type serviceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a service.
+     */
+    data: XOR<serviceUpdateInput, serviceUncheckedUpdateInput>
+    /**
+     * Choose, which service to update.
+     */
+    where: serviceWhereUniqueInput
+  }
+
+  /**
+   * service updateMany
+   */
+  export type serviceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update services.
+     */
+    data: XOR<serviceUpdateManyMutationInput, serviceUncheckedUpdateManyInput>
+    /**
+     * Filter which services to update
+     */
+    where?: serviceWhereInput
+    /**
+     * Limit how many services to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * service updateManyAndReturn
+   */
+  export type serviceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * The data used to update services.
+     */
+    data: XOR<serviceUpdateManyMutationInput, serviceUncheckedUpdateManyInput>
+    /**
+     * Filter which services to update
+     */
+    where?: serviceWhereInput
+    /**
+     * Limit how many services to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * service upsert
+   */
+  export type serviceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the service to update in case it exists.
+     */
+    where: serviceWhereUniqueInput
+    /**
+     * In case the service found by the `where` argument doesn't exist, create a new service with this data.
+     */
+    create: XOR<serviceCreateInput, serviceUncheckedCreateInput>
+    /**
+     * In case the service was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<serviceUpdateInput, serviceUncheckedUpdateInput>
+  }
+
+  /**
+   * service delete
+   */
+  export type serviceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
+    /**
+     * Filter which service to delete.
+     */
+    where: serviceWhereUniqueInput
+  }
+
+  /**
+   * service deleteMany
+   */
+  export type serviceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which services to delete
+     */
+    where?: serviceWhereInput
+    /**
+     * Limit how many services to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * service without action
+   */
+  export type serviceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the service
+     */
+    select?: serviceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the service
+     */
+    omit?: serviceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: serviceInclude<ExtArgs> | null
   }
 
 
@@ -3041,6 +4532,29 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const OrganizationScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    ownerId: 'ownerId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    password: 'password',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
   export const ServiceScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -3050,20 +4564,11 @@ export namespace Prisma {
     image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    observations: 'observations'
+    observations: 'observations',
+    organizationId: 'organizationId'
   };
 
   export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
-
-
-  export const UserScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    email: 'email',
-    password: 'password'
-  };
-
-  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3110,20 +4615,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -3134,6 +4625,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -3154,6 +4659,130 @@ export namespace Prisma {
    */
 
 
+  export type organizationWhereInput = {
+    AND?: organizationWhereInput | organizationWhereInput[]
+    OR?: organizationWhereInput[]
+    NOT?: organizationWhereInput | organizationWhereInput[]
+    id?: StringFilter<"organization"> | string
+    name?: StringFilter<"organization"> | string
+    ownerId?: StringFilter<"organization"> | string
+    createdAt?: DateTimeFilter<"organization"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"organization"> | Date | string | null
+    services?: ServiceListRelationFilter
+    owner?: XOR<UserScalarRelationFilter, userWhereInput>
+    members?: UserListRelationFilter
+  }
+
+  export type organizationOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    services?: serviceOrderByRelationAggregateInput
+    owner?: userOrderByWithRelationInput
+    members?: userOrderByRelationAggregateInput
+  }
+
+  export type organizationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: organizationWhereInput | organizationWhereInput[]
+    OR?: organizationWhereInput[]
+    NOT?: organizationWhereInput | organizationWhereInput[]
+    ownerId?: StringFilter<"organization"> | string
+    createdAt?: DateTimeFilter<"organization"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"organization"> | Date | string | null
+    services?: ServiceListRelationFilter
+    owner?: XOR<UserScalarRelationFilter, userWhereInput>
+    members?: UserListRelationFilter
+  }, "id" | "name">
+
+  export type organizationOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    _count?: organizationCountOrderByAggregateInput
+    _max?: organizationMaxOrderByAggregateInput
+    _min?: organizationMinOrderByAggregateInput
+  }
+
+  export type organizationScalarWhereWithAggregatesInput = {
+    AND?: organizationScalarWhereWithAggregatesInput | organizationScalarWhereWithAggregatesInput[]
+    OR?: organizationScalarWhereWithAggregatesInput[]
+    NOT?: organizationScalarWhereWithAggregatesInput | organizationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"organization"> | string
+    name?: StringWithAggregatesFilter<"organization"> | string
+    ownerId?: StringWithAggregatesFilter<"organization"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"organization"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"organization"> | Date | string | null
+  }
+
+  export type userWhereInput = {
+    AND?: userWhereInput | userWhereInput[]
+    OR?: userWhereInput[]
+    NOT?: userWhereInput | userWhereInput[]
+    id?: StringFilter<"user"> | string
+    name?: StringFilter<"user"> | string
+    email?: StringFilter<"user"> | string
+    password?: StringFilter<"user"> | string
+    createdAt?: DateTimeFilter<"user"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"user"> | Date | string | null
+    ownedOrganizations?: OrganizationListRelationFilter
+    memberOf?: OrganizationListRelationFilter
+  }
+
+  export type userOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    ownedOrganizations?: organizationOrderByRelationAggregateInput
+    memberOf?: organizationOrderByRelationAggregateInput
+  }
+
+  export type userWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: userWhereInput | userWhereInput[]
+    OR?: userWhereInput[]
+    NOT?: userWhereInput | userWhereInput[]
+    name?: StringFilter<"user"> | string
+    password?: StringFilter<"user"> | string
+    createdAt?: DateTimeFilter<"user"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"user"> | Date | string | null
+    ownedOrganizations?: OrganizationListRelationFilter
+    memberOf?: OrganizationListRelationFilter
+  }, "id" | "email">
+
+  export type userOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
+    _count?: userCountOrderByAggregateInput
+    _max?: userMaxOrderByAggregateInput
+    _min?: userMinOrderByAggregateInput
+  }
+
+  export type userScalarWhereWithAggregatesInput = {
+    AND?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
+    OR?: userScalarWhereWithAggregatesInput[]
+    NOT?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"user"> | string
+    name?: StringWithAggregatesFilter<"user"> | string
+    email?: StringWithAggregatesFilter<"user"> | string
+    password?: StringWithAggregatesFilter<"user"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
+  }
+
   export type serviceWhereInput = {
     AND?: serviceWhereInput | serviceWhereInput[]
     OR?: serviceWhereInput[]
@@ -3167,6 +4796,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"service"> | Date | string
     updatedAt?: DateTimeNullableFilter<"service"> | Date | string | null
     observations?: StringNullableFilter<"service"> | string | null
+    organizationId?: StringFilter<"service"> | string
+    organization?: XOR<OrganizationScalarRelationFilter, organizationWhereInput>
   }
 
   export type serviceOrderByWithRelationInput = {
@@ -3179,6 +4810,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     observations?: SortOrderInput | SortOrder
+    organizationId?: SortOrder
+    organization?: organizationOrderByWithRelationInput
   }
 
   export type serviceWhereUniqueInput = Prisma.AtLeast<{
@@ -3194,6 +4827,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"service"> | Date | string
     updatedAt?: DateTimeNullableFilter<"service"> | Date | string | null
     observations?: StringNullableFilter<"service"> | string | null
+    organizationId?: StringFilter<"service"> | string
+    organization?: XOR<OrganizationScalarRelationFilter, organizationWhereInput>
   }, "id">
 
   export type serviceOrderByWithAggregationInput = {
@@ -3206,6 +4841,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     observations?: SortOrderInput | SortOrder
+    organizationId?: SortOrder
     _count?: serviceCountOrderByAggregateInput
     _avg?: serviceAvgOrderByAggregateInput
     _max?: serviceMaxOrderByAggregateInput
@@ -3226,53 +4862,141 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"service"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"service"> | Date | string | null
     observations?: StringNullableWithAggregatesFilter<"service"> | string | null
+    organizationId?: StringWithAggregatesFilter<"service"> | string
   }
 
-  export type userWhereInput = {
-    AND?: userWhereInput | userWhereInput[]
-    OR?: userWhereInput[]
-    NOT?: userWhereInput | userWhereInput[]
-    id?: StringFilter<"user"> | string
-    name?: StringFilter<"user"> | string
-    email?: StringFilter<"user"> | string
-    password?: StringFilter<"user"> | string
-  }
-
-  export type userOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-  }
-
-  export type userWhereUniqueInput = Prisma.AtLeast<{
+  export type organizationCreateInput = {
     id?: string
-    email?: string
-    AND?: userWhereInput | userWhereInput[]
-    OR?: userWhereInput[]
-    NOT?: userWhereInput | userWhereInput[]
-    name?: StringFilter<"user"> | string
-    password?: StringFilter<"user"> | string
-  }, "id" | "email">
-
-  export type userOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    _count?: userCountOrderByAggregateInput
-    _max?: userMaxOrderByAggregateInput
-    _min?: userMinOrderByAggregateInput
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    services?: serviceCreateNestedManyWithoutOrganizationInput
+    owner: userCreateNestedOneWithoutOwnedOrganizationsInput
+    members?: userCreateNestedManyWithoutMemberOfInput
   }
 
-  export type userScalarWhereWithAggregatesInput = {
-    AND?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
-    OR?: userScalarWhereWithAggregatesInput[]
-    NOT?: userScalarWhereWithAggregatesInput | userScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"user"> | string
-    name?: StringWithAggregatesFilter<"user"> | string
-    email?: StringWithAggregatesFilter<"user"> | string
-    password?: StringWithAggregatesFilter<"user"> | string
+  export type organizationUncheckedCreateInput = {
+    id?: string
+    name: string
+    ownerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    services?: serviceUncheckedCreateNestedManyWithoutOrganizationInput
+    members?: userUncheckedCreateNestedManyWithoutMemberOfInput
+  }
+
+  export type organizationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    services?: serviceUpdateManyWithoutOrganizationNestedInput
+    owner?: userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput
+    members?: userUpdateManyWithoutMemberOfNestedInput
+  }
+
+  export type organizationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    services?: serviceUncheckedUpdateManyWithoutOrganizationNestedInput
+    members?: userUncheckedUpdateManyWithoutMemberOfNestedInput
+  }
+
+  export type organizationCreateManyInput = {
+    id?: string
+    name: string
+    ownerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type organizationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type organizationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type userCreateInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    ownedOrganizations?: organizationCreateNestedManyWithoutOwnerInput
+    memberOf?: organizationCreateNestedManyWithoutMembersInput
+  }
+
+  export type userUncheckedCreateInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    ownedOrganizations?: organizationUncheckedCreateNestedManyWithoutOwnerInput
+    memberOf?: organizationUncheckedCreateNestedManyWithoutMembersInput
+  }
+
+  export type userUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownedOrganizations?: organizationUpdateManyWithoutOwnerNestedInput
+    memberOf?: organizationUpdateManyWithoutMembersNestedInput
+  }
+
+  export type userUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownedOrganizations?: organizationUncheckedUpdateManyWithoutOwnerNestedInput
+    memberOf?: organizationUncheckedUpdateManyWithoutMembersNestedInput
+  }
+
+  export type userCreateManyInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type userUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type userUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type serviceCreateInput = {
@@ -3285,6 +5009,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     observations?: string | null
+    organization: organizationCreateNestedOneWithoutServicesInput
   }
 
   export type serviceUncheckedCreateInput = {
@@ -3297,6 +5022,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     observations?: string | null
+    organizationId: string
   }
 
   export type serviceUpdateInput = {
@@ -3309,6 +5035,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observations?: NullableStringFieldUpdateOperationsInput | string | null
+    organization?: organizationUpdateOneRequiredWithoutServicesNestedInput
   }
 
   export type serviceUncheckedUpdateInput = {
@@ -3321,6 +5048,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observations?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationId?: StringFieldUpdateOperationsInput | string
   }
 
   export type serviceCreateManyInput = {
@@ -3333,6 +5061,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     observations?: string | null
+    organizationId: string
   }
 
   export type serviceUpdateManyMutationInput = {
@@ -3357,55 +5086,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observations?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type userCreateInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-  }
-
-  export type userUncheckedCreateInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-  }
-
-  export type userUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type userUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type userCreateManyInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-  }
-
-  export type userUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type userUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3421,6 +5102,165 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type ServiceListRelationFilter = {
+    every?: serviceWhereInput
+    some?: serviceWhereInput
+    none?: serviceWhereInput
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: userWhereInput
+    isNot?: userWhereInput
+  }
+
+  export type UserListRelationFilter = {
+    every?: userWhereInput
+    some?: userWhereInput
+    none?: userWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type serviceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type userOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type organizationCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type organizationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type organizationMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type OrganizationListRelationFilter = {
+    every?: organizationWhereInput
+    some?: organizationWhereInput
+    none?: organizationWhereInput
+  }
+
+  export type organizationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type userCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type userMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type userMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3449,31 +5289,9 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type OrganizationScalarRelationFilter = {
+    is?: organizationWhereInput
+    isNot?: organizationWhereInput
   }
 
   export type serviceCountOrderByAggregateInput = {
@@ -3486,6 +5304,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     observations?: SortOrder
+    organizationId?: SortOrder
   }
 
   export type serviceAvgOrderByAggregateInput = {
@@ -3503,6 +5322,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     observations?: SortOrder
+    organizationId?: SortOrder
   }
 
   export type serviceMinOrderByAggregateInput = {
@@ -3515,29 +5335,12 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     observations?: SortOrder
+    organizationId?: SortOrder
   }
 
   export type serviceSumOrderByAggregateInput = {
     price?: SortOrder
     duration?: SortOrder
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3574,57 +5377,196 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type serviceCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
+    createMany?: serviceCreateManyOrganizationInputEnvelope
+    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  export type userCreateNestedOneWithoutOwnedOrganizationsInput = {
+    create?: XOR<userCreateWithoutOwnedOrganizationsInput, userUncheckedCreateWithoutOwnedOrganizationsInput>
+    connectOrCreate?: userCreateOrConnectWithoutOwnedOrganizationsInput
+    connect?: userWhereUniqueInput
   }
 
-  export type userCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
+  export type userCreateNestedManyWithoutMemberOfInput = {
+    create?: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput> | userCreateWithoutMemberOfInput[] | userUncheckedCreateWithoutMemberOfInput[]
+    connectOrCreate?: userCreateOrConnectWithoutMemberOfInput | userCreateOrConnectWithoutMemberOfInput[]
+    connect?: userWhereUniqueInput | userWhereUniqueInput[]
   }
 
-  export type userMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
+  export type serviceUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
+    createMany?: serviceCreateManyOrganizationInputEnvelope
+    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
   }
 
-  export type userMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
+  export type userUncheckedCreateNestedManyWithoutMemberOfInput = {
+    create?: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput> | userCreateWithoutMemberOfInput[] | userUncheckedCreateWithoutMemberOfInput[]
+    connectOrCreate?: userCreateOrConnectWithoutMemberOfInput | userCreateOrConnectWithoutMemberOfInput[]
+    connect?: userWhereUniqueInput | userWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type serviceUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
+    upsert?: serviceUpsertWithWhereUniqueWithoutOrganizationInput | serviceUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: serviceCreateManyOrganizationInputEnvelope
+    set?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    disconnect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    delete?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    update?: serviceUpdateWithWhereUniqueWithoutOrganizationInput | serviceUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: serviceUpdateManyWithWhereWithoutOrganizationInput | serviceUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: serviceScalarWhereInput | serviceScalarWhereInput[]
+  }
+
+  export type userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput = {
+    create?: XOR<userCreateWithoutOwnedOrganizationsInput, userUncheckedCreateWithoutOwnedOrganizationsInput>
+    connectOrCreate?: userCreateOrConnectWithoutOwnedOrganizationsInput
+    upsert?: userUpsertWithoutOwnedOrganizationsInput
+    connect?: userWhereUniqueInput
+    update?: XOR<XOR<userUpdateToOneWithWhereWithoutOwnedOrganizationsInput, userUpdateWithoutOwnedOrganizationsInput>, userUncheckedUpdateWithoutOwnedOrganizationsInput>
+  }
+
+  export type userUpdateManyWithoutMemberOfNestedInput = {
+    create?: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput> | userCreateWithoutMemberOfInput[] | userUncheckedCreateWithoutMemberOfInput[]
+    connectOrCreate?: userCreateOrConnectWithoutMemberOfInput | userCreateOrConnectWithoutMemberOfInput[]
+    upsert?: userUpsertWithWhereUniqueWithoutMemberOfInput | userUpsertWithWhereUniqueWithoutMemberOfInput[]
+    set?: userWhereUniqueInput | userWhereUniqueInput[]
+    disconnect?: userWhereUniqueInput | userWhereUniqueInput[]
+    delete?: userWhereUniqueInput | userWhereUniqueInput[]
+    connect?: userWhereUniqueInput | userWhereUniqueInput[]
+    update?: userUpdateWithWhereUniqueWithoutMemberOfInput | userUpdateWithWhereUniqueWithoutMemberOfInput[]
+    updateMany?: userUpdateManyWithWhereWithoutMemberOfInput | userUpdateManyWithWhereWithoutMemberOfInput[]
+    deleteMany?: userScalarWhereInput | userScalarWhereInput[]
+  }
+
+  export type serviceUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
+    upsert?: serviceUpsertWithWhereUniqueWithoutOrganizationInput | serviceUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: serviceCreateManyOrganizationInputEnvelope
+    set?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    disconnect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    delete?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
+    update?: serviceUpdateWithWhereUniqueWithoutOrganizationInput | serviceUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: serviceUpdateManyWithWhereWithoutOrganizationInput | serviceUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: serviceScalarWhereInput | serviceScalarWhereInput[]
+  }
+
+  export type userUncheckedUpdateManyWithoutMemberOfNestedInput = {
+    create?: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput> | userCreateWithoutMemberOfInput[] | userUncheckedCreateWithoutMemberOfInput[]
+    connectOrCreate?: userCreateOrConnectWithoutMemberOfInput | userCreateOrConnectWithoutMemberOfInput[]
+    upsert?: userUpsertWithWhereUniqueWithoutMemberOfInput | userUpsertWithWhereUniqueWithoutMemberOfInput[]
+    set?: userWhereUniqueInput | userWhereUniqueInput[]
+    disconnect?: userWhereUniqueInput | userWhereUniqueInput[]
+    delete?: userWhereUniqueInput | userWhereUniqueInput[]
+    connect?: userWhereUniqueInput | userWhereUniqueInput[]
+    update?: userUpdateWithWhereUniqueWithoutMemberOfInput | userUpdateWithWhereUniqueWithoutMemberOfInput[]
+    updateMany?: userUpdateManyWithWhereWithoutMemberOfInput | userUpdateManyWithWhereWithoutMemberOfInput[]
+    deleteMany?: userScalarWhereInput | userScalarWhereInput[]
+  }
+
+  export type organizationCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<organizationCreateWithoutOwnerInput, organizationUncheckedCreateWithoutOwnerInput> | organizationCreateWithoutOwnerInput[] | organizationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutOwnerInput | organizationCreateOrConnectWithoutOwnerInput[]
+    createMany?: organizationCreateManyOwnerInputEnvelope
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+  }
+
+  export type organizationCreateNestedManyWithoutMembersInput = {
+    create?: XOR<organizationCreateWithoutMembersInput, organizationUncheckedCreateWithoutMembersInput> | organizationCreateWithoutMembersInput[] | organizationUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutMembersInput | organizationCreateOrConnectWithoutMembersInput[]
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+  }
+
+  export type organizationUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<organizationCreateWithoutOwnerInput, organizationUncheckedCreateWithoutOwnerInput> | organizationCreateWithoutOwnerInput[] | organizationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutOwnerInput | organizationCreateOrConnectWithoutOwnerInput[]
+    createMany?: organizationCreateManyOwnerInputEnvelope
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+  }
+
+  export type organizationUncheckedCreateNestedManyWithoutMembersInput = {
+    create?: XOR<organizationCreateWithoutMembersInput, organizationUncheckedCreateWithoutMembersInput> | organizationCreateWithoutMembersInput[] | organizationUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutMembersInput | organizationCreateOrConnectWithoutMembersInput[]
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+  }
+
+  export type organizationUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<organizationCreateWithoutOwnerInput, organizationUncheckedCreateWithoutOwnerInput> | organizationCreateWithoutOwnerInput[] | organizationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutOwnerInput | organizationCreateOrConnectWithoutOwnerInput[]
+    upsert?: organizationUpsertWithWhereUniqueWithoutOwnerInput | organizationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: organizationCreateManyOwnerInputEnvelope
+    set?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    disconnect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    delete?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    update?: organizationUpdateWithWhereUniqueWithoutOwnerInput | organizationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: organizationUpdateManyWithWhereWithoutOwnerInput | organizationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: organizationScalarWhereInput | organizationScalarWhereInput[]
+  }
+
+  export type organizationUpdateManyWithoutMembersNestedInput = {
+    create?: XOR<organizationCreateWithoutMembersInput, organizationUncheckedCreateWithoutMembersInput> | organizationCreateWithoutMembersInput[] | organizationUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutMembersInput | organizationCreateOrConnectWithoutMembersInput[]
+    upsert?: organizationUpsertWithWhereUniqueWithoutMembersInput | organizationUpsertWithWhereUniqueWithoutMembersInput[]
+    set?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    disconnect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    delete?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    update?: organizationUpdateWithWhereUniqueWithoutMembersInput | organizationUpdateWithWhereUniqueWithoutMembersInput[]
+    updateMany?: organizationUpdateManyWithWhereWithoutMembersInput | organizationUpdateManyWithWhereWithoutMembersInput[]
+    deleteMany?: organizationScalarWhereInput | organizationScalarWhereInput[]
+  }
+
+  export type organizationUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<organizationCreateWithoutOwnerInput, organizationUncheckedCreateWithoutOwnerInput> | organizationCreateWithoutOwnerInput[] | organizationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutOwnerInput | organizationCreateOrConnectWithoutOwnerInput[]
+    upsert?: organizationUpsertWithWhereUniqueWithoutOwnerInput | organizationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: organizationCreateManyOwnerInputEnvelope
+    set?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    disconnect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    delete?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    update?: organizationUpdateWithWhereUniqueWithoutOwnerInput | organizationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: organizationUpdateManyWithWhereWithoutOwnerInput | organizationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: organizationScalarWhereInput | organizationScalarWhereInput[]
+  }
+
+  export type organizationUncheckedUpdateManyWithoutMembersNestedInput = {
+    create?: XOR<organizationCreateWithoutMembersInput, organizationUncheckedCreateWithoutMembersInput> | organizationCreateWithoutMembersInput[] | organizationUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: organizationCreateOrConnectWithoutMembersInput | organizationCreateOrConnectWithoutMembersInput[]
+    upsert?: organizationUpsertWithWhereUniqueWithoutMembersInput | organizationUpsertWithWhereUniqueWithoutMembersInput[]
+    set?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    disconnect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    delete?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    connect?: organizationWhereUniqueInput | organizationWhereUniqueInput[]
+    update?: organizationUpdateWithWhereUniqueWithoutMembersInput | organizationUpdateWithWhereUniqueWithoutMembersInput[]
+    updateMany?: organizationUpdateManyWithWhereWithoutMembersInput | organizationUpdateManyWithWhereWithoutMembersInput[]
+    deleteMany?: organizationScalarWhereInput | organizationScalarWhereInput[]
+  }
+
+  export type organizationCreateNestedOneWithoutServicesInput = {
+    create?: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
+    connectOrCreate?: organizationCreateOrConnectWithoutServicesInput
+    connect?: organizationWhereUniqueInput
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3639,12 +5581,12 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type organizationUpdateOneRequiredWithoutServicesNestedInput = {
+    create?: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
+    connectOrCreate?: organizationCreateOrConnectWithoutServicesInput
+    upsert?: organizationUpsertWithoutServicesInput
+    connect?: organizationWhereUniqueInput
+    update?: XOR<XOR<organizationUpdateToOneWithWhereWithoutServicesInput, organizationUpdateWithoutServicesInput>, organizationUncheckedUpdateWithoutServicesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3659,31 +5601,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -3723,6 +5640,70 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3769,43 +5750,460 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type serviceCreateWithoutOrganizationInput = {
+    id?: string
+    name: string
+    description: string
+    price: number
+    duration: number
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    observations?: string | null
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type serviceUncheckedCreateWithoutOrganizationInput = {
+    id?: string
+    name: string
+    description: string
+    price: number
+    duration: number
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    observations?: string | null
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  export type serviceCreateOrConnectWithoutOrganizationInput = {
+    where: serviceWhereUniqueInput
+    create: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type serviceCreateManyOrganizationInputEnvelope = {
+    data: serviceCreateManyOrganizationInput | serviceCreateManyOrganizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type userCreateWithoutOwnedOrganizationsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    memberOf?: organizationCreateNestedManyWithoutMembersInput
+  }
+
+  export type userUncheckedCreateWithoutOwnedOrganizationsInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    memberOf?: organizationUncheckedCreateNestedManyWithoutMembersInput
+  }
+
+  export type userCreateOrConnectWithoutOwnedOrganizationsInput = {
+    where: userWhereUniqueInput
+    create: XOR<userCreateWithoutOwnedOrganizationsInput, userUncheckedCreateWithoutOwnedOrganizationsInput>
+  }
+
+  export type userCreateWithoutMemberOfInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    ownedOrganizations?: organizationCreateNestedManyWithoutOwnerInput
+  }
+
+  export type userUncheckedCreateWithoutMemberOfInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    ownedOrganizations?: organizationUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type userCreateOrConnectWithoutMemberOfInput = {
+    where: userWhereUniqueInput
+    create: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput>
+  }
+
+  export type serviceUpsertWithWhereUniqueWithoutOrganizationInput = {
+    where: serviceWhereUniqueInput
+    update: XOR<serviceUpdateWithoutOrganizationInput, serviceUncheckedUpdateWithoutOrganizationInput>
+    create: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type serviceUpdateWithWhereUniqueWithoutOrganizationInput = {
+    where: serviceWhereUniqueInput
+    data: XOR<serviceUpdateWithoutOrganizationInput, serviceUncheckedUpdateWithoutOrganizationInput>
+  }
+
+  export type serviceUpdateManyWithWhereWithoutOrganizationInput = {
+    where: serviceScalarWhereInput
+    data: XOR<serviceUpdateManyMutationInput, serviceUncheckedUpdateManyWithoutOrganizationInput>
+  }
+
+  export type serviceScalarWhereInput = {
+    AND?: serviceScalarWhereInput | serviceScalarWhereInput[]
+    OR?: serviceScalarWhereInput[]
+    NOT?: serviceScalarWhereInput | serviceScalarWhereInput[]
+    id?: StringFilter<"service"> | string
+    name?: StringFilter<"service"> | string
+    description?: StringFilter<"service"> | string
+    price?: IntFilter<"service"> | number
+    duration?: IntFilter<"service"> | number
+    image?: StringNullableFilter<"service"> | string | null
+    createdAt?: DateTimeFilter<"service"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"service"> | Date | string | null
+    observations?: StringNullableFilter<"service"> | string | null
+    organizationId?: StringFilter<"service"> | string
+  }
+
+  export type userUpsertWithoutOwnedOrganizationsInput = {
+    update: XOR<userUpdateWithoutOwnedOrganizationsInput, userUncheckedUpdateWithoutOwnedOrganizationsInput>
+    create: XOR<userCreateWithoutOwnedOrganizationsInput, userUncheckedCreateWithoutOwnedOrganizationsInput>
+    where?: userWhereInput
+  }
+
+  export type userUpdateToOneWithWhereWithoutOwnedOrganizationsInput = {
+    where?: userWhereInput
+    data: XOR<userUpdateWithoutOwnedOrganizationsInput, userUncheckedUpdateWithoutOwnedOrganizationsInput>
+  }
+
+  export type userUpdateWithoutOwnedOrganizationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberOf?: organizationUpdateManyWithoutMembersNestedInput
+  }
+
+  export type userUncheckedUpdateWithoutOwnedOrganizationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberOf?: organizationUncheckedUpdateManyWithoutMembersNestedInput
+  }
+
+  export type userUpsertWithWhereUniqueWithoutMemberOfInput = {
+    where: userWhereUniqueInput
+    update: XOR<userUpdateWithoutMemberOfInput, userUncheckedUpdateWithoutMemberOfInput>
+    create: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput>
+  }
+
+  export type userUpdateWithWhereUniqueWithoutMemberOfInput = {
+    where: userWhereUniqueInput
+    data: XOR<userUpdateWithoutMemberOfInput, userUncheckedUpdateWithoutMemberOfInput>
+  }
+
+  export type userUpdateManyWithWhereWithoutMemberOfInput = {
+    where: userScalarWhereInput
+    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyWithoutMemberOfInput>
+  }
+
+  export type userScalarWhereInput = {
+    AND?: userScalarWhereInput | userScalarWhereInput[]
+    OR?: userScalarWhereInput[]
+    NOT?: userScalarWhereInput | userScalarWhereInput[]
+    id?: StringFilter<"user"> | string
+    name?: StringFilter<"user"> | string
+    email?: StringFilter<"user"> | string
+    password?: StringFilter<"user"> | string
+    createdAt?: DateTimeFilter<"user"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"user"> | Date | string | null
+  }
+
+  export type organizationCreateWithoutOwnerInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    services?: serviceCreateNestedManyWithoutOrganizationInput
+    members?: userCreateNestedManyWithoutMemberOfInput
+  }
+
+  export type organizationUncheckedCreateWithoutOwnerInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    services?: serviceUncheckedCreateNestedManyWithoutOrganizationInput
+    members?: userUncheckedCreateNestedManyWithoutMemberOfInput
+  }
+
+  export type organizationCreateOrConnectWithoutOwnerInput = {
+    where: organizationWhereUniqueInput
+    create: XOR<organizationCreateWithoutOwnerInput, organizationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type organizationCreateManyOwnerInputEnvelope = {
+    data: organizationCreateManyOwnerInput | organizationCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type organizationCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    services?: serviceCreateNestedManyWithoutOrganizationInput
+    owner: userCreateNestedOneWithoutOwnedOrganizationsInput
+  }
+
+  export type organizationUncheckedCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    ownerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    services?: serviceUncheckedCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type organizationCreateOrConnectWithoutMembersInput = {
+    where: organizationWhereUniqueInput
+    create: XOR<organizationCreateWithoutMembersInput, organizationUncheckedCreateWithoutMembersInput>
+  }
+
+  export type organizationUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: organizationWhereUniqueInput
+    update: XOR<organizationUpdateWithoutOwnerInput, organizationUncheckedUpdateWithoutOwnerInput>
+    create: XOR<organizationCreateWithoutOwnerInput, organizationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type organizationUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: organizationWhereUniqueInput
+    data: XOR<organizationUpdateWithoutOwnerInput, organizationUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type organizationUpdateManyWithWhereWithoutOwnerInput = {
+    where: organizationScalarWhereInput
+    data: XOR<organizationUpdateManyMutationInput, organizationUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type organizationScalarWhereInput = {
+    AND?: organizationScalarWhereInput | organizationScalarWhereInput[]
+    OR?: organizationScalarWhereInput[]
+    NOT?: organizationScalarWhereInput | organizationScalarWhereInput[]
+    id?: StringFilter<"organization"> | string
+    name?: StringFilter<"organization"> | string
+    ownerId?: StringFilter<"organization"> | string
+    createdAt?: DateTimeFilter<"organization"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"organization"> | Date | string | null
+  }
+
+  export type organizationUpsertWithWhereUniqueWithoutMembersInput = {
+    where: organizationWhereUniqueInput
+    update: XOR<organizationUpdateWithoutMembersInput, organizationUncheckedUpdateWithoutMembersInput>
+    create: XOR<organizationCreateWithoutMembersInput, organizationUncheckedCreateWithoutMembersInput>
+  }
+
+  export type organizationUpdateWithWhereUniqueWithoutMembersInput = {
+    where: organizationWhereUniqueInput
+    data: XOR<organizationUpdateWithoutMembersInput, organizationUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type organizationUpdateManyWithWhereWithoutMembersInput = {
+    where: organizationScalarWhereInput
+    data: XOR<organizationUpdateManyMutationInput, organizationUncheckedUpdateManyWithoutMembersInput>
+  }
+
+  export type organizationCreateWithoutServicesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    owner: userCreateNestedOneWithoutOwnedOrganizationsInput
+    members?: userCreateNestedManyWithoutMemberOfInput
+  }
+
+  export type organizationUncheckedCreateWithoutServicesInput = {
+    id?: string
+    name: string
+    ownerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    members?: userUncheckedCreateNestedManyWithoutMemberOfInput
+  }
+
+  export type organizationCreateOrConnectWithoutServicesInput = {
+    where: organizationWhereUniqueInput
+    create: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
+  }
+
+  export type organizationUpsertWithoutServicesInput = {
+    update: XOR<organizationUpdateWithoutServicesInput, organizationUncheckedUpdateWithoutServicesInput>
+    create: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
+    where?: organizationWhereInput
+  }
+
+  export type organizationUpdateToOneWithWhereWithoutServicesInput = {
+    where?: organizationWhereInput
+    data: XOR<organizationUpdateWithoutServicesInput, organizationUncheckedUpdateWithoutServicesInput>
+  }
+
+  export type organizationUpdateWithoutServicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    owner?: userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput
+    members?: userUpdateManyWithoutMemberOfNestedInput
+  }
+
+  export type organizationUncheckedUpdateWithoutServicesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    members?: userUncheckedUpdateManyWithoutMemberOfNestedInput
+  }
+
+  export type serviceCreateManyOrganizationInput = {
+    id?: string
+    name: string
+    description: string
+    price: number
+    duration: number
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    observations?: string | null
+  }
+
+  export type serviceUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observations?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type serviceUncheckedUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observations?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type serviceUncheckedUpdateManyWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    price?: IntFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    observations?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type userUpdateWithoutMemberOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownedOrganizations?: organizationUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type userUncheckedUpdateWithoutMemberOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownedOrganizations?: organizationUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type userUncheckedUpdateManyWithoutMemberOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type organizationCreateManyOwnerInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type organizationUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    services?: serviceUpdateManyWithoutOrganizationNestedInput
+    members?: userUpdateManyWithoutMemberOfNestedInput
+  }
+
+  export type organizationUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    services?: serviceUncheckedUpdateManyWithoutOrganizationNestedInput
+    members?: userUncheckedUpdateManyWithoutMemberOfNestedInput
+  }
+
+  export type organizationUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type organizationUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    services?: serviceUpdateManyWithoutOrganizationNestedInput
+    owner?: userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput
+  }
+
+  export type organizationUncheckedUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    services?: serviceUncheckedUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type organizationUncheckedUpdateManyWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

@@ -24,15 +24,15 @@ export class CreateAccountController {
   async handle(@Body() body: CreateServiceBodySchema) {
     const { name, description, price, duration, image, observations } = body;
 
-    await this.prisma.service.create({
-      data: {
-        name,
-        description,
-        price,
-        duration,
-        image,
-        observations,
-      },
-    });
+    // await this.prisma.service.create({
+    //   data: {
+    //     name,
+    //     description,
+    //     price,
+    //     duration,
+    //     image,
+    //     observations,
+    //   },
+    // });
   }
 }
