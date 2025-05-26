@@ -4,10 +4,11 @@ import { CreateAccountController } from './controllers/create-account.controller
 import { DatabaseModule } from '../database/database.module';
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { CreateAccountUseCase } from '@/domain/application/use-cases/user/create-account';
+import { AuthenticateAccountUseCase } from '@/domain/application/use-cases/user/authenticate-account';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [CreateAccountController, AuthenticateController],
-  providers: [CreateAccountUseCase],
+  providers: [CreateAccountUseCase, AuthenticateAccountUseCase],
 })
 export class HttpModule {}

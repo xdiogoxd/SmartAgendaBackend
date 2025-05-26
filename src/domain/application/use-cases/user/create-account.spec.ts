@@ -47,7 +47,6 @@ describe('Create User', () => {
     });
 
     expect(result.isLeft()).toBe(true);
-    console.log(result.value);
 
     expect(result.value).toBeInstanceOf(UserAlreadyExistsError);
   });
