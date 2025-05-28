@@ -1051,12 +1051,10 @@ export namespace Prisma {
    */
 
   export type OrganizationCountOutputType = {
-    services: number
     members: number
   }
 
   export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    services?: boolean | OrganizationCountOutputTypeCountServicesArgs
     members?: boolean | OrganizationCountOutputTypeCountMembersArgs
   }
 
@@ -1069,13 +1067,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the OrganizationCountOutputType
      */
     select?: OrganizationCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * OrganizationCountOutputType without action
-   */
-  export type OrganizationCountOutputTypeCountServicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: serviceWhereInput
   }
 
   /**
@@ -1294,7 +1285,6 @@ export namespace Prisma {
     ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    services?: boolean | organization$servicesArgs<ExtArgs>
     owner?: boolean | userDefaultArgs<ExtArgs>
     members?: boolean | organization$membersArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
@@ -1328,7 +1318,6 @@ export namespace Prisma {
 
   export type organizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
   export type organizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    services?: boolean | organization$servicesArgs<ExtArgs>
     owner?: boolean | userDefaultArgs<ExtArgs>
     members?: boolean | organization$membersArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
@@ -1343,7 +1332,6 @@ export namespace Prisma {
   export type $organizationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "organization"
     objects: {
-      services: Prisma.$servicePayload<ExtArgs>[]
       owner: Prisma.$userPayload<ExtArgs>
       members: Prisma.$userPayload<ExtArgs>[]
     }
@@ -1747,7 +1735,6 @@ export namespace Prisma {
    */
   export interface Prisma__organizationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    services<T extends organization$servicesArgs<ExtArgs> = {}>(args?: Subset<T, organization$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$servicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     owner<T extends userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, userDefaultArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     members<T extends organization$membersArgs<ExtArgs> = {}>(args?: Subset<T, organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -2177,30 +2164,6 @@ export namespace Prisma {
      * Limit how many organizations to delete.
      */
     limit?: number
-  }
-
-  /**
-   * organization.services
-   */
-  export type organization$servicesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the service
-     */
-    select?: serviceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the service
-     */
-    omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
-    where?: serviceWhereInput
-    orderBy?: serviceOrderByWithRelationInput | serviceOrderByWithRelationInput[]
-    cursor?: serviceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ServiceScalarFieldEnum | ServiceScalarFieldEnum[]
   }
 
   /**
@@ -3389,7 +3352,6 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     observations: string | null
-    organizationId: string | null
   }
 
   export type ServiceMaxAggregateOutputType = {
@@ -3402,7 +3364,6 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     observations: string | null
-    organizationId: string | null
   }
 
   export type ServiceCountAggregateOutputType = {
@@ -3415,7 +3376,6 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     observations: number
-    organizationId: number
     _all: number
   }
 
@@ -3440,7 +3400,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     observations?: true
-    organizationId?: true
   }
 
   export type ServiceMaxAggregateInputType = {
@@ -3453,7 +3412,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     observations?: true
-    organizationId?: true
   }
 
   export type ServiceCountAggregateInputType = {
@@ -3466,7 +3424,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     observations?: true
-    organizationId?: true
     _all?: true
   }
 
@@ -3566,7 +3523,6 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date | null
     observations: string | null
-    organizationId: string
     _count: ServiceCountAggregateOutputType | null
     _avg: ServiceAvgAggregateOutputType | null
     _sum: ServiceSumAggregateOutputType | null
@@ -3598,8 +3554,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     observations?: boolean
-    organizationId?: boolean
-    organization?: boolean | organizationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
   export type serviceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3612,8 +3566,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     observations?: boolean
-    organizationId?: boolean
-    organization?: boolean | organizationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
   export type serviceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3626,8 +3578,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     observations?: boolean
-    organizationId?: boolean
-    organization?: boolean | organizationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["service"]>
 
   export type serviceSelectScalar = {
@@ -3640,25 +3590,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     observations?: boolean
-    organizationId?: boolean
   }
 
-  export type serviceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "duration" | "image" | "createdAt" | "updatedAt" | "observations" | "organizationId", ExtArgs["result"]["service"]>
-  export type serviceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    organization?: boolean | organizationDefaultArgs<ExtArgs>
-  }
-  export type serviceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    organization?: boolean | organizationDefaultArgs<ExtArgs>
-  }
-  export type serviceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    organization?: boolean | organizationDefaultArgs<ExtArgs>
-  }
+  export type serviceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "duration" | "image" | "createdAt" | "updatedAt" | "observations", ExtArgs["result"]["service"]>
 
   export type $servicePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "service"
-    objects: {
-      organization: Prisma.$organizationPayload<ExtArgs>
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
@@ -3669,7 +3607,6 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date | null
       observations: string | null
-      organizationId: string
     }, ExtArgs["result"]["service"]>
     composites: {}
   }
@@ -4064,7 +4001,6 @@ export namespace Prisma {
    */
   export interface Prisma__serviceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    organization<T extends organizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, organizationDefaultArgs<ExtArgs>>): Prisma__organizationClient<$Result.GetResult<Prisma.$organizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4103,7 +4039,6 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"service", 'DateTime'>
     readonly updatedAt: FieldRef<"service", 'DateTime'>
     readonly observations: FieldRef<"service", 'String'>
-    readonly organizationId: FieldRef<"service", 'String'>
   }
     
 
@@ -4120,10 +4055,6 @@ export namespace Prisma {
      * Omit specific fields from the service
      */
     omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
     /**
      * Filter, which service to fetch.
      */
@@ -4143,10 +4074,6 @@ export namespace Prisma {
      */
     omit?: serviceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
-    /**
      * Filter, which service to fetch.
      */
     where: serviceWhereUniqueInput
@@ -4164,10 +4091,6 @@ export namespace Prisma {
      * Omit specific fields from the service
      */
     omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
     /**
      * Filter, which service to fetch.
      */
@@ -4217,10 +4140,6 @@ export namespace Prisma {
      */
     omit?: serviceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
-    /**
      * Filter, which service to fetch.
      */
     where?: serviceWhereInput
@@ -4269,10 +4188,6 @@ export namespace Prisma {
      */
     omit?: serviceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
-    /**
      * Filter, which services to fetch.
      */
     where?: serviceWhereInput
@@ -4316,10 +4231,6 @@ export namespace Prisma {
      */
     omit?: serviceOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
-    /**
      * The data needed to create a service.
      */
     data: XOR<serviceCreateInput, serviceUncheckedCreateInput>
@@ -4353,10 +4264,6 @@ export namespace Prisma {
      */
     data: serviceCreateManyInput | serviceCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4371,10 +4278,6 @@ export namespace Prisma {
      * Omit specific fields from the service
      */
     omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
     /**
      * The data needed to update a service.
      */
@@ -4427,10 +4330,6 @@ export namespace Prisma {
      * Limit how many services to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4445,10 +4344,6 @@ export namespace Prisma {
      * Omit specific fields from the service
      */
     omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
     /**
      * The filter to search for the service to update in case it exists.
      */
@@ -4475,10 +4370,6 @@ export namespace Prisma {
      * Omit specific fields from the service
      */
     omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
     /**
      * Filter which service to delete.
      */
@@ -4511,10 +4402,6 @@ export namespace Prisma {
      * Omit specific fields from the service
      */
     omit?: serviceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: serviceInclude<ExtArgs> | null
   }
 
 
@@ -4564,8 +4451,7 @@ export namespace Prisma {
     image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    observations: 'observations',
-    organizationId: 'organizationId'
+    observations: 'observations'
   };
 
   export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
@@ -4668,7 +4554,6 @@ export namespace Prisma {
     ownerId?: StringFilter<"organization"> | string
     createdAt?: DateTimeFilter<"organization"> | Date | string
     updatedAt?: DateTimeNullableFilter<"organization"> | Date | string | null
-    services?: ServiceListRelationFilter
     owner?: XOR<UserScalarRelationFilter, userWhereInput>
     members?: UserListRelationFilter
   }
@@ -4679,7 +4564,6 @@ export namespace Prisma {
     ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
-    services?: serviceOrderByRelationAggregateInput
     owner?: userOrderByWithRelationInput
     members?: userOrderByRelationAggregateInput
   }
@@ -4693,7 +4577,6 @@ export namespace Prisma {
     ownerId?: StringFilter<"organization"> | string
     createdAt?: DateTimeFilter<"organization"> | Date | string
     updatedAt?: DateTimeNullableFilter<"organization"> | Date | string | null
-    services?: ServiceListRelationFilter
     owner?: XOR<UserScalarRelationFilter, userWhereInput>
     members?: UserListRelationFilter
   }, "id" | "name">
@@ -4796,8 +4679,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"service"> | Date | string
     updatedAt?: DateTimeNullableFilter<"service"> | Date | string | null
     observations?: StringNullableFilter<"service"> | string | null
-    organizationId?: StringFilter<"service"> | string
-    organization?: XOR<OrganizationScalarRelationFilter, organizationWhereInput>
   }
 
   export type serviceOrderByWithRelationInput = {
@@ -4810,8 +4691,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     observations?: SortOrderInput | SortOrder
-    organizationId?: SortOrder
-    organization?: organizationOrderByWithRelationInput
   }
 
   export type serviceWhereUniqueInput = Prisma.AtLeast<{
@@ -4827,8 +4706,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"service"> | Date | string
     updatedAt?: DateTimeNullableFilter<"service"> | Date | string | null
     observations?: StringNullableFilter<"service"> | string | null
-    organizationId?: StringFilter<"service"> | string
-    organization?: XOR<OrganizationScalarRelationFilter, organizationWhereInput>
   }, "id">
 
   export type serviceOrderByWithAggregationInput = {
@@ -4841,7 +4718,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     observations?: SortOrderInput | SortOrder
-    organizationId?: SortOrder
     _count?: serviceCountOrderByAggregateInput
     _avg?: serviceAvgOrderByAggregateInput
     _max?: serviceMaxOrderByAggregateInput
@@ -4862,7 +4738,6 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"service"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"service"> | Date | string | null
     observations?: StringNullableWithAggregatesFilter<"service"> | string | null
-    organizationId?: StringWithAggregatesFilter<"service"> | string
   }
 
   export type organizationCreateInput = {
@@ -4870,7 +4745,6 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    services?: serviceCreateNestedManyWithoutOrganizationInput
     owner: userCreateNestedOneWithoutOwnedOrganizationsInput
     members?: userCreateNestedManyWithoutMemberOfInput
   }
@@ -4881,7 +4755,6 @@ export namespace Prisma {
     ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    services?: serviceUncheckedCreateNestedManyWithoutOrganizationInput
     members?: userUncheckedCreateNestedManyWithoutMemberOfInput
   }
 
@@ -4890,7 +4763,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    services?: serviceUpdateManyWithoutOrganizationNestedInput
     owner?: userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput
     members?: userUpdateManyWithoutMemberOfNestedInput
   }
@@ -4901,7 +4773,6 @@ export namespace Prisma {
     ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    services?: serviceUncheckedUpdateManyWithoutOrganizationNestedInput
     members?: userUncheckedUpdateManyWithoutMemberOfNestedInput
   }
 
@@ -5009,7 +4880,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     observations?: string | null
-    organization: organizationCreateNestedOneWithoutServicesInput
   }
 
   export type serviceUncheckedCreateInput = {
@@ -5022,7 +4892,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     observations?: string | null
-    organizationId: string
   }
 
   export type serviceUpdateInput = {
@@ -5035,7 +4904,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observations?: NullableStringFieldUpdateOperationsInput | string | null
-    organization?: organizationUpdateOneRequiredWithoutServicesNestedInput
   }
 
   export type serviceUncheckedUpdateInput = {
@@ -5048,7 +4916,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observations?: NullableStringFieldUpdateOperationsInput | string | null
-    organizationId?: StringFieldUpdateOperationsInput | string
   }
 
   export type serviceCreateManyInput = {
@@ -5061,7 +4928,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     observations?: string | null
-    organizationId: string
   }
 
   export type serviceUpdateManyMutationInput = {
@@ -5086,7 +4952,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observations?: NullableStringFieldUpdateOperationsInput | string | null
-    organizationId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5126,12 +4991,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type ServiceListRelationFilter = {
-    every?: serviceWhereInput
-    some?: serviceWhereInput
-    none?: serviceWhereInput
-  }
-
   export type UserScalarRelationFilter = {
     is?: userWhereInput
     isNot?: userWhereInput
@@ -5146,10 +5005,6 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
-  }
-
-  export type serviceOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type userOrderByRelationAggregateInput = {
@@ -5289,11 +5144,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type OrganizationScalarRelationFilter = {
-    is?: organizationWhereInput
-    isNot?: organizationWhereInput
-  }
-
   export type serviceCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -5304,7 +5154,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     observations?: SortOrder
-    organizationId?: SortOrder
   }
 
   export type serviceAvgOrderByAggregateInput = {
@@ -5322,7 +5171,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     observations?: SortOrder
-    organizationId?: SortOrder
   }
 
   export type serviceMinOrderByAggregateInput = {
@@ -5335,7 +5183,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     observations?: SortOrder
-    organizationId?: SortOrder
   }
 
   export type serviceSumOrderByAggregateInput = {
@@ -5377,13 +5224,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type serviceCreateNestedManyWithoutOrganizationInput = {
-    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
-    createMany?: serviceCreateManyOrganizationInputEnvelope
-    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-  }
-
   export type userCreateNestedOneWithoutOwnedOrganizationsInput = {
     create?: XOR<userCreateWithoutOwnedOrganizationsInput, userUncheckedCreateWithoutOwnedOrganizationsInput>
     connectOrCreate?: userCreateOrConnectWithoutOwnedOrganizationsInput
@@ -5394,13 +5234,6 @@ export namespace Prisma {
     create?: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput> | userCreateWithoutMemberOfInput[] | userUncheckedCreateWithoutMemberOfInput[]
     connectOrCreate?: userCreateOrConnectWithoutMemberOfInput | userCreateOrConnectWithoutMemberOfInput[]
     connect?: userWhereUniqueInput | userWhereUniqueInput[]
-  }
-
-  export type serviceUncheckedCreateNestedManyWithoutOrganizationInput = {
-    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
-    createMany?: serviceCreateManyOrganizationInputEnvelope
-    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
   }
 
   export type userUncheckedCreateNestedManyWithoutMemberOfInput = {
@@ -5419,20 +5252,6 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type serviceUpdateManyWithoutOrganizationNestedInput = {
-    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
-    upsert?: serviceUpsertWithWhereUniqueWithoutOrganizationInput | serviceUpsertWithWhereUniqueWithoutOrganizationInput[]
-    createMany?: serviceCreateManyOrganizationInputEnvelope
-    set?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    disconnect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    delete?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    update?: serviceUpdateWithWhereUniqueWithoutOrganizationInput | serviceUpdateWithWhereUniqueWithoutOrganizationInput[]
-    updateMany?: serviceUpdateManyWithWhereWithoutOrganizationInput | serviceUpdateManyWithWhereWithoutOrganizationInput[]
-    deleteMany?: serviceScalarWhereInput | serviceScalarWhereInput[]
   }
 
   export type userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput = {
@@ -5454,20 +5273,6 @@ export namespace Prisma {
     update?: userUpdateWithWhereUniqueWithoutMemberOfInput | userUpdateWithWhereUniqueWithoutMemberOfInput[]
     updateMany?: userUpdateManyWithWhereWithoutMemberOfInput | userUpdateManyWithWhereWithoutMemberOfInput[]
     deleteMany?: userScalarWhereInput | userScalarWhereInput[]
-  }
-
-  export type serviceUncheckedUpdateManyWithoutOrganizationNestedInput = {
-    create?: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput> | serviceCreateWithoutOrganizationInput[] | serviceUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: serviceCreateOrConnectWithoutOrganizationInput | serviceCreateOrConnectWithoutOrganizationInput[]
-    upsert?: serviceUpsertWithWhereUniqueWithoutOrganizationInput | serviceUpsertWithWhereUniqueWithoutOrganizationInput[]
-    createMany?: serviceCreateManyOrganizationInputEnvelope
-    set?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    disconnect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    delete?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    connect?: serviceWhereUniqueInput | serviceWhereUniqueInput[]
-    update?: serviceUpdateWithWhereUniqueWithoutOrganizationInput | serviceUpdateWithWhereUniqueWithoutOrganizationInput[]
-    updateMany?: serviceUpdateManyWithWhereWithoutOrganizationInput | serviceUpdateManyWithWhereWithoutOrganizationInput[]
-    deleteMany?: serviceScalarWhereInput | serviceScalarWhereInput[]
   }
 
   export type userUncheckedUpdateManyWithoutMemberOfNestedInput = {
@@ -5563,12 +5368,6 @@ export namespace Prisma {
     deleteMany?: organizationScalarWhereInput | organizationScalarWhereInput[]
   }
 
-  export type organizationCreateNestedOneWithoutServicesInput = {
-    create?: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
-    connectOrCreate?: organizationCreateOrConnectWithoutServicesInput
-    connect?: organizationWhereUniqueInput
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -5579,14 +5378,6 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type organizationUpdateOneRequiredWithoutServicesNestedInput = {
-    create?: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
-    connectOrCreate?: organizationCreateOrConnectWithoutServicesInput
-    upsert?: organizationUpsertWithoutServicesInput
-    connect?: organizationWhereUniqueInput
-    update?: XOR<XOR<organizationUpdateToOneWithWhereWithoutServicesInput, organizationUpdateWithoutServicesInput>, organizationUncheckedUpdateWithoutServicesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5750,40 +5541,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type serviceCreateWithoutOrganizationInput = {
-    id?: string
-    name: string
-    description: string
-    price: number
-    duration: number
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string | null
-    observations?: string | null
-  }
-
-  export type serviceUncheckedCreateWithoutOrganizationInput = {
-    id?: string
-    name: string
-    description: string
-    price: number
-    duration: number
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string | null
-    observations?: string | null
-  }
-
-  export type serviceCreateOrConnectWithoutOrganizationInput = {
-    where: serviceWhereUniqueInput
-    create: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput>
-  }
-
-  export type serviceCreateManyOrganizationInputEnvelope = {
-    data: serviceCreateManyOrganizationInput | serviceCreateManyOrganizationInput[]
-    skipDuplicates?: boolean
-  }
-
   export type userCreateWithoutOwnedOrganizationsInput = {
     id?: string
     name: string
@@ -5832,38 +5589,6 @@ export namespace Prisma {
   export type userCreateOrConnectWithoutMemberOfInput = {
     where: userWhereUniqueInput
     create: XOR<userCreateWithoutMemberOfInput, userUncheckedCreateWithoutMemberOfInput>
-  }
-
-  export type serviceUpsertWithWhereUniqueWithoutOrganizationInput = {
-    where: serviceWhereUniqueInput
-    update: XOR<serviceUpdateWithoutOrganizationInput, serviceUncheckedUpdateWithoutOrganizationInput>
-    create: XOR<serviceCreateWithoutOrganizationInput, serviceUncheckedCreateWithoutOrganizationInput>
-  }
-
-  export type serviceUpdateWithWhereUniqueWithoutOrganizationInput = {
-    where: serviceWhereUniqueInput
-    data: XOR<serviceUpdateWithoutOrganizationInput, serviceUncheckedUpdateWithoutOrganizationInput>
-  }
-
-  export type serviceUpdateManyWithWhereWithoutOrganizationInput = {
-    where: serviceScalarWhereInput
-    data: XOR<serviceUpdateManyMutationInput, serviceUncheckedUpdateManyWithoutOrganizationInput>
-  }
-
-  export type serviceScalarWhereInput = {
-    AND?: serviceScalarWhereInput | serviceScalarWhereInput[]
-    OR?: serviceScalarWhereInput[]
-    NOT?: serviceScalarWhereInput | serviceScalarWhereInput[]
-    id?: StringFilter<"service"> | string
-    name?: StringFilter<"service"> | string
-    description?: StringFilter<"service"> | string
-    price?: IntFilter<"service"> | number
-    duration?: IntFilter<"service"> | number
-    image?: StringNullableFilter<"service"> | string | null
-    createdAt?: DateTimeFilter<"service"> | Date | string
-    updatedAt?: DateTimeNullableFilter<"service"> | Date | string | null
-    observations?: StringNullableFilter<"service"> | string | null
-    organizationId?: StringFilter<"service"> | string
   }
 
   export type userUpsertWithoutOwnedOrganizationsInput = {
@@ -5930,7 +5655,6 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    services?: serviceCreateNestedManyWithoutOrganizationInput
     members?: userCreateNestedManyWithoutMemberOfInput
   }
 
@@ -5939,7 +5663,6 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    services?: serviceUncheckedCreateNestedManyWithoutOrganizationInput
     members?: userUncheckedCreateNestedManyWithoutMemberOfInput
   }
 
@@ -5958,7 +5681,6 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    services?: serviceCreateNestedManyWithoutOrganizationInput
     owner: userCreateNestedOneWithoutOwnedOrganizationsInput
   }
 
@@ -5968,7 +5690,6 @@ export namespace Prisma {
     ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    services?: serviceUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type organizationCreateOrConnectWithoutMembersInput = {
@@ -6019,106 +5740,6 @@ export namespace Prisma {
     data: XOR<organizationUpdateManyMutationInput, organizationUncheckedUpdateManyWithoutMembersInput>
   }
 
-  export type organizationCreateWithoutServicesInput = {
-    id?: string
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string | null
-    owner: userCreateNestedOneWithoutOwnedOrganizationsInput
-    members?: userCreateNestedManyWithoutMemberOfInput
-  }
-
-  export type organizationUncheckedCreateWithoutServicesInput = {
-    id?: string
-    name: string
-    ownerId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string | null
-    members?: userUncheckedCreateNestedManyWithoutMemberOfInput
-  }
-
-  export type organizationCreateOrConnectWithoutServicesInput = {
-    where: organizationWhereUniqueInput
-    create: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
-  }
-
-  export type organizationUpsertWithoutServicesInput = {
-    update: XOR<organizationUpdateWithoutServicesInput, organizationUncheckedUpdateWithoutServicesInput>
-    create: XOR<organizationCreateWithoutServicesInput, organizationUncheckedCreateWithoutServicesInput>
-    where?: organizationWhereInput
-  }
-
-  export type organizationUpdateToOneWithWhereWithoutServicesInput = {
-    where?: organizationWhereInput
-    data: XOR<organizationUpdateWithoutServicesInput, organizationUncheckedUpdateWithoutServicesInput>
-  }
-
-  export type organizationUpdateWithoutServicesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    owner?: userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput
-    members?: userUpdateManyWithoutMemberOfNestedInput
-  }
-
-  export type organizationUncheckedUpdateWithoutServicesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    ownerId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    members?: userUncheckedUpdateManyWithoutMemberOfNestedInput
-  }
-
-  export type serviceCreateManyOrganizationInput = {
-    id?: string
-    name: string
-    description: string
-    price: number
-    duration: number
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string | null
-    observations?: string | null
-  }
-
-  export type serviceUpdateWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    observations?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type serviceUncheckedUpdateWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    observations?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type serviceUncheckedUpdateManyWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: IntFieldUpdateOperationsInput | number
-    duration?: IntFieldUpdateOperationsInput | number
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    observations?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type userUpdateWithoutMemberOfInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -6160,7 +5781,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    services?: serviceUpdateManyWithoutOrganizationNestedInput
     members?: userUpdateManyWithoutMemberOfNestedInput
   }
 
@@ -6169,7 +5789,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    services?: serviceUncheckedUpdateManyWithoutOrganizationNestedInput
     members?: userUncheckedUpdateManyWithoutMemberOfNestedInput
   }
 
@@ -6185,7 +5804,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    services?: serviceUpdateManyWithoutOrganizationNestedInput
     owner?: userUpdateOneRequiredWithoutOwnedOrganizationsNestedInput
   }
 
@@ -6195,7 +5813,6 @@ export namespace Prisma {
     ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    services?: serviceUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type organizationUncheckedUpdateManyWithoutMembersInput = {

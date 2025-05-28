@@ -7,9 +7,10 @@ export interface ServiceProps {
   description: string;
   price: number;
   duration: number;
-  image: string;
-  createdAt: Date;
+  image?: string | null;
+  createdAt?: Date;
   updatedAt?: Date | null;
+  observations?: string | null;
 }
 
 export class Service extends Entity<ServiceProps> {
@@ -66,6 +67,15 @@ export class Service extends Entity<ServiceProps> {
     return this.props.updatedAt;
   }
 
+  get observations() {
+    return this.props.observations;
+  }
+
+  set observations(observations: string) {
+    this.props.observations = observations;
+    this.touch();
+  }
+
   private touch() {
     this.props.updatedAt = new Date();
   }
@@ -74,14 +84,8 @@ export class Service extends Entity<ServiceProps> {
     props: Optional<ServiceProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityID,
   ) {
-    const service = new Service(
-      {
-        ...props,
-        createdAt: props.createdAt ?? new Date(),
-        updatedAt: props.updatedAt ?? null,
-      },
-      id,
-    );
+    props.createdAt = new Date();
+    const service = new Service(props, id);
 
     return service;
   }

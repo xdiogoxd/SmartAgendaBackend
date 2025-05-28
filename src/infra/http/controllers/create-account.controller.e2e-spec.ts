@@ -1,25 +1,31 @@
 import { AppModule } from '@/app.module';
+import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
+import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
+import { UserFactory } from 'test/factories/make-user';
 
 describe('Create account (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
+  let userFactory: UserFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, DatabaseModule],
+      providers: [UserFactory, PrismaService, JwtEncrypter],
     }).compile();
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
+    userFactory = moduleRef.get(UserFactory);
 
     await app.init();
   });
 
-  test('[POST] /accounts', async () => {
+  test('[POST] /accounts - should be able to create an account', async () => {
     const response = await request(app.getHttpServer()).post('/accounts').send({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -35,5 +41,21 @@ describe('Create account (E2E)', () => {
     });
 
     expect(user).toBeTruthy();
+  });
+
+  test('[POST] /accounts - should not be able to create an account with same email twice', async () => {
+    const email = 'johndoe1@example.com';
+
+    await userFactory.makePrismaUser({
+      email,
+    });
+
+    const response = await request(app.getHttpServer()).post('/accounts').send({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    expect(response.statusCode).toBe(409);
   });
 });

@@ -1,0 +1,60 @@
+import { FakeHasher } from 'test/cryptography/fake-hasher';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
+import { AuthenticateAccountUseCase } from './authenticate-account';
+import { UserAlreadyExistsError } from '../errors/user-already-exists-error';
+import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
+import { makeUser } from 'test/factories/make-user';
+import { InvalidCredentialsError } from '../errors/invalid-credentials-error';
+
+let inMemoryUserRepository: InMemoryUserRepository;
+let fakeHasher: FakeHasher;
+let fakeEncrypter: FakeEncrypter;
+
+let sut: AuthenticateAccountUseCase;
+
+describe('Create User', () => {
+  beforeEach(() => {
+    inMemoryUserRepository = new InMemoryUserRepository();
+    fakeHasher = new FakeHasher();
+    fakeEncrypter = new FakeEncrypter();
+
+    sut = new AuthenticateAccountUseCase(
+      inMemoryUserRepository,
+      fakeHasher,
+      fakeEncrypter,
+    );
+  });
+
+  it('should be able to authenticate an user', async () => {
+    const user = makeUser({
+      email: 'johndoe@example.com',
+      password: await fakeHasher.hash('123456'),
+    });
+
+    inMemoryUserRepository.items.push(user);
+
+    const name = 'John Doe';
+
+    const result = await sut.execute({
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toEqual({
+      accessToken: expect.any(String),
+    });
+  });
+
+  it('should not be able to authenticate an user with wrong credentials', async () => {
+    const email = 'johndoe@example.com';
+
+    const result = await sut.execute({
+      email: 'johndoe@example.com',
+      password: '1234561',
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(InvalidCredentialsError);
+  });
+});

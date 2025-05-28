@@ -12,7 +12,6 @@ model organization {
   id        String    @id @default(uuid())
   name      String    @unique
   ownerId   String
-  services  service[]
   createdAt DateTime  @default(now())
   updatedAt DateTime?
 
@@ -37,18 +36,15 @@ model user {
 }
 
 model service {
-  id             String    @id @default(uuid())
-  name           String
-  description    String
-  price          Int
-  duration       Int
-  image          String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime?
-  observations   String?
-  organizationId String
-
-  organization organization @relation(fields: [organizationId], references: [id])
+  id           String    @id @default(uuid())
+  name         String
+  description  String
+  price        Int
+  duration     Int
+  image        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  observations String?
 
   @@map("services")
 }

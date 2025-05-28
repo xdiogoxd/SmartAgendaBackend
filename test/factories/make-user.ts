@@ -5,6 +5,7 @@ import { User, UserProps } from '@/domain/enterprise/entities/user';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaUserMapper } from '@/infra/database/prisma/mappers/prisma-user.mapper';
+import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 
 export function makeUser(
   override: Partial<UserProps> = {},
@@ -25,7 +26,10 @@ export function makeUser(
 
 @Injectable()
 export class UserFactory {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwtEncrypter: JwtEncrypter,
+  ) {}
 
   async makePrismaUser(data: Partial<UserProps> = {}): Promise<User> {
     const user = makeUser(data);
@@ -35,5 +39,13 @@ export class UserFactory {
     });
 
     return user;
+  }
+
+  async makeToken(userId: string): Promise<string> {
+    const token = await this.jwtEncrypter.encrypt({
+      sub: userId,
+    });
+
+    return token;
   }
 }

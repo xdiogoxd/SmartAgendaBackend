@@ -1,0 +1,50 @@
+import { CreateServiceUseCase } from './create-service';
+import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
+
+let inMemoryServiceRepository: InMemoryServiceRepository;
+let sut: CreateServiceUseCase;
+
+describe('Create Service', () => {
+  beforeEach(() => {
+    inMemoryServiceRepository = new InMemoryServiceRepository();
+    sut = new CreateServiceUseCase(inMemoryServiceRepository);
+  });
+
+  it('should be able to create a new service', async () => {
+    const name = 'Haircut';
+
+    const result = await sut.execute({
+      name,
+      description: 'Basic haircut service',
+      duration: 30,
+      price: 25.0,
+    });
+
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toEqual({
+      service: expect.objectContaining({ name }),
+    });
+  });
+
+  it('should not be able to create a service with a name already used', async () => {
+    const name = 'Haircut';
+
+    await sut.execute({
+      name,
+      description: 'Basic haircut service',
+      duration: 30,
+      price: 25.0,
+    });
+
+    const result = await sut.execute({
+      name,
+      description: 'Another haircut service',
+      duration: 45,
+      price: 35.0,
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(DuplicatedServiceNameError);
+  });
+});

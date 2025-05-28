@@ -146,8 +146,7 @@ exports.Prisma.ServiceScalarFieldEnum = {
   image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  observations: 'observations',
-  organizationId: 'organizationId'
+  observations: 'observations'
 };
 
 exports.Prisma.SortOrder = {

@@ -32,7 +32,7 @@ describe('Create User', () => {
   });
 
   it('should not be able to create an account with an email already used', async () => {
-    const email = 'johndoe@example.com';
+    const email = 'johndoe1@example.com';
 
     await sut.execute({
       name: 'John Doe',

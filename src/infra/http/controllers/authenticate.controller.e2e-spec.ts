@@ -1,5 +1,7 @@
 import { AppModule } from '@/app.module';
+import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 import { DatabaseModule } from '@/infra/database/database.module';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
 
 import { Test } from '@nestjs/testing';
@@ -14,7 +16,7 @@ describe('Authenticate account (E2E)', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [UserFactory],
+      providers: [UserFactory, PrismaService, JwtEncrypter],
     }).compile();
 
     app = moduleRef.createNestApplication();
