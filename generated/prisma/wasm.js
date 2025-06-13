@@ -128,6 +128,16 @@ exports.Prisma.OrganizationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ScheduleScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  weekDay: 'weekDay',
+  startHour: 'startHour',
+  endHour: 'endHour',
+  organizationId: 'organizationId'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -167,6 +177,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   organization: 'organization',
+  schedule: 'schedule',
   user: 'user',
   service: 'service'
 };

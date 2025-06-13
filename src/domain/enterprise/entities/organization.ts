@@ -2,6 +2,7 @@ import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
 import { User } from './user';
+import { Schedule } from './schedule';
 
 export interface OrganizationProps {
   name: string;
@@ -9,6 +10,7 @@ export interface OrganizationProps {
   members?: User[];
   createdAt: Date;
   updatedAt?: Date | null;
+  schedule?: Schedule[];
 }
 export class Organization extends Entity<OrganizationProps> {
   get name() {
@@ -38,6 +40,14 @@ export class Organization extends Entity<OrganizationProps> {
 
   get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  get schedules() {
+    return this.props.schedule;
+  }
+  set schedule(newSchedule: Schedule) {
+    this.props.schedule.push(newSchedule);
+    this.touch();
   }
 
   private touch() {

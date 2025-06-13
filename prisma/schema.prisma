@@ -11,14 +11,29 @@ datasource db {
 model organization {
   id        String    @id @default(uuid())
   name      String    @unique
-  ownerId   String
   createdAt DateTime  @default(now())
   updatedAt DateTime?
+  ownerId   String
 
-  owner   user   @relation("OrganizationOwner", fields: [ownerId], references: [id])
-  members user[] @relation("OrganizationMembers")
+  owner    user       @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  members  user[]     @relation("OrganizationMembers")
+  schedule schedule[]
 
   @@map("organizations")
+}
+
+model schedule {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  weekDay   String
+  startHour Int
+  endHour   Int
+
+  organizationId String
+  organization   organization @relation(fields: [organizationId], references: [id])
+
+  @@map("schedules")
 }
 
 model user {

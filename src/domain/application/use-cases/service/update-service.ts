@@ -43,7 +43,7 @@ export class UpdateServiceUseCase {
     const service = await this.servicesRepository.findById(id);
 
     if (!service) {
-      return left(new ResourceNotFoundError());
+      return left(new ResourceNotFoundError(id));
     }
 
     const serviceWithSameName = await this.servicesRepository.findByName(name);

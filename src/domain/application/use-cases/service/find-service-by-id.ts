@@ -32,7 +32,7 @@ export class FindServiceByIdUseCase {
     const service = await this.servicesRepository.findById(id);
 
     if (!service) {
-      return left(new ResourceNotFoundError());
+      return left(new ResourceNotFoundError(id));
     }
 
     return right({

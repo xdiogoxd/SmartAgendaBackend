@@ -7,7 +7,7 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
-import { PrismaService } from 'src/infra/database/prisma/prisma.service';
+
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { CreateServiceUseCase } from '@/domain/application/use-cases/service/create-service';
@@ -25,10 +25,7 @@ type CreateServiceBodySchema = z.infer<typeof createServiceBodySchema>;
 
 @Controller('/services')
 export class CreateServiceController {
-  constructor(
-    private prisma: PrismaService,
-    private createService: CreateServiceUseCase,
-  ) {}
+  constructor(private createService: CreateServiceUseCase) {}
 
   @Post()
   @HttpCode(201)

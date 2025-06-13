@@ -20,10 +20,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["vitest/globals"],
-    "extends": "./tsconfig.json",
-    "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
-    "include": ["./src"]
+    "types": ["vitest/globals"]
   },
   "watchOptions": {
     "watchFile": "fixedPollingInterval",

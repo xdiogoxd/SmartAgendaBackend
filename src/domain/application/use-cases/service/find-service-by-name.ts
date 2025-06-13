@@ -32,7 +32,7 @@ export class FindServiceByNameUseCase {
     const service = await this.servicesRepository.findByName(name);
 
     if (!service) {
-      return left(new ResourceNotFoundError());
+      return left(new ResourceNotFoundError(name));
     }
 
     return right({
