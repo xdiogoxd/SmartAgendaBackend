@@ -36,3 +36,18 @@ Authorization: Bearer {{authToken}}
     "duration": 30,
     "observations": "Não cortar o cabelo ruim"
 }
+
+###
+
+# @name update_service
+PATCH  {{baseUrl}}/services/14f5fa39-ffeb-4394-96ae-df1e58d040dd
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Corte de cabelo",
+    "description": "Corte de cabelo masculino",
+    "price": 30,
+    "duration": 30,
+    "observations": "Não cortar o cabelo ruim"
+}

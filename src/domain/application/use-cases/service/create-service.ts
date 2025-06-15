@@ -6,6 +6,7 @@ import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-er
 import { Service } from '@/domain/enterprise/entities/service';
 
 export interface CreateServiceUseCaseRequest {
+  organizationId: string;
   name: string;
   description: string;
   price: number;
@@ -17,6 +18,7 @@ type CreateServiceUseCaseResponse = Either<
   DuplicatedServiceNameError,
   {
     service: {
+      organizationId: string;
       id: string;
       name: string;
       description: string;
@@ -32,6 +34,7 @@ export class CreateServiceUseCase {
   constructor(private servicesRepository: ServiceRepository) {}
 
   async execute({
+    organizationId,
     name,
     description,
     price,
@@ -45,6 +48,7 @@ export class CreateServiceUseCase {
     }
 
     const service = Service.create({
+      organizationId,
       name,
       description,
       price,
@@ -56,6 +60,7 @@ export class CreateServiceUseCase {
 
     return right({
       service: {
+        organizationId: service.organizationId,
         id: service.id.toString(),
         name: service.name,
         description: service.description,

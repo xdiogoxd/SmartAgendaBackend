@@ -1,11 +1,12 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Service } from '@/domain/enterprise/entities/service';
-import { Prisma, service as PrismaService } from 'generated/prisma';
+import { Prisma, service as PrismaService } from '@prisma/client';
 
 export class PrismaServiceMapper {
   static toDomain(raw: PrismaService): Service {
     return Service.create(
       {
+        organizationId: raw.organizationId,
         name: raw.name,
         description: raw.description,
         duration: raw.duration,
@@ -20,6 +21,7 @@ export class PrismaServiceMapper {
 
   static toPrisma(service: Service): Prisma.serviceUncheckedCreateInput {
     return {
+      organizationId: service.organizationId,
       id: service.id.toString(),
       name: service.name,
       description: service.description,

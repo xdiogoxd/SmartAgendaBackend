@@ -17,7 +17,7 @@ describe('Create service (E2E)', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [UserFactory, PrismaService, JwtEncrypter, ServiceFactory],
+      providers: [UserFactory, JwtEncrypter, PrismaService, ServiceFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();

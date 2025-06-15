@@ -3,6 +3,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
 
 export interface ServiceProps {
+  organizationId: string;
   name: string;
   description: string;
   price: number;
@@ -14,6 +15,10 @@ export interface ServiceProps {
 }
 
 export class Service extends Entity<ServiceProps> {
+  get organizationId() {
+    return this.props.organizationId;
+  }
+
   get name() {
     return this.props.name;
   }

@@ -42,6 +42,7 @@ export class UpdateServiceUseCase {
   }: UpdateServiceUseCaseRequest): Promise<UpdateServiceUseCaseResponse> {
     const service = await this.servicesRepository.findById(id);
 
+    console.log(service);
     if (!service) {
       return left(new ResourceNotFoundError(id));
     }

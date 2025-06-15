@@ -1,9 +1,9 @@
 import {
   BadRequestException,
   Body,
-  ConflictException,
   Controller,
   HttpCode,
+  NotFoundException,
   Param,
   Patch,
   UsePipes,
@@ -11,8 +11,11 @@ import {
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { UpdateServiceUseCase } from '@/domain/application/use-cases/service/update-service';
-import { DuplicatedServiceNameError } from '@/domain/application/use-cases/errors/duplicated-service-name-error';
+import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
 
+// todo: add a filter per organization and check autorization to
+//  perform actions based on user role inside of the organization
 const updateServiceBodySchema = z.object({
   name: z.string(),
   description: z.string(),
@@ -21,20 +24,25 @@ const updateServiceBodySchema = z.object({
   observations: z.string().optional(),
 });
 
+const bodyValidationPipe = new ZodValidationPipe(updateServiceBodySchema);
+
 type UpdateServiceBodySchema = z.infer<typeof updateServiceBodySchema>;
 
-@Controller('/services')
+@Controller('/services/id/:serviceId')
 export class UpdateServiceController {
   constructor(private updateService: UpdateServiceUseCase) {}
 
-  @Patch(':id')
+  @Patch()
   @HttpCode(200)
-  @UsePipes(new ZodValidationPipe(updateServiceBodySchema))
-  async handle(@Body() body: UpdateServiceBodySchema, @Param('id') id: string) {
+  async handle(
+    @Body(bodyValidationPipe) body: UpdateServiceBodySchema,
+    @CurrentUser() userId: string,
+    @Param('serviceId') serviceId: string,
+  ) {
     const { name, description, price, duration, observations } = body;
 
     const result = await this.updateService.execute({
-      id,
+      id: serviceId,
       name,
       description,
       price,
@@ -44,8 +52,8 @@ export class UpdateServiceController {
 
     if (result.isLeft()) {
       switch (result.value.constructor) {
-        case DuplicatedServiceNameError:
-          throw new ConflictException(result.value.message);
+        case ResourceNotFoundError:
+          throw new NotFoundException(result.value.message);
         default:
           throw new BadRequestException(result.value.message);
       }
