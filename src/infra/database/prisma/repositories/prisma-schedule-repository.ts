@@ -35,6 +35,9 @@ export class PrismaScheduleRepository implements ScheduleRepository {
       where: {
         organizationId,
       },
+      orderBy: {
+        weekDay: 'asc',
+      },
     });
 
     return schedules.map(PrismaScheduleMapper.toDomain);

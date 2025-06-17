@@ -16,7 +16,7 @@ export function makeOrganization(
   const organization = Organization.create(
     {
       name: faker.commerce.productName(),
-      ownerId: faker.string.uuid(),
+      ownerId: new UniqueEntityID(),
       createdAt: faker.date.recent(),
       ...override,
     },
@@ -31,7 +31,9 @@ export class OrganizationFactory {
 
   async makePrismaOrganization(
     data: Partial<OrganizationProps> = {},
+    ownerId: UniqueEntityID,
   ): Promise<Organization> {
+    data.ownerId = ownerId;
     const organization = makeOrganization(data);
 
     await this.prisma.organization.create({

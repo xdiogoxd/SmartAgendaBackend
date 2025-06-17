@@ -9,7 +9,7 @@ export class PrismaOrganizationMapper {
         name: raw.name,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
-        ownerId: raw.ownerId,
+        ownerId: new UniqueEntityID(raw.ownerId),
       },
       new UniqueEntityID(raw.id),
     );
@@ -21,7 +21,7 @@ export class PrismaOrganizationMapper {
     return {
       id: organization.id.toString(),
       name: organization.name,
-      ownerId: organization.ownerId,
+      ownerId: organization.ownerId.toString(),
       createdAt: organization.createdAt,
       updatedAt: organization.updatedAt,
     };

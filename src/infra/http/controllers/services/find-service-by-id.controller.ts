@@ -10,6 +10,7 @@ import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { z } from 'zod';
 import { FindServiceByIdUseCase } from '@/domain/application/use-cases/service/find-service-by-id';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -29,9 +30,10 @@ export class FindServiceByIdController {
   @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: FindServiceByIdParamsSchema,
-    @CurrentUser() userId: string,
+    @CurrentUser() user: UserPayload,
     @Param('serviceId') serviceId: string,
   ) {
+    const userId = user.sub;
     const result = await this.findServiceById.execute({
       id: serviceId,
     });

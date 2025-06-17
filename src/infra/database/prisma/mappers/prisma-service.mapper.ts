@@ -6,7 +6,7 @@ export class PrismaServiceMapper {
   static toDomain(raw: PrismaService): Service {
     return Service.create(
       {
-        organizationId: raw.organizationId,
+        organizationId: new UniqueEntityID(raw.organizationId),
         name: raw.name,
         description: raw.description,
         duration: raw.duration,
@@ -21,7 +21,7 @@ export class PrismaServiceMapper {
 
   static toPrisma(service: Service): Prisma.serviceUncheckedCreateInput {
     return {
-      organizationId: service.organizationId,
+      organizationId: service.organizationId.toString(),
       id: service.id.toString(),
       name: service.name,
       description: service.description,

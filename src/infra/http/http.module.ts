@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthenticateController } from './controllers/sessions/authenticate.controller';
 import { CreateAccountController } from './controllers/accounts/create-account.controller';
 import { DatabaseModule } from '../database/database.module';
@@ -9,19 +9,47 @@ import { CreateServiceController } from './controllers/services/create-service.c
 import { CreateServiceUseCase } from '@/domain/application/use-cases/service/create-service';
 import { UpdateServiceController } from './controllers/services/update-service.controller';
 import { UpdateServiceUseCase } from '@/domain/application/use-cases/service/update-service';
+import { FindServiceByIdController } from './controllers/services/find-service-by-id.controller';
+import { FindServiceByNameController } from './controllers/services/find-servive-by-name.controller';
+import { CreateOrganizationController } from './controllers/organizations/create-organization.controller';
+import { UpdateOrganizationController } from './controllers/organizations/update-organization.controller';
+import { CreateScheduleController } from './controllers/schedules/create-schedule.controller';
+import { CreateOrganizationUseCase } from '@/domain/application/use-cases/organization/create-organization';
+import { UpdateOrganizationUseCase } from '@/domain/application/use-cases/organization/update-organization';
+import { CreateScheduleUseCase } from '@/domain/application/use-cases/schedule/create-schedule';
+import { ListAllServicesController } from './controllers/services/list-all-services.controller';
+import { FindServiceByIdUseCase } from '@/domain/application/use-cases/service/find-service-by-id';
+import { FindServiceByNameUseCase } from '@/domain/application/use-cases/service/find-service-by-name';
+import { ListAllServicesByOrganizationUseCase } from '@/domain/application/use-cases/service/list-all-services-by-organization';
+import { UpdateScheduleController } from './controllers/schedules/update-schedule.controller';
+import { UpdateScheduleUseCase } from '@/domain/application/use-cases/schedule/update-schedule';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [forwardRef(() => DatabaseModule), CryptographyModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
+    CreateOrganizationController,
+    UpdateOrganizationController,
+    CreateScheduleController,
+    UpdateScheduleController,
     CreateServiceController,
+    FindServiceByIdController,
+    FindServiceByNameController,
+    ListAllServicesController,
     UpdateServiceController,
   ],
   providers: [
     CreateAccountUseCase,
     AuthenticateAccountUseCase,
+    CreateOrganizationUseCase,
+    UpdateOrganizationUseCase,
+    CreateScheduleUseCase,
+    UpdateScheduleUseCase,
     CreateServiceUseCase,
+    FindServiceByIdUseCase,
+    FindServiceByNameUseCase,
+    ListAllServicesByOrganizationUseCase,
     UpdateServiceUseCase,
   ],
 })

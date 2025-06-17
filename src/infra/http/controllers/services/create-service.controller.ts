@@ -12,6 +12,9 @@ import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { CreateServiceUseCase } from '@/domain/application/use-cases/service/create-service';
 import { DuplicatedServiceNameError } from '@/domain/application/use-cases/errors/duplicated-service-name-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -34,9 +37,14 @@ export class CreateServiceController {
 
   @Post()
   @HttpCode(201)
-  async handle(@Body(bodyValidationPipe) body: CreateServiceBodySchema) {
+  async handle(
+    @Body(bodyValidationPipe) body: CreateServiceBodySchema,
+    @CurrentUser() user: UserPayload,
+  ) {
     const { organizationId, name, description, price, duration, observations } =
       body;
+
+    const userId = user.sub;
 
     const result = await this.createService.execute({
       organizationId,
@@ -55,5 +63,9 @@ export class CreateServiceController {
           throw new BadRequestException(result.value.message);
       }
     }
+
+    return {
+      service: result.value.service,
+    };
   }
 }

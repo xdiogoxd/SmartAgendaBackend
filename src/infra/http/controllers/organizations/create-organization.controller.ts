@@ -12,6 +12,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { CreateOrganizationUseCase } from '@/domain/application/use-cases/organization/create-organization';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { OrganizationAlreadyExistsError } from '@/domain/application/use-cases/errors/organization-already-exist-error';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -33,12 +34,12 @@ export class CreateOrganizationController {
   @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe) body: CreateOrganizationBodySchema,
-    @CurrentUser() userId: string,
+    @CurrentUser() user: UserPayload,
   ) {
     const { name } = body;
 
     const result = await this.createOrganization.execute({
-      ownerId: userId,
+      ownerId: user.sub,
       name,
     });
 

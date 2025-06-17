@@ -2,12 +2,6 @@ import { Service } from '@/domain/enterprise/entities/service';
 import { ServiceRepository } from '@/domain/repositories/service-repository';
 
 export class InMemoryServiceRepository implements ServiceRepository {
-  public items: Service[] = [];
-  async create(service: Service) {
-    this.items.push(service);
-    return service;
-  }
-
   async findById(id: string): Promise<Service | null> {
     const service = this.items.find((item) => item.id.toString() === id);
 
@@ -25,6 +19,17 @@ export class InMemoryServiceRepository implements ServiceRepository {
       return null;
     }
 
+    return service;
+  }
+  async findAllByOrganization(organizationId: string): Promise<Service[]> {
+    const services = this.items.filter(
+      (item) => item.organizationId.toString() === organizationId,
+    );
+    return services;
+  }
+  public items: Service[] = [];
+  async create(service: Service) {
+    this.items.push(service);
     return service;
   }
 

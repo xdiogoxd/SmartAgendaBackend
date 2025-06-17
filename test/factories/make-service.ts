@@ -12,6 +12,7 @@ export function makeService(
 ) {
   const service = Service.create(
     {
+      organizationId: new UniqueEntityID(),
       name: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
       duration: faker.number.int({ min: 15, max: 180 }),
@@ -28,8 +29,11 @@ export function makeService(
 export class ServiceFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaService(data: Partial<ServiceProps> = {}): Promise<Service> {
-    console.log(data);
+  async makePrismaService(
+    data: Partial<ServiceProps> = {},
+    organizationId: UniqueEntityID,
+  ): Promise<Service> {
+    data.organizationId = organizationId;
     const service = makeService(data);
 
     await this.prisma.service.create({

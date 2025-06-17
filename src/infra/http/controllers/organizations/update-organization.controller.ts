@@ -5,7 +5,7 @@ import {
   Controller,
   HttpCode,
   Param,
-  Post,
+  Patch,
 } from '@nestjs/common';
 
 import { z } from 'zod';
@@ -13,6 +13,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { UpdateOrganizationUseCase } from '@/domain/application/use-cases/organization/update-organization';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { OrganizationAlreadyExistsError } from '@/domain/application/use-cases/errors/organization-already-exist-error';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -30,14 +31,16 @@ type UpdateOrganizationBodySchema = z.infer<
 export class UpdateOrganizationController {
   constructor(private updateOrganization: UpdateOrganizationUseCase) {}
 
-  @Post()
-  @HttpCode(201)
+  @Patch()
+  @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: UpdateOrganizationBodySchema,
-    @CurrentUser() userId: string,
+    @CurrentUser() user: UserPayload,
     @Param('organizationId') organizationId: string,
   ) {
     const { name } = body;
+
+    const userId = user.sub;
 
     const result = await this.updateOrganization.execute({
       id: organizationId,

@@ -1,4 +1,4 @@
-import { UpdateSchedulesUseCase } from './update-schedule';
+import { UpdateScheduleUseCase } from './update-schedule';
 import { MissingDayOnScheduleError } from '../errors/missing-day-on-schedule-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
@@ -10,13 +10,13 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 let inMemoryScheduleRepository: InMemoryScheduleRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let sut: UpdateSchedulesUseCase;
+let sut: UpdateScheduleUseCase;
 
 describe('Update Schedules', () => {
   beforeEach(() => {
     inMemoryScheduleRepository = new InMemoryScheduleRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    sut = new UpdateSchedulesUseCase(
+    sut = new UpdateScheduleUseCase(
       inMemoryOrganizationRepository,
       inMemoryScheduleRepository,
     );
@@ -34,43 +34,42 @@ describe('Update Schedules', () => {
     }
 
     const result = await sut.execute({
-      scheduleId: schedule[0].id.toString(),
       organizationId: organization.id.toString(),
-      day: [
+      days: [
         {
-          weekDay: 'monday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 0,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'tuesday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 1,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'wednesday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 2,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'thursday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 3,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'friday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 4,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'saturday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 5,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'sunday',
-          startHour: '0',
-          endHour: '0',
+          weekDay: 6,
+          startHour: 9,
+          endHour: 17,
         },
       ],
     });
@@ -79,7 +78,7 @@ describe('Update Schedules', () => {
     if (result.isRight()) {
       expect(result.value.schedule.schedules[0]).toEqual(
         expect.objectContaining({
-          weekDay: 'monday',
+          weekDay: 0,
           startHour: 9,
           endHour: 17,
         }),
@@ -94,13 +93,12 @@ describe('Update Schedules', () => {
     }
 
     const result = await sut.execute({
-      scheduleId: schedule[0].id.toString(),
       organizationId: 'non-existing-id',
-      day: [
+      days: [
         {
-          weekDay: 'monday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 0,
+          startHour: 9,
+          endHour: 17,
         },
       ],
     });
@@ -114,39 +112,17 @@ describe('Update Schedules', () => {
     await inMemoryOrganizationRepository.create(organization);
 
     const result = await sut.execute({
-      scheduleId: 'non-existing-id',
       organizationId: organization.id.toString(),
-      day: [
+      days: [
         {
-          weekDay: 'monday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 0,
+          startHour: 9,
+          endHour: 17,
         },
       ],
     });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(ResourceNotFoundError);
-  });
-
-  it('should not be able to update schedules with missing day information', async () => {
-    const organization = makeOrganization();
-    await inMemoryOrganizationRepository.create(organization);
-
-    const schedule = makeSchedule();
-    for (let i = 0; i < schedule.length; i++) {
-      await inMemoryScheduleRepository.create(schedule[i]);
-    }
-
-    const result = await sut.execute({
-      scheduleId: schedule[0].id.toString(),
-      organizationId: organization.id.toString(),
-      day: [{ weekDay: 'monday', startHour: '9', endHour: '17' }],
-    });
-
-    console.log(result.value);
-
-    expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(MissingDayOnScheduleError);
   });
 });

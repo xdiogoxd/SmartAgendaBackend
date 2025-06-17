@@ -9,7 +9,7 @@ import { OrganizationFactory } from 'test/factories/make-organization';
 import { ServiceFactory } from 'test/factories/make-service';
 import { UserFactory } from 'test/factories/make-user';
 
-describe('Create service (E2E)', () => {
+describe('Find service by name (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let userFactory: UserFactory;
@@ -21,9 +21,9 @@ describe('Create service (E2E)', () => {
       imports: [AppModule, DatabaseModule],
       providers: [
         UserFactory,
+        OrganizationFactory,
         JwtEncrypter,
         PrismaService,
-        OrganizationFactory,
         ServiceFactory,
       ],
     }).compile();
@@ -37,9 +37,8 @@ describe('Create service (E2E)', () => {
     await app.init();
   });
 
-  test('[POST] /services - should be able to create a service', async () => {
+  test('[GET] /services/name/:name - should be able to get a service by name', async () => {
     const user = await userFactory.makePrismaUser();
-
     const accessToken = await userFactory.makeToken(user.id.toString());
 
     const organization = await organizationFactory.makePrismaOrganization(
@@ -47,62 +46,45 @@ describe('Create service (E2E)', () => {
       user.id,
     );
 
-    const organizationId = organization.id.toString();
-
-    const response = await request(app.getHttpServer())
-      .post('/services')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-        name: 'Hair cut',
-        description: 'Hair cut description',
-        price: 50,
-        duration: 30,
-        observations: 'Hair cut observations',
-      });
-
-    expect(response.statusCode).toBe(201);
-
-    const service = await prisma.service.findFirst({
-      where: {
-        name: 'Hair cut',
-      },
-    });
-
-    expect(service).toBeTruthy();
-  });
-
-  test('[POST] /services - should not be able to create a service with a name already used', async () => {
-    const user = await userFactory.makePrismaUser();
-
-    const accessToken = await userFactory.makeToken(user.id.toString());
-
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
-
-    await serviceFactory.makePrismaService(
+    const service = await serviceFactory.makePrismaService(
       {
-        name: 'New Hair cut',
+        name: 'Hair cut',
       },
       organization.id,
     );
 
-    const organizationId = organization.id.toString();
-
     const response = await request(app.getHttpServer())
-      .post('/services')
+      .get(`/services/name/${service.name}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
-        name: 'New Hair cut',
-        description: 'Hair cut description',
-        price: 50,
-        duration: 30,
-        observations: 'Hair cut observations',
+        organizationId: organization.id.toString(),
       });
 
-    expect(response.statusCode).toBe(409);
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      service: expect.objectContaining({
+        id: service.id.toString(),
+        name: 'Hair cut',
+      }),
+    });
+  });
+
+  test('[GET] /services/name/:name - should not be able to get a non-existing service', async () => {
+    const user = await userFactory.makePrismaUser();
+    const accessToken = await userFactory.makeToken(user.id.toString());
+
+    const organization = await organizationFactory.makePrismaOrganization(
+      {},
+      user.id,
+    );
+
+    const response = await request(app.getHttpServer())
+      .get('/services/name/non-existing-service')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        organizationId: organization.id.toString(),
+      });
+
+    expect(response.statusCode).toBe(400);
   });
 });

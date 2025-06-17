@@ -1,6 +1,10 @@
 @baseUrl = http://localhost:3333
 @authToken = {{authenticate.response.body.access_token}}
 
+@organizationId = {{create_organization.response.body.organization._id.value}}
+
+@serviceId = {{create_service.response.body.service._id.value}}
+
 # @name create_account
 POST {{baseUrl}}/accounts
 Content-Type: application/json
@@ -24,30 +28,102 @@ Content-Type: application/json
 
 ###
 
+# @name create_organization
+POST {{baseUrl}}/organizations
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Barbearia do Zezé"
+}
+
+###
+
+# @name update_organization
+PATCH {{baseUrl}}/organizations/{{organizationId}}
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Barbearia do Ze"
+}
+
+###
+
+# @name create_schedule
+POST {{baseUrl}}/schedules
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "organizationId": "{{organizationId}}",
+  "days": [
+    {
+      "weekDay": 0,
+      "startHour": 480,
+      "endHour": 1080
+    },
+    {
+      "weekDay": 1,
+      "startHour": 480,
+      "endHour": 1080
+    },
+    {
+      "weekDay": 2,
+      "startHour": 480,
+      "endHour": 1080
+    },
+    {
+      "weekDay": 3,
+      "startHour": 480,
+      "endHour": 1080
+    },
+    {
+      "weekDay": 4,
+      "startHour": 480,
+      "endHour": 1080
+    },
+    {
+      "weekDay": 5,
+      "startHour": 480,
+      "endHour": 1080
+    },
+    {
+      "weekDay": 6,
+      "startHour": 0,
+      "endHour": 0
+    }
+  ]
+}
+
+###
+
 # @name create_service
 POST {{baseUrl}}/services
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "Corte de cabelo",
-    "description": "Corte de cabelo masculino",
-    "price": 30,
-    "duration": 30,
-    "observations": "Não cortar o cabelo ruim"
+  "organizationId": "{{organizationId}}",
+  "name": "Corte de cabelo3",
+  "description": "Corte de cabelo masculino",
+  "price": 30,
+  "duration": 30,
+  "observations": "Não cortar o cabelo ruim"
 }
 
 ###
 
 # @name update_service
-PATCH  {{baseUrl}}/services/14f5fa39-ffeb-4394-96ae-df1e58d040dd
+PATCH  {{baseUrl}}/services/id/{{serviceId}}
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "Corte de cabelo",
-    "description": "Corte de cabelo masculino",
-    "price": 30,
-    "duration": 30,
-    "observations": "Não cortar o cabelo ruim"
+  "organizationId": "{{organizationId}}",
+  "name": "Corte de cabelo",
+  "description": "Corte de cabelo masculino",
+  "price": 30,
+  "duration": 30,
+  "observations": "Não cortar o cabelo ruim"
 }

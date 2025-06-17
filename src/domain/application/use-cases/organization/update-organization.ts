@@ -7,6 +7,8 @@ import { UserRepository } from '@/domain/repositories/user-repository';
 
 import { UserNotFoundError } from '../errors/user-not-found-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { OrganizationAlreadyExistsError } from '../errors/organization-already-exist-error';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 export interface UpdateOrganizationUseCaseRequest {
   id: string;
@@ -45,8 +47,17 @@ export class UpdateOrganizationUseCase {
       return left(new OrganizationNotFoundError(id));
     }
 
+    if (organization.name !== name) {
+      const organizationWithSameName =
+        await this.organizationRepository.findByName(name);
+
+      if (organizationWithSameName) {
+        return left(new OrganizationAlreadyExistsError(name));
+      }
+    }
+
     organization.name = name;
-    organization.ownerId = ownerId;
+    organization.ownerId = new UniqueEntityID(ownerId);
 
     await this.organizationRepository.save(id, organization);
 

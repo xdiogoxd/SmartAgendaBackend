@@ -7,22 +7,31 @@ import { AppModule } from '@/app.module';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { UserFactory } from 'test/factories/make-user';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
+import { OrganizationFactory } from 'test/factories/make-organization';
 
 describe('Update Service (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let userFactory: UserFactory;
+  let organizationFactory: OrganizationFactory;
   let serviceFactory: ServiceFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [UserFactory, JwtEncrypter, PrismaService, ServiceFactory],
+      providers: [
+        UserFactory,
+        JwtEncrypter,
+        PrismaService,
+        OrganizationFactory,
+        ServiceFactory,
+      ],
     }).compile();
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
     userFactory = moduleRef.get(UserFactory);
+    organizationFactory = moduleRef.get(OrganizationFactory);
     serviceFactory = moduleRef.get(ServiceFactory);
 
     await app.init();
@@ -33,7 +42,12 @@ describe('Update Service (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const service = await serviceFactory.makePrismaService();
+    const organization = await organizationFactory.makePrismaOrganization(
+      {},
+      user.id,
+    );
+
+    const service = await serviceFactory.makePrismaService({}, organization.id);
 
     const response = await request(app.getHttpServer())
       .patch(`/services/id/${service.id}`)
@@ -81,7 +95,13 @@ describe('Update Service (E2E)', () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
-    const service = await serviceFactory.makePrismaService();
+
+    const organization = await organizationFactory.makePrismaOrganization(
+      {},
+      user.id,
+    );
+
+    const service = await serviceFactory.makePrismaService({}, organization.id);
 
     const response = await request(app.getHttpServer())
       .patch(`/services/id/${service.id}`)

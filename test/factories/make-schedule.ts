@@ -5,33 +5,18 @@ import { Schedule, ScheduleProps } from '@/domain/enterprise/entities/schedule';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaScheduleMapper } from '@/infra/database/prisma/mappers/prisma-schedule.mapper';
-import { selectWeekDay } from '@/domain/utils/select-week-day';
 
 export function makeSchedule(
   override: Partial<ScheduleProps> = {},
   id?: UniqueEntityID,
 ): Schedule[] {
-  const days = [
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-    'sunday',
-  ];
-
   const schedules = [];
 
-  const organizationId = id ?? new UniqueEntityID();
-
-  for (let i = 0; i < 7; i++) {
-    const weekDay = selectWeekDay(days[i]);
-
+  for (let i = 0; i <= 6; i++) {
     const schedule = Schedule.create(
       {
-        organizationId,
-        weekDay,
+        organizationId: new UniqueEntityID(),
+        weekDay: i,
         startHour: faker.number.int({ min: 480, max: 600 }),
         endHour: faker.number.int({ min: 1080, max: 1200 }),
         createdAt: faker.date.recent(),
@@ -50,7 +35,9 @@ export class ScheduleFactory {
 
   async makePrismaSchedule(
     data: Partial<ScheduleProps> = {},
+    organizationId: UniqueEntityID,
   ): Promise<Schedule[]> {
+    data.organizationId = organizationId;
     const schedules = makeSchedule(data);
 
     await this.prisma.schedule.createMany({

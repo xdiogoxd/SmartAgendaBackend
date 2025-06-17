@@ -13,6 +13,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { UpdateServiceUseCase } from '@/domain/application/use-cases/service/update-service';
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -36,9 +37,10 @@ export class UpdateServiceController {
   @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: UpdateServiceBodySchema,
-    @CurrentUser() userId: string,
+    @CurrentUser() user: UserPayload,
     @Param('serviceId') serviceId: string,
   ) {
+    const userId = user.sub;
     const { name, description, price, duration, observations } = body;
 
     const result = await this.updateService.execute({

@@ -1,4 +1,4 @@
-import { CreateSchedulesUseCase } from './create-schedules';
+import { CreateScheduleUseCase } from './create-schedule';
 import { MissingDayOnScheduleError } from '../errors/missing-day-on-schedule-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { InMemoryScheduleRepository } from 'test/repositories/in-memory-schedule-repository';
@@ -7,13 +7,13 @@ import { makeOrganization } from 'test/factories/make-organization';
 
 let inMemoryScheduleRepository: InMemoryScheduleRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
-let sut: CreateSchedulesUseCase;
+let sut: CreateScheduleUseCase;
 
 describe('Create Schedules', () => {
   beforeEach(() => {
     inMemoryScheduleRepository = new InMemoryScheduleRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
-    sut = new CreateSchedulesUseCase(
+    sut = new CreateScheduleUseCase(
       inMemoryOrganizationRepository,
       inMemoryScheduleRepository,
     );
@@ -25,51 +25,51 @@ describe('Create Schedules', () => {
 
     const result = await sut.execute({
       organizationId: organization.id.toString(),
-      day: [
+      days: [
         {
-          weekDay: 'monday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 0,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'tuesday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 1,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'wednesday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 2,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'thursday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 3,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'friday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 4,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'saturday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 5,
+          startHour: 9,
+          endHour: 17,
         },
         {
-          weekDay: 'sunday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 6,
+          startHour: 9,
+          endHour: 17,
         },
       ],
     });
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.schedules).toHaveLength(2);
+      expect(result.value.schedules).toHaveLength(7);
       expect(result.value.schedules[0]).toEqual(
         expect.objectContaining({
-          weekDay: 'monday',
+          weekDay: 0,
           startHour: 9,
           endHour: 17,
         }),
@@ -79,11 +79,11 @@ describe('Create Schedules', () => {
   it('should not be able to create schedules for non-existing organization', async () => {
     const result = await sut.execute({
       organizationId: 'non-existing-id',
-      day: [
+      days: [
         {
-          weekDay: 'monday',
-          startHour: '9',
-          endHour: '17',
+          weekDay: 6,
+          startHour: 9,
+          endHour: 17,
         },
       ],
     });
@@ -98,7 +98,7 @@ describe('Create Schedules', () => {
 
     const result = await sut.execute({
       organizationId: organization.id.toString(),
-      day: [undefined as any],
+      days: [undefined as any],
     });
 
     expect(result.isLeft()).toBe(true);

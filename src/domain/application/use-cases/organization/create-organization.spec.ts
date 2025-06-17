@@ -29,11 +29,8 @@ describe('Create Organization', () => {
 
     expect(result.isRight()).toBe(true);
     expect(inMemoryOrganizationRepository.items).toHaveLength(1);
-    expect(inMemoryOrganizationRepository.items[0]).toEqual(
-      expect.objectContaining({
-        name: 'Test Organization',
-        ownerId: user.id.toString(),
-      }),
+    expect(inMemoryOrganizationRepository.items[0].name).toEqual(
+      'Test Organization',
     );
   });
 

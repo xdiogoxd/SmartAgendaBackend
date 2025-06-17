@@ -6,15 +6,13 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { OrganizationFactory } from 'test/factories/make-organization';
-import { ServiceFactory } from 'test/factories/make-service';
 import { UserFactory } from 'test/factories/make-user';
 
-describe('Create service (E2E)', () => {
+describe('Update organization (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let userFactory: UserFactory;
   let organizationFactory: OrganizationFactory;
-  let serviceFactory: ServiceFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -22,24 +20,21 @@ describe('Create service (E2E)', () => {
       providers: [
         UserFactory,
         JwtEncrypter,
-        PrismaService,
         OrganizationFactory,
-        ServiceFactory,
+        PrismaService,
       ],
     }).compile();
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
-    userFactory = moduleRef.get(UserFactory);
     organizationFactory = moduleRef.get(OrganizationFactory);
-    serviceFactory = moduleRef.get(ServiceFactory);
+    userFactory = moduleRef.get(UserFactory);
 
     await app.init();
   });
 
-  test('[POST] /services - should be able to create a service', async () => {
+  test('[PATCH] /organizations/:organizationId - should be able to update an organization', async () => {
     const user = await userFactory.makePrismaUser();
-
     const accessToken = await userFactory.makeToken(user.id.toString());
 
     const organization = await organizationFactory.makePrismaOrganization(
@@ -47,60 +42,54 @@ describe('Create service (E2E)', () => {
       user.id,
     );
 
-    const organizationId = organization.id.toString();
-
     const response = await request(app.getHttpServer())
-      .post('/services')
+      .patch(`/organizations/${organization.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
-        name: 'Hair cut',
-        description: 'Hair cut description',
-        price: 50,
-        duration: 30,
-        observations: 'Hair cut observations',
+        name: 'New Organization Name',
       });
 
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 
-    const service = await prisma.service.findFirst({
+    const updatedOrganization = await prisma.organization.findFirst({
       where: {
-        name: 'Hair cut',
+        id: organization.id.toString(),
       },
     });
 
-    expect(service).toBeTruthy();
+    expect(updatedOrganization).toBeTruthy();
+    expect(updatedOrganization.name).toBe('New Organization Name');
   });
 
-  test('[POST] /services - should not be able to create a service with a name already used', async () => {
-    const user = await userFactory.makePrismaUser();
+  test('[PATCH] /organizations/:organizationId - should not be able to update an organization without authentication', async () => {
+    const response = await request(app.getHttpServer())
+      .patch('/organizations/any-id')
+      .send({
+        name: 'New Organization Name',
+      });
 
+    expect(response.statusCode).toBe(401);
+  });
+
+  test('[PATCH] /organizations/:organizationId - should not be able to update an organization with duplicated name', async () => {
+    const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
+    await organizationFactory.makePrismaOrganization(
+      {
+        name: 'Existing Organization',
+      },
       user.id,
     );
 
-    await serviceFactory.makePrismaService(
-      {
-        name: 'New Hair cut',
-      },
-      organization.id,
-    );
-
-    const organizationId = organization.id.toString();
+    const organizationToUpdate =
+      await organizationFactory.makePrismaOrganization({}, user.id);
 
     const response = await request(app.getHttpServer())
-      .post('/services')
+      .patch(`/organizations/${organizationToUpdate.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
-        name: 'New Hair cut',
-        description: 'Hair cut description',
-        price: 50,
-        duration: 30,
-        observations: 'Hair cut observations',
+        name: 'Existing Organization',
       });
 
     expect(response.statusCode).toBe(409);

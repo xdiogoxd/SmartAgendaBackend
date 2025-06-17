@@ -7,21 +7,16 @@ import { Schedule } from '@/domain/enterprise/entities/schedule';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { MissingDayOnScheduleError } from '../errors/missing-day-on-schedule-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { selectWeekDay } from '@/domain/utils/select-week-day';
+import { InvalidHourRangeError } from '../errors/invalid-hour-range-error';
+import { DuplicateWeekdayError } from '../errors/duplicated-week-day-error';
+import { ScheduleAlreadyExistsError } from '../errors/schedule-already-exists-error';
 
 export interface CreateSchedulesUseCaseRequest {
   organizationId: string;
-  day: {
-    weekDay:
-      | 'monday'
-      | 'tuesday'
-      | 'wednesday'
-      | 'thursday'
-      | 'friday'
-      | 'saturday'
-      | 'sunday';
-    startHour: string;
-    endHour: string;
+  days: {
+    weekDay: number;
+    startHour: number;
+    endHour: number;
   }[];
 }
 
@@ -33,7 +28,7 @@ type CreateSchedulesUseCaseResponse = Either<
 >;
 
 @Injectable()
-export class CreateSchedulesUseCase {
+export class CreateScheduleUseCase {
   constructor(
     private organizationRepository: OrganizationRepository,
     private scheduleRepository: ScheduleRepository,
@@ -41,7 +36,7 @@ export class CreateSchedulesUseCase {
 
   async execute({
     organizationId,
-    day,
+    days,
   }: CreateSchedulesUseCaseRequest): Promise<CreateSchedulesUseCaseResponse> {
     const organitazion =
       await this.organizationRepository.findById(organizationId);
@@ -50,20 +45,40 @@ export class CreateSchedulesUseCase {
       return left(new OrganizationNotFoundError(organizationId));
     }
 
+    const existentSchedules =
+      await this.scheduleRepository.findAllByOrganizationId(organizationId);
+
+    if (existentSchedules.length > 0) {
+      return left(new ScheduleAlreadyExistsError());
+    }
+
     let schedules: Schedule[] = [];
 
-    for (let i = 0; i < day.length; i++) {
-      if (!day[i]) {
+    for (let i = 0; i < days.length; i++) {
+      if (!days[i]) {
         return left(new MissingDayOnScheduleError());
       }
 
-      const weekDay = selectWeekDay(day[i].weekDay);
+      const weekDay = days[i].weekDay;
+
+      //validates if the weekday isn't duplicated, each entry should have a unique weekday
+      const isWeekdayDuplicated = days.some(
+        (day, index) => index !== i && day.weekDay === weekDay,
+      );
+
+      if (isWeekdayDuplicated) {
+        return left(new DuplicateWeekdayError());
+      }
+
+      if (days[i].startHour > days[i].endHour) {
+        return left(new InvalidHourRangeError());
+      }
 
       const schedule = Schedule.create({
         organizationId: new UniqueEntityID(organizationId),
         weekDay,
-        startHour: parseInt(day[i].startHour),
-        endHour: parseInt(day[i].endHour),
+        startHour: days[i].startHour,
+        endHour: days[i].endHour,
       });
 
       await this.scheduleRepository.create(schedule);

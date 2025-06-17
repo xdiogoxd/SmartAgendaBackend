@@ -4,9 +4,11 @@ import { Optional } from '@/core/types/optional';
 import { User } from './user';
 import { Schedule } from './schedule';
 
+//todo: add description
+
 export interface OrganizationProps {
   name: string;
-  ownerId: string;
+  ownerId: UniqueEntityID;
   members?: User[];
   createdAt: Date;
   updatedAt?: Date | null;
@@ -26,7 +28,7 @@ export class Organization extends Entity<OrganizationProps> {
     return this.props.ownerId;
   }
 
-  set ownerId(ownerId: string) {
+  set ownerId(ownerId: UniqueEntityID) {
     this.props.ownerId = ownerId;
     this.touch();
   }

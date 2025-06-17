@@ -18,9 +18,13 @@ export class InMemoryScheduleRepository implements ScheduleRepository {
     return schedule;
   }
   async findAllByOrganizationId(organizationId: string): Promise<Schedule[]> {
-    return this.items.filter(
+    const schedules = this.items.filter(
       (item) => item.organizationId.toString() === organizationId,
     );
+
+    schedules.sort((a, b) => a.weekDay - b.weekDay);
+
+    return schedules;
   }
 
   async save(id: string, data: Schedule): Promise<Schedule> {

@@ -3,7 +3,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
 
 export interface ServiceProps {
-  organizationId: string;
+  organizationId: UniqueEntityID;
   name: string;
   description: string;
   price: number;

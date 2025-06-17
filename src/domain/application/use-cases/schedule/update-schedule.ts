@@ -7,22 +7,15 @@ import { Injectable } from '@nestjs/common';
 import { MissingDayOnScheduleError } from '../errors/missing-day-on-schedule-error';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { selectWeekDay } from '@/domain/utils/select-week-day';
+
+//In this use case the user will provide only the schedules that he intends to update, and only those will be updated
 
 export interface UpdateSchedulesUseCaseRequest {
-  scheduleId: string;
   organizationId: string;
-  day: {
-    weekDay:
-      | 'monday'
-      | 'tuesday'
-      | 'wednesday'
-      | 'thursday'
-      | 'friday'
-      | 'saturday'
-      | 'sunday';
-    startHour: string;
-    endHour: string;
+  days: {
+    weekDay: number;
+    startHour: number;
+    endHour: number;
   }[];
 }
 
@@ -36,53 +29,46 @@ type UpdateSchedulesUseCaseResponse = Either<
 >;
 
 @Injectable()
-export class UpdateSchedulesUseCase {
+export class UpdateScheduleUseCase {
   constructor(
     private organizationRepository: OrganizationRepository,
     private scheduleRepository: ScheduleRepository,
   ) {}
 
   async execute({
-    scheduleId,
     organizationId,
-    day,
+    days,
   }: UpdateSchedulesUseCaseRequest): Promise<UpdateSchedulesUseCaseResponse> {
-    const organitazion =
+    const organization =
       await this.organizationRepository.findById(organizationId);
 
-    if (!organitazion) {
+    if (!organization) {
       return left(new OrganizationNotFoundError(organizationId));
     }
 
-    let schedules: Schedule[] = [];
+    let schedules =
+      await this.scheduleRepository.findAllByOrganizationId(organizationId);
 
-    //Checks if the schedule has all the days of the week
+    for (let i = 0; i < days.length; i++) {
+      const weekDay = days[i].weekDay;
 
-    for (let i = 0; i < 6; i++) {
-      if (!day[i]) {
-        return left(new MissingDayOnScheduleError());
-      }
-
-      const oldSchedule = await this.scheduleRepository.findById(scheduleId);
-
-      if (!oldSchedule) {
-        return left(new ResourceNotFoundError(scheduleId));
-      }
-
-      const weekDay = selectWeekDay(day[i].weekDay);
-
-      const schedule = Schedule.create(
-        {
-          organizationId: new UniqueEntityID(organizationId),
-          weekDay,
-          startHour: parseInt(day[i].startHour),
-          endHour: parseInt(day[i].endHour),
-        },
-        new UniqueEntityID(scheduleId),
+      const scheduleToUpdate = schedules.find(
+        (schedule) => schedule.weekDay === weekDay,
       );
 
-      await this.scheduleRepository.save(scheduleId, schedule);
-      schedules.push(schedule);
+      if (!scheduleToUpdate) {
+        return left(
+          new ResourceNotFoundError(`Schedule for weekDay ${weekDay}`),
+        );
+      }
+
+      const scheduleId = scheduleToUpdate.id.toString();
+
+      // Update the schedule properties
+      scheduleToUpdate.startHour = days[i].startHour;
+      scheduleToUpdate.endHour = days[i].endHour;
+
+      await this.scheduleRepository.save(scheduleId, scheduleToUpdate);
     }
 
     return right({

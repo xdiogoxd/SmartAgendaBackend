@@ -1,11 +1,11 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { WeekDays } from '@/core/types/weekDays';
 
 //Start and end hour set in minutes
+//Weekdays set in number format, monday = 0, tuesday = 1, etc.
 export interface ScheduleProps {
   organizationId: UniqueEntityID;
-  weekDay: WeekDays;
+  weekDay: number;
   startHour: number;
   endHour: number;
   createdAt?: Date;

@@ -4,6 +4,7 @@ import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
 import { Service } from '@/domain/enterprise/entities/service';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 export interface CreateServiceUseCaseRequest {
   organizationId: string;
@@ -17,15 +18,7 @@ export interface CreateServiceUseCaseRequest {
 type CreateServiceUseCaseResponse = Either<
   DuplicatedServiceNameError,
   {
-    service: {
-      organizationId: string;
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      duration: number;
-      observations?: string;
-    };
+    service: Service;
   }
 >;
 
@@ -48,7 +41,7 @@ export class CreateServiceUseCase {
     }
 
     const service = Service.create({
-      organizationId,
+      organizationId: new UniqueEntityID(organizationId),
       name,
       description,
       price,
@@ -59,14 +52,7 @@ export class CreateServiceUseCase {
     await this.servicesRepository.create(service);
 
     return right({
-      service: {
-        organizationId: service.organizationId,
-        id: service.id.toString(),
-        name: service.name,
-        description: service.description,
-        price: service.price,
-        duration: service.duration,
-      },
+      service: service,
     });
   }
 }
