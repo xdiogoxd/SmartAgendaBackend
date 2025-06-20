@@ -3,17 +3,29 @@ import { UpdateServiceUseCase } from './update-service';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { makeService } from 'test/factories/make-service';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { makeOrganization } from 'test/factories/make-organization';
 
 let inMemoryServiceRepository: InMemoryServiceRepository;
+let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let sut: UpdateServiceUseCase;
 
 describe('Update Service', () => {
   beforeEach(() => {
     inMemoryServiceRepository = new InMemoryServiceRepository();
-    sut = new UpdateServiceUseCase(inMemoryServiceRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
+    sut = new UpdateServiceUseCase(
+      inMemoryServiceRepository,
+      inMemoryOrganizationRepository,
+    );
   });
 
   it('should be able to update a service', async () => {
+    const organization = makeOrganization();
+    await inMemoryOrganizationRepository.create(organization);
+
+    const organizationId = organization.id.toString();
+
     const newService = makeService(
       {
         name: 'Old Service Name',
@@ -27,6 +39,7 @@ describe('Update Service', () => {
     await inMemoryServiceRepository.create(newService);
 
     const result = await sut.execute({
+      organizationId,
       id: 'service-1',
       name: 'New Service Name',
       description: 'New Description',
@@ -45,7 +58,13 @@ describe('Update Service', () => {
   });
 
   it('should not be able to update a non existing service', async () => {
+    const organization = makeOrganization();
+    await inMemoryOrganizationRepository.create(organization);
+
+    const organizationId = organization.id.toString();
+
     const result = await sut.execute({
+      organizationId,
       id: 'non-existing-id',
       name: 'New Service Name',
       description: 'New Description',

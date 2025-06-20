@@ -6,6 +6,15 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaScheduleMapper } from '@/infra/database/prisma/mappers/prisma-schedule.mapper';
 
+interface MakeScheduleProps {
+  organizationId: UniqueEntityID;
+  weekDay?: number;
+  startHour?: number;
+  endHour?: number;
+  createdAt?: Date;
+  updatedAt?: Date | null;
+}
+
 export function makeSchedule(
   override: Partial<ScheduleProps> = {},
   id?: UniqueEntityID,
@@ -33,11 +42,7 @@ export function makeSchedule(
 export class ScheduleFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaSchedule(
-    data: Partial<ScheduleProps> = {},
-    organizationId: UniqueEntityID,
-  ): Promise<Schedule[]> {
-    data.organizationId = organizationId;
+  async makePrismaSchedule(data: MakeScheduleProps): Promise<Schedule[]> {
     const schedules = makeSchedule(data);
 
     await this.prisma.schedule.createMany({

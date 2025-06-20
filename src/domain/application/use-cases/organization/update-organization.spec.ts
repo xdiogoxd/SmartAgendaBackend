@@ -2,7 +2,6 @@ import { UpdateOrganizationUseCase } from './update-organization';
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
 import { makeOrganization } from 'test/factories/make-organization';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { makeUser } from 'test/factories/make-user';
 
@@ -22,7 +21,7 @@ describe('Update Organization', () => {
 
   it('should be able to update an organization', async () => {
     const user = await inMemoryUserRepository.create(makeUser());
-    const organization = makeOrganization({ ownerId: user.id.toString() });
+    const organization = makeOrganization({ ownerId: user.id });
     await inMemoryOrganizationRepository.create(organization);
 
     const result = await sut.execute({

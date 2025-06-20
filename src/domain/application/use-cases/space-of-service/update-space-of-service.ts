@@ -1,0 +1,79 @@
+import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+import { Either, left, right } from '@/core/types/either';
+import { Injectable } from '@nestjs/common';
+
+import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { DuplicatedSpaceOfServiceNameError } from '../errors/duplicated-space-of-service-name-error';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+
+export interface UpdateSpaceOfServiceUseCaseRequest {
+  id: UniqueEntityID;
+  organizationId: UniqueEntityID;
+  name: string;
+  description: string;
+}
+
+type UpdateSpaceOfServiceUseCaseResponse = Either<
+  | DuplicatedSpaceOfServiceNameError
+  | OrganizationNotFoundError
+  | ResourceNotFoundError,
+  {
+    spaceOfService: SpaceOfService;
+  }
+>;
+
+@Injectable()
+export class UpdateSpaceOfServiceUseCase {
+  constructor(
+    private spaceOfServiceRepository: SpaceOfServiceRepository,
+    private organizationRepository: OrganizationRepository,
+  ) {}
+
+  async execute({
+    id,
+    organizationId,
+    name,
+    description,
+  }: UpdateSpaceOfServiceUseCaseRequest): Promise<UpdateSpaceOfServiceUseCaseResponse> {
+    const organization = await this.organizationRepository.findById(
+      organizationId.toString(),
+    );
+
+    if (!organization) {
+      return left(new OrganizationNotFoundError(organizationId.toString()));
+    }
+
+    const spaceOfService = await this.spaceOfServiceRepository.findById(
+      id.toString(),
+    );
+
+    if (!spaceOfService) {
+      return left(new ResourceNotFoundError(id.toString()));
+    }
+
+    const spaceWithSameName =
+      await this.spaceOfServiceRepository.findByName(name);
+
+    if (
+      spaceWithSameName &&
+      spaceWithSameName.id.toString() !== id.toString()
+    ) {
+      return left(new DuplicatedSpaceOfServiceNameError(name));
+    }
+
+    spaceOfService.name = name;
+    spaceOfService.description = description;
+
+    await this.spaceOfServiceRepository.save(
+      spaceOfService.id.toString(),
+      spaceOfService,
+    );
+
+    return right({
+      spaceOfService,
+    });
+  }
+}

@@ -42,17 +42,22 @@ describe('Update Service (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
-    const service = await serviceFactory.makePrismaService({}, organization.id);
+    const organizationId = organization.id.toString();
+
+    const service = await serviceFactory.makePrismaService({
+      name: 'Hair cut',
+      organizationId: organization.id,
+    });
 
     const response = await request(app.getHttpServer())
       .patch(`/services/id/${service.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
+        organizationId,
         name: 'Updated Service',
         description: 'Updated Description',
         price: 150,
@@ -77,10 +82,17 @@ describe('Update Service (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
+
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
       .patch('/services/id/invalid-id')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
+        organizationId,
         name: 'Updated Service',
         description: 'Updated Description',
         price: 150,
@@ -96,17 +108,22 @@ describe('Update Service (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
-    const service = await serviceFactory.makePrismaService({}, organization.id);
+    const organizationId = organization.id.toString();
+
+    const service = await serviceFactory.makePrismaService({
+      name: 'Hair cut',
+      organizationId: organization.id,
+    });
 
     const response = await request(app.getHttpServer())
       .patch(`/services/id/${service.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
+        organizationId,
         name: '',
         description: '',
         price: 'invalid-price',

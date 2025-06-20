@@ -1,7 +1,6 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 import { AuthenticateAccountUseCase } from './authenticate-account';
-import { UserAlreadyExistsError } from '../errors/user-already-exists-error';
 import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
 import { makeUser } from 'test/factories/make-user';
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error';
@@ -33,8 +32,6 @@ describe('Create User', () => {
 
     inMemoryUserRepository.items.push(user);
 
-    const name = 'John Doe';
-
     const result = await sut.execute({
       email: 'johndoe@example.com',
       password: '123456',
@@ -47,8 +44,6 @@ describe('Create User', () => {
   });
 
   it('should not be able to authenticate an user with wrong credentials', async () => {
-    const email = 'johndoe@example.com';
-
     const result = await sut.execute({
       email: 'johndoe@example.com',
       password: '1234561',

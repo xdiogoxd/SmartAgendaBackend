@@ -5,7 +5,6 @@ import {
   Controller,
   HttpCode,
   Post,
-  UsePipes,
 } from '@nestjs/common';
 
 import { z } from 'zod';
@@ -47,7 +46,7 @@ export class CreateServiceController {
     const userId = user.sub;
 
     const result = await this.createService.execute({
-      organizationId,
+      organizationId: new UniqueEntityID(organizationId),
       name,
       description,
       price,

@@ -14,10 +14,11 @@ model organization {
   updatedAt DateTime?
   ownerId   String
 
-  owner    user       @relation("OrganizationOwner", fields: [ownerId], references: [id])
-  members  user[]     @relation("OrganizationMembers")
-  schedule schedule[]
-  service  service[]
+  owner          user             @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  members        user[]           @relation("OrganizationMembers")
+  schedule       schedule[]
+  service        service[]
+  spaceOfService spaceOfService[]
 
   @@map("organizations")
 }
@@ -65,4 +66,16 @@ model service {
   organization organization @relation(fields: [organizationId], references: [id])
 
   @@map("services")
+}
+
+model spaceOfService {
+  id             String       @id @default(uuid())
+  name           String
+  description    String
+  organizationId String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?
+  organization   organization @relation(fields: [organizationId], references: [id])
+
+  @@map("spaces_of_service")
 }

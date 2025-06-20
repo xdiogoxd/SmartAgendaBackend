@@ -1,7 +1,6 @@
 import { ServiceRepository } from '@/domain/repositories/service-repository';
 import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
-import { Service } from '@/domain/enterprise/entities/service';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 export interface FindServiceByIdUseCaseRequest {

@@ -4,7 +4,6 @@ import {
   Controller,
   Get,
   HttpCode,
-  Param,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';

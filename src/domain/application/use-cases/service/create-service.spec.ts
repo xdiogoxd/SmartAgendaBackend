@@ -1,20 +1,32 @@
 import { CreateServiceUseCase } from './create-service';
 import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
 import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { makeOrganization } from 'test/factories/make-organization';
 
 let inMemoryServiceRepository: InMemoryServiceRepository;
+let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let sut: CreateServiceUseCase;
 
 describe('Create Service', () => {
   beforeEach(() => {
     inMemoryServiceRepository = new InMemoryServiceRepository();
-    sut = new CreateServiceUseCase(inMemoryServiceRepository);
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
+    sut = new CreateServiceUseCase(
+      inMemoryServiceRepository,
+      inMemoryOrganizationRepository,
+    );
   });
 
   it('should be able to create a new service', async () => {
     const name = 'Haircut';
 
+    const organization = makeOrganization();
+
+    await inMemoryOrganizationRepository.create(organization);
+
     const result = await sut.execute({
+      organizationId: organization.id,
       name,
       description: 'Basic haircut service',
       duration: 30,
@@ -30,7 +42,12 @@ describe('Create Service', () => {
   it('should not be able to create a service with a name already used', async () => {
     const name = 'Haircut';
 
+    const organization = makeOrganization();
+
+    await inMemoryOrganizationRepository.create(organization);
+
     await sut.execute({
+      organizationId: organization.id,
       name,
       description: 'Basic haircut service',
       duration: 30,
@@ -38,6 +55,7 @@ describe('Create Service', () => {
     });
 
     const result = await sut.execute({
+      organizationId: organization.id,
       name,
       description: 'Another haircut service',
       duration: 45,

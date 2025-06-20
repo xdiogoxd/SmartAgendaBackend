@@ -1,4 +1,3 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Either, left, right } from '@/core/types/either';
 import { Schedule } from '@/domain/enterprise/entities/schedule';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
@@ -46,7 +45,7 @@ export class UpdateScheduleUseCase {
       return left(new OrganizationNotFoundError(organizationId));
     }
 
-    let schedules =
+    const schedules =
       await this.scheduleRepository.findAllByOrganizationId(organizationId);
 
     for (let i = 0; i < days.length; i++) {

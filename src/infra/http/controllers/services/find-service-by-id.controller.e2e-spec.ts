@@ -1,7 +1,6 @@
 import { AppModule } from '@/app.module';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 import { DatabaseModule } from '@/infra/database/database.module';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
@@ -11,7 +10,6 @@ import { UserFactory } from 'test/factories/make-user';
 
 describe('Find service by id (E2E)', () => {
   let app: INestApplication;
-  let prisma: PrismaService;
   let userFactory: UserFactory;
   let organizationFactory: OrganizationFactory;
   let serviceFactory: ServiceFactory;
@@ -23,13 +21,11 @@ describe('Find service by id (E2E)', () => {
         UserFactory,
         OrganizationFactory,
         JwtEncrypter,
-        PrismaService,
         ServiceFactory,
       ],
     }).compile();
 
     app = moduleRef.createNestApplication();
-    prisma = moduleRef.get(PrismaService);
     userFactory = moduleRef.get(UserFactory);
     organizationFactory = moduleRef.get(OrganizationFactory);
     serviceFactory = moduleRef.get(ServiceFactory);
@@ -41,17 +37,14 @@ describe('Find service by id (E2E)', () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
-    const service = await serviceFactory.makePrismaService(
-      {
-        name: 'Hair cut',
-      },
-      organization.id,
-    );
+    const service = await serviceFactory.makePrismaService({
+      name: 'Hair cut',
+      organizationId: organization.id,
+    });
 
     const response = await request(app.getHttpServer())
       .get(`/services/id/${service.id}`)
@@ -73,18 +66,19 @@ describe('Find service by id (E2E)', () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
+
+    const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
       .get('/services/id/non-existing-id')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId: null,
+        organizationId,
       });
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(404);
   });
 });

@@ -23,6 +23,16 @@ import { FindServiceByNameUseCase } from '@/domain/application/use-cases/service
 import { ListAllServicesByOrganizationUseCase } from '@/domain/application/use-cases/service/list-all-services-by-organization';
 import { UpdateScheduleController } from './controllers/schedules/update-schedule.controller';
 import { UpdateScheduleUseCase } from '@/domain/application/use-cases/schedule/update-schedule';
+import { CreateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/create-space-of-service';
+import { FindSpaceOfServiceByNameUseCase } from '@/domain/application/use-cases/space-of-service/find-space-of-service-name';
+import { ListAllSpacesOfServiceByOrganizationUseCase } from '@/domain/application/use-cases/space-of-service/list-all-spaces-of-service-by-organization';
+import { UpdateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/update-space-of-service';
+import { CreateSpaceOfServiceController } from './controllers/space-of-services/create-space-of-service.controller';
+import { FindSpaceOfServiceByNameController } from './controllers/space-of-services/find-space-of-service-by-name.controller';
+import { ListAllSpacesOfServiceByOrganizationController } from './controllers/space-of-services/list-all-spaces-of-service-by-organization.controller';
+import { UpdateSpaceOfServiceController } from './controllers/space-of-services/update-space-of-service.controller';
+import { FindSpaceOfServiceByIdController } from './controllers/space-of-services/find-space-of-service-by-id.controller';
+import { FindSpaceOfServiceByIdUseCase } from '@/domain/application/use-cases/space-of-service/find-space-of-service-by-id';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule), CryptographyModule],
@@ -38,6 +48,11 @@ import { UpdateScheduleUseCase } from '@/domain/application/use-cases/schedule/u
     FindServiceByNameController,
     ListAllServicesController,
     UpdateServiceController,
+    CreateSpaceOfServiceController,
+    FindSpaceOfServiceByNameController,
+    FindSpaceOfServiceByIdController,
+    ListAllSpacesOfServiceByOrganizationController,
+    UpdateSpaceOfServiceController,
   ],
   providers: [
     CreateAccountUseCase,
@@ -51,6 +66,11 @@ import { UpdateScheduleUseCase } from '@/domain/application/use-cases/schedule/u
     FindServiceByNameUseCase,
     ListAllServicesByOrganizationUseCase,
     UpdateServiceUseCase,
+    CreateSpaceOfServiceUseCase,
+    FindSpaceOfServiceByNameUseCase,
+    FindSpaceOfServiceByIdUseCase,
+    ListAllSpacesOfServiceByOrganizationUseCase,
+    UpdateSpaceOfServiceUseCase,
   ],
 })
 export class HttpModule {}

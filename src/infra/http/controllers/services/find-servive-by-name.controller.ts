@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
@@ -11,6 +12,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { z } from 'zod';
 import { FindServiceByNameUseCase } from '@/domain/application/use-cases/service/find-service-by-name';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -41,7 +43,12 @@ export class FindServiceByNameController {
     });
 
     if (result.isLeft()) {
-      throw new BadRequestException(result.value.message);
+      switch (result.value.constructor) {
+        case ResourceNotFoundError:
+          throw new NotFoundException(result.value.message);
+        default:
+          throw new BadRequestException(result.value.message);
+      }
     }
 
     return { service: result.value.service };

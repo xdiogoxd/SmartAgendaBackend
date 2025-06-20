@@ -42,10 +42,9 @@ describe('Create service (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     const organizationId = organization.id.toString();
 
@@ -77,17 +76,14 @@ describe('Create service (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
-    await serviceFactory.makePrismaService(
-      {
-        name: 'New Hair cut',
-      },
-      organization.id,
-    );
+    await serviceFactory.makePrismaService({
+      name: 'New Hair cut',
+      organizationId: organization.id,
+    });
 
     const organizationId = organization.id.toString();
 

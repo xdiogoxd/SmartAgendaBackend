@@ -37,10 +37,9 @@ describe('Update organization (E2E)', () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     const response = await request(app.getHttpServer())
       .patch(`/organizations/${organization.id}`)
@@ -75,15 +74,16 @@ describe('Update organization (E2E)', () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    await organizationFactory.makePrismaOrganization(
-      {
-        name: 'Existing Organization',
-      },
-      user.id,
-    );
+    await organizationFactory.makePrismaOrganization({
+      name: 'Existing Organization',
+      ownerId: user.id,
+    });
 
     const organizationToUpdate =
-      await organizationFactory.makePrismaOrganization({}, user.id);
+      await organizationFactory.makePrismaOrganization({
+        name: 'Different Organization',
+        ownerId: user.id,
+      });
 
     const response = await request(app.getHttpServer())
       .patch(`/organizations/${organizationToUpdate.id}`)

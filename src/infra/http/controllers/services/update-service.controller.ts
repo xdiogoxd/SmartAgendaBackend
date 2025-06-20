@@ -6,7 +6,6 @@ import {
   NotFoundException,
   Param,
   Patch,
-  UsePipes,
 } from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
@@ -18,6 +17,7 @@ import { UserPayload } from '@/infra/auth/jwt.strategy';
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const updateServiceBodySchema = z.object({
+  organizationId: z.string(),
   name: z.string(),
   description: z.string(),
   price: z.number(),
@@ -40,10 +40,11 @@ export class UpdateServiceController {
     @CurrentUser() user: UserPayload,
     @Param('serviceId') serviceId: string,
   ) {
-    const userId = user.sub;
-    const { name, description, price, duration, observations } = body;
+    const { organizationId, name, description, price, duration, observations } =
+      body;
 
     const result = await this.updateService.execute({
+      organizationId,
       id: serviceId,
       name,
       description,

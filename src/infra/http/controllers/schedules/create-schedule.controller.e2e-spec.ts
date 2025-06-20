@@ -38,10 +38,9 @@ describe('Create schedule (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     const response = await request(app.getHttpServer())
       .post('/schedules')
@@ -103,10 +102,9 @@ describe('Create schedule (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     const response = await request(app.getHttpServer())
       .post('/schedules')
@@ -130,10 +128,9 @@ describe('Create schedule (E2E)', () => {
 
     const accessToken = await userFactory.makeToken(user.id.toString());
 
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     const response = await request(app.getHttpServer())
       .post('/schedules')

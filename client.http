@@ -121,7 +121,7 @@ Authorization: Bearer {{authToken}}
 
 {
   "organizationId": "{{organizationId}}",
-  "name": "Corte de cabelo",
+  "name": "Corte de cabelo5",
   "description": "Corte de cabelo masculino",
   "price": 30,
   "duration": 30,

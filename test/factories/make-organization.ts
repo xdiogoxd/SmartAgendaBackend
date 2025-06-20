@@ -9,6 +9,12 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaOrganizationMapper } from '@/infra/database/prisma/mappers/prisma-organization.mapper';
 
+interface MakeOrganizationProps {
+  ownerId: UniqueEntityID;
+  name?: string;
+  createdAt?: Date;
+}
+
 export function makeOrganization(
   override: Partial<OrganizationProps> = {},
   id?: UniqueEntityID,
@@ -30,10 +36,8 @@ export class OrganizationFactory {
   constructor(private prisma: PrismaService) {}
 
   async makePrismaOrganization(
-    data: Partial<OrganizationProps> = {},
-    ownerId: UniqueEntityID,
+    data: MakeOrganizationProps,
   ): Promise<Organization> {
-    data.ownerId = ownerId;
     const organization = makeOrganization(data);
 
     await this.prisma.organization.create({

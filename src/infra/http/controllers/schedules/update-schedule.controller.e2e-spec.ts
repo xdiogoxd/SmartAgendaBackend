@@ -41,13 +41,14 @@ describe('Update schedule (E2E)', () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     // Create initial schedule
-    await scheduleFactory.makePrismaSchedule({}, organization.id);
+    await scheduleFactory.makePrismaSchedule({
+      organizationId: organization.id,
+    });
 
     const organizationId = organization.id.toString();
 
@@ -82,10 +83,9 @@ describe('Update schedule (E2E)', () => {
   test('[PUT] /schedules - should not be able to update a schedule with invalid hour range', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
-    const organization = await organizationFactory.makePrismaOrganization(
-      {},
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
 
     const organizationId = organization.id.toString();
 
@@ -109,10 +109,10 @@ describe('Update schedule (E2E)', () => {
   test('[PUT] /schedules - should not be able to update a schedule with invalid week day', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
-    const organization = await organizationFactory.makePrismaOrganization(
-      { name: 'Organization 1' },
-      user.id,
-    );
+    const organization = await organizationFactory.makePrismaOrganization({
+      name: 'Organization 1',
+      ownerId: user.id,
+    });
 
     const organizationId = organization.id.toString();
 

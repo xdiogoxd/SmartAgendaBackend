@@ -2,10 +2,12 @@ import { ServiceRepository } from '@/domain/repositories/service-repository';
 import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
-import { Service } from '@/domain/enterprise/entities/service';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface UpdateServiceUseCaseRequest {
+  organizationId: string;
   id: string;
   name: string;
   description: string;
@@ -30,9 +32,13 @@ type UpdateServiceUseCaseResponse = Either<
 
 @Injectable()
 export class UpdateServiceUseCase {
-  constructor(private servicesRepository: ServiceRepository) {}
+  constructor(
+    private servicesRepository: ServiceRepository,
+    private organizationRepository: OrganizationRepository,
+  ) {}
 
   async execute({
+    organizationId,
     id,
     name,
     description,
@@ -40,6 +46,13 @@ export class UpdateServiceUseCase {
     duration,
     observations,
   }: UpdateServiceUseCaseRequest): Promise<UpdateServiceUseCaseResponse> {
+    const organization =
+      await this.organizationRepository.findById(organizationId);
+
+    if (!organization) {
+      return left(new OrganizationNotFoundError(id));
+    }
+
     const service = await this.servicesRepository.findById(id);
 
     if (!service) {
