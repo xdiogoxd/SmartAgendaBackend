@@ -8,7 +8,7 @@ import { OrganizationRepository } from '@/domain/repositories/organization-repos
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface CreateServiceUseCaseRequest {
-  organizationId: UniqueEntityID;
+  organizationId: string;
   name: string;
   description: string;
   price: number;
@@ -53,7 +53,7 @@ export class CreateServiceUseCase {
     }
 
     const service = Service.create({
-      organizationId,
+      organizationId: new UniqueEntityID(organizationId),
       name,
       description,
       price,

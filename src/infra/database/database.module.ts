@@ -11,6 +11,8 @@ import { PrismaOrganizationRepository } from './prisma/repositories/prisma-organ
 import { HttpModule } from '../http/http.module';
 import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
 import { PrismaSpaceOfServiceRepository } from './prisma/repositories/prisma-space-of-service-repository';
+import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+import { PrismaAppointmentRepository } from './prisma/repositories/prisma-appointment-repository';
 
 @Module({
   imports: [forwardRef(() => HttpModule)],
@@ -36,6 +38,10 @@ import { PrismaSpaceOfServiceRepository } from './prisma/repositories/prisma-spa
       provide: SpaceOfServiceRepository,
       useClass: PrismaSpaceOfServiceRepository,
     },
+    {
+      provide: AppointmentRepository,
+      useClass: PrismaAppointmentRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -44,6 +50,7 @@ import { PrismaSpaceOfServiceRepository } from './prisma/repositories/prisma-spa
     OrganizationRepository,
     ScheduleRepository,
     SpaceOfServiceRepository,
+    AppointmentRepository,
   ],
 })
 export class DatabaseModule {}

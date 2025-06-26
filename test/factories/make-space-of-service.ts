@@ -9,14 +9,7 @@ import {
 } from '@/domain/enterprise/entities/space-of-service';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaSpaceOfServiceMapper } from '@/infra/database/prisma/mappers/prisma-space-of-service.mapper';
-
-interface MakeOrganizationProps {
-  organizationId: UniqueEntityID;
-  name?: string;
-  description?: string;
-  createdAt?: Date;
-  updatedAt?: Date | null;
-}
+import { Optional } from '@/core/types/optional';
 
 export function makeSpaceOfService(
   override: Partial<SpaceOfServiceProps> = {},
@@ -41,7 +34,10 @@ export class SpaceOfServiceFactory {
   constructor(private prisma: PrismaService) {}
 
   async makePrismaSpaceOfService(
-    data: MakeOrganizationProps,
+    data: Optional<
+      SpaceOfServiceProps,
+      'name' | 'description' | 'createdAt' | 'updatedAt'
+    >,
   ): Promise<SpaceOfService> {
     const spaceofservice = makeSpaceOfService(data);
 

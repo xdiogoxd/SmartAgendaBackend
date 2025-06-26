@@ -26,7 +26,7 @@ describe('Create Service', () => {
     await inMemoryOrganizationRepository.create(organization);
 
     const result = await sut.execute({
-      organizationId: organization.id,
+      organizationId: organization.id.toString(),
       name,
       description: 'Basic haircut service',
       duration: 30,
@@ -47,7 +47,7 @@ describe('Create Service', () => {
     await inMemoryOrganizationRepository.create(organization);
 
     await sut.execute({
-      organizationId: organization.id,
+      organizationId: organization.id.toString(),
       name,
       description: 'Basic haircut service',
       duration: 30,
@@ -55,7 +55,7 @@ describe('Create Service', () => {
     });
 
     const result = await sut.execute({
-      organizationId: organization.id,
+      organizationId: organization.id.toString(),
       name,
       description: 'Another haircut service',
       duration: 45,

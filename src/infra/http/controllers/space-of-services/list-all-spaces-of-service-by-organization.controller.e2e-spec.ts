@@ -70,8 +70,6 @@ describe('List all spaceOfServices (E2E)', () => {
         organizationId,
       });
 
-    console.log(response.body);
-
     expect(response.statusCode).toBe(200);
     expect(response.body.spacesOfService).toHaveLength(2);
     expect(response.body).toEqual({

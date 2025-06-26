@@ -5,15 +5,7 @@ import { Service, ServiceProps } from '@/domain/enterprise/entities/service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaServiceMapper } from '@/infra/database/prisma/mappers/prisma-service.mapper';
-
-interface MakeServiceProps {
-  organizationId: UniqueEntityID;
-  name?: string;
-  description?: string;
-  duration?: number;
-  price?: number;
-  createdAt?: Date;
-}
+import { Optional } from '@/core/types/optional';
 
 export function makeService(
   override: Partial<ServiceProps> = {},
@@ -38,7 +30,12 @@ export function makeService(
 export class ServiceFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaService(data: MakeServiceProps): Promise<Service> {
+  async makePrismaService(
+    data: Optional<
+      ServiceProps,
+      'name' | 'description' | 'duration' | 'price' | 'createdAt'
+    >,
+  ): Promise<Service> {
     const service = makeService(data);
 
     await this.prisma.service.create({

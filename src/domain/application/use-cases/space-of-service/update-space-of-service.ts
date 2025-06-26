@@ -10,8 +10,8 @@ import { DuplicatedSpaceOfServiceNameError } from '../errors/duplicated-space-of
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 export interface UpdateSpaceOfServiceUseCaseRequest {
-  id: UniqueEntityID;
-  organizationId: UniqueEntityID;
+  id: string;
+  organizationId: string;
   name: string;
   description: string;
 }
@@ -38,17 +38,14 @@ export class UpdateSpaceOfServiceUseCase {
     name,
     description,
   }: UpdateSpaceOfServiceUseCaseRequest): Promise<UpdateSpaceOfServiceUseCaseResponse> {
-    const organization = await this.organizationRepository.findById(
-      organizationId.toString(),
-    );
+    const organization =
+      await this.organizationRepository.findById(organizationId);
 
     if (!organization) {
       return left(new OrganizationNotFoundError(organizationId.toString()));
     }
 
-    const spaceOfService = await this.spaceOfServiceRepository.findById(
-      id.toString(),
-    );
+    const spaceOfService = await this.spaceOfServiceRepository.findById(id);
 
     if (!spaceOfService) {
       return left(new ResourceNotFoundError(id.toString()));
@@ -59,7 +56,7 @@ export class UpdateSpaceOfServiceUseCase {
 
     if (
       spaceWithSameName &&
-      spaceWithSameName.id.toString() !== id.toString()
+      spaceWithSameName.organizationId.toString() !== organizationId
     ) {
       return left(new DuplicatedSpaceOfServiceNameError(name));
     }

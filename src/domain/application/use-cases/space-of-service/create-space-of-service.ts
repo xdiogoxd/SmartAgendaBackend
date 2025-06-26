@@ -9,7 +9,7 @@ import { OrganizationNotFoundError } from '../errors/organization-not-found-erro
 import { DuplicatedSpaceOfServiceNameError } from '../errors/duplicated-space-of-service-name-error';
 
 export interface CreateSpaceOfServiceUseCaseRequest {
-  organizationId: UniqueEntityID;
+  organizationId: string;
   name: string;
   description: string;
 }
@@ -49,7 +49,7 @@ export class CreateSpaceOfServiceUseCase {
     }
 
     const spaceOfService = SpaceOfService.create({
-      organizationId,
+      organizationId: new UniqueEntityID(organizationId),
       name,
       description,
     });

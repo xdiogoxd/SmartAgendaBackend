@@ -37,8 +37,8 @@ describe('Update SpaceOfService', () => {
     await inMemorySpaceOfServiceRepository.create(newSpaceOfService);
 
     const result = await sut.execute({
-      organizationId: organization.id,
-      id: newSpaceOfService.id,
+      organizationId: organization.id.toString(),
+      id: newSpaceOfService.id.toString(),
       name: 'New SpaceOfService Name',
       description: 'New Description',
     });
@@ -54,8 +54,8 @@ describe('Update SpaceOfService', () => {
     await inMemoryOrganizationRepository.create(organization);
     const organizationId = organization.id;
     const result = await sut.execute({
-      organizationId,
-      id: new UniqueEntityID('non-existing-id'),
+      organizationId: organizationId.toString(),
+      id: 'non-existing-id',
       name: 'New SpaceOfService Name',
       description: 'New Description',
     });

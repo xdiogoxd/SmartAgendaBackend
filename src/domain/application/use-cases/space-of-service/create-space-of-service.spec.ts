@@ -26,7 +26,7 @@ describe('Create SpaceOfService', () => {
     await inMemoryOrganizationRepository.create(organization);
 
     const result = await sut.execute({
-      organizationId: organization.id,
+      organizationId: organization.id.toString(),
       name,
       description: 'Space 1',
     });
@@ -45,13 +45,13 @@ describe('Create SpaceOfService', () => {
     await inMemoryOrganizationRepository.create(organization);
 
     await sut.execute({
-      organizationId: organization.id,
+      organizationId: organization.id.toString(),
       name,
       description: 'Space 2',
     });
 
     const result = await sut.execute({
-      organizationId: organization.id,
+      organizationId: organization.id.toString(),
       name,
       description: 'Space 2',
     });

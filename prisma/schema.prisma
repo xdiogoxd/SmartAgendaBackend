@@ -19,6 +19,7 @@ model organization {
   schedule       schedule[]
   service        service[]
   spaceOfService spaceOfService[]
+  appointment    appointment[]
 
   @@map("organizations")
 }
@@ -47,6 +48,7 @@ model user {
 
   ownedOrganizations organization[] @relation("OrganizationOwner")
   memberOf           organization[] @relation("OrganizationMembers")
+  appointment        appointment[]
 
   @@map("users")
 }
@@ -63,19 +65,45 @@ model service {
   observations   String?
   organizationId String
 
-  organization organization @relation(fields: [organizationId], references: [id])
+  organization organization  @relation(fields: [organizationId], references: [id])
+  appointment  appointment[]
 
   @@map("services")
 }
 
 model spaceOfService {
-  id             String       @id @default(uuid())
+  id             String        @id @default(uuid())
   name           String
   description    String
   organizationId String
-  createdAt      DateTime     @default(now())
+  createdAt      DateTime      @default(now())
   updatedAt      DateTime?
-  organization   organization @relation(fields: [organizationId], references: [id])
+  organization   organization  @relation(fields: [organizationId], references: [id])
+  appointment    appointment[]
 
   @@map("spaces_of_service")
+}
+
+model appointment {
+  id           String    @id @default(uuid())
+  date         DateTime
+  description  String
+  observations String
+  status       String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  canceledAt   DateTime?
+  finishedAt   DateTime?
+
+  organizationId   String
+  serviceId        String
+  spaceOfServiceId String
+  clientId         String
+
+  organization   organization   @relation(fields: [organizationId], references: [id])
+  service        service        @relation(fields: [serviceId], references: [id])
+  user           user           @relation(fields: [clientId], references: [id])
+  spaceOfService spaceOfService @relation(fields: [spaceOfServiceId], references: [id])
+
+  @@map("appointments")
 }

@@ -57,8 +57,6 @@ describe('Find spaceofservice by id (E2E)', () => {
         organizationId,
       });
 
-    console.log(response.body);
-
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
       spaceOfService: expect.objectContaining({
