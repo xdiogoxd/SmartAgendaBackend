@@ -1,9 +1,13 @@
 @baseUrl = http://localhost:3333
 @authToken = {{authenticate.response.body.access_token}}
 
-@organizationId = {{create_organization.response.body.organization._id.value}}
+@organizationId = fd76a81d-38a6-4c58-8b51-c46488faa729
 
 @serviceId = {{create_service.response.body.service._id.value}}
+
+@spaceOfServiceId = {{create_space_of_service.response.body.spaceOfService._id.value}}
+
+@clientId = 0750bbf7-e91d-4e3a-8fc9-57a8603c0cac
 
 # @name create_account
 POST {{baseUrl}}/accounts
@@ -34,7 +38,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "name": "Barbearia do Zezé"
+  "name": "Barbearia do Zezé1"
 }
 
 ###
@@ -105,7 +109,7 @@ Authorization: Bearer {{authToken}}
 
 {
   "organizationId": "{{organizationId}}",
-  "name": "Corte de cabelo3",
+  "name": "Corte de cabelo4",
   "description": "Corte de cabelo masculino",
   "price": 30,
   "duration": 30,
@@ -127,3 +131,40 @@ Authorization: Bearer {{authToken}}
   "duration": 30,
   "observations": "Não cortar o cabelo ruim"
 }
+
+###
+
+# @name create_space_of_service
+POST {{baseUrl}}/spaceofservices
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "organizationId": "{{organizationId}}",
+  "name": "Espaço 1",
+  "description": "Espaço para atendimento 1"  
+}
+
+###
+
+# @name create_appointment
+POST {{baseUrl}}/appointments
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "date": "2025-08-10T07:00:00Z",
+  "description": "Agendamento de teste",
+  "observations": "Observações do agendamento",
+  "organizationId": "{{organizationId}}",
+  "spaceOfServiceId": "{{spaceOfServiceId}}",
+  "serviceId": "{{serviceId}}",
+  "clientId": "{{clientId}}"
+}
+
+###
+
+# @name list_appointments_by_month
+GET {{baseUrl}}/appointments/list/{{organizationId}}/month?month=8&year=2025
+Content-Type: application/json
+Authorization: Bearer {{authToken}}

@@ -58,6 +58,30 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
 
     return appointments.map(PrismaAppointmentMapper.toDomain);
   }
+
+  async listByMonth(
+    organizationId: string,
+    month: number,
+    year: number,
+  ): Promise<Appointment[]> {
+    console.log(
+      `Searching for month: ${month}, year: ${year}, org: ${organizationId}`,
+    );
+
+    const appointments = await this.prisma.appointment.findMany({
+      where: {
+        organizationId,
+        date: {
+          gte: new Date(year, month - 1, 1),
+          lt: new Date(year, month - 1, 32),
+        },
+      },
+    });
+
+    console.log(appointments);
+
+    return appointments.map(PrismaAppointmentMapper.toDomain);
+  }
   async save(id: string, appointment: Appointment): Promise<Appointment> {
     const PrismaAppointment = await this.prisma.appointment.update({
       where: {

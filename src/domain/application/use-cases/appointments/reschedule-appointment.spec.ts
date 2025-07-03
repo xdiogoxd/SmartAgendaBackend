@@ -8,18 +8,28 @@ import { AppointmentStatusInvalidError } from '../errors/appointment-status-inva
 import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
 import { faker } from '@faker-js/faker';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { makeOrganization } from 'test/factories/make-organization';
 
 let inMemoryAppointmentRepository: InMemoryAppointmentRepository;
+let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let sut: RescheduleAppointmentUseCase;
 
 describe('Reschedule Appointment', () => {
   beforeEach(() => {
     inMemoryAppointmentRepository = new InMemoryAppointmentRepository();
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new RescheduleAppointmentUseCase(inMemoryAppointmentRepository);
   });
 
   it('should be able to reschedule a appointment', async () => {
-    const appointment = makeAppointment();
+    const organization = makeOrganization();
+
+    await inMemoryOrganizationRepository.items.push(organization);
+
+    const appointment = makeAppointment({
+      organizationId: organization.id,
+    });
 
     await inMemoryAppointmentRepository.create(appointment);
 
@@ -28,6 +38,7 @@ describe('Reschedule Appointment', () => {
     newDate.setDate(newDate.getDate() + 2);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: appointment.id.toString(),
       date: newDate,
     });
@@ -37,7 +48,12 @@ describe('Reschedule Appointment', () => {
   });
 
   it('should not be able to reschedule an appointment with invalid id', async () => {
+    const organization = makeOrganization();
+
+    await inMemoryOrganizationRepository.items.push(organization);
+
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: 'invalid-id',
       date: new Date(),
     });
@@ -47,13 +63,19 @@ describe('Reschedule Appointment', () => {
   });
 
   it('should not be able to reschedule an appointment with status finished', async () => {
+    const organization = makeOrganization();
+
+    inMemoryOrganizationRepository.items.push(organization);
+
     const appointment = makeAppointment({
+      organizationId: organization.id,
       status: AppointmentStatus.FINISHED,
     });
 
     await inMemoryAppointmentRepository.create(appointment);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: appointment.id.toString(),
       date: faker.date.future(),
     });
@@ -63,16 +85,24 @@ describe('Reschedule Appointment', () => {
   });
 
   it('should not be able to reschedule an appointment with status canceled', async () => {
+    const organization = makeOrganization();
+
+    await inMemoryOrganizationRepository.items.push(organization);
+
     const appointment = makeAppointment({
+      organizationId: organization.id,
       status: AppointmentStatus.CANCELED,
     });
 
     await inMemoryAppointmentRepository.create(appointment);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: appointment.id.toString(),
       date: faker.date.future(),
     });
+
+    console.log(result.value);
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(AppointmentStatusInvalidError);
@@ -105,6 +135,7 @@ describe('Reschedule Appointment', () => {
     await inMemoryAppointmentRepository.create(appointment2);
 
     const result = await sut.execute({
+      organizationId,
       appointmentId: appointment2.id.toString(),
       date: date1,
     });

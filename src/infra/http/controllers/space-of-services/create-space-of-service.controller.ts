@@ -11,7 +11,6 @@ import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { CreateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/create-space-of-service';
 import { DuplicatedSpaceOfServiceNameError } from '@/domain/application/use-cases/errors/duplicated-space-of-service-name-error';
 
@@ -46,7 +45,7 @@ export class CreateSpaceOfServiceController {
     const userId = user.sub;
 
     const result = await this.createSpaceOfService.execute({
-      organizationId: new UniqueEntityID(organizationId),
+      organizationId,
       name,
       description,
     });

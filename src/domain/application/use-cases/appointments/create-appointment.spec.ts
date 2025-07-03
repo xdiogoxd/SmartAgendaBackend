@@ -2,7 +2,6 @@ import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appoi
 
 import { CreateAppointmentUseCase } from './create-appointment';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { AppointmentStatusInvalidError } from '../errors/appointment-status-invalid-error';
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
 import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
@@ -215,8 +214,6 @@ describe('Create Appointment', () => {
       serviceId: service.id.toString(),
       clientId: user.id.toString(),
     });
-
-    console.log(result.value);
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(InvalidAppointmentDateError);

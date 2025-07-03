@@ -5,22 +5,33 @@ import { makeAppointment } from 'test/factories/make-appointment';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { AppointmentStatus } from '@/core/types/appointment-status-enum';
 import { AppointmentStatusInvalidError } from '../errors/appointment-status-invalid-error';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { makeOrganization } from 'test/factories/make-organization';
 
 let inMemoryAppointmentRepository: InMemoryAppointmentRepository;
+let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let sut: CancelAppointmentUseCase;
 
 describe('Cancel Appointment', () => {
   beforeEach(() => {
     inMemoryAppointmentRepository = new InMemoryAppointmentRepository();
+    inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     sut = new CancelAppointmentUseCase(inMemoryAppointmentRepository);
   });
 
   it('should be able to cancel a appointment', async () => {
-    const appointment = makeAppointment();
+    const organization = makeOrganization();
+
+    inMemoryOrganizationRepository.items.push(organization);
+
+    const appointment = makeAppointment({
+      organizationId: organization.id,
+    });
 
     await inMemoryAppointmentRepository.create(appointment);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: appointment.id.toString(),
     });
 
@@ -32,7 +43,12 @@ describe('Cancel Appointment', () => {
   });
 
   it('should not be able to cancel an appointment with invalid id', async () => {
+    const organization = makeOrganization();
+
+    inMemoryOrganizationRepository.items.push(organization);
+
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: 'invalid-id',
     });
 
@@ -41,13 +57,19 @@ describe('Cancel Appointment', () => {
   });
 
   it('should not be able to cancel an appointment with status finished', async () => {
+    const organization = makeOrganization();
+
+    inMemoryOrganizationRepository.items.push(organization);
+
     const appointment = makeAppointment({
+      organizationId: organization.id,
       status: AppointmentStatus.FINISHED,
     });
 
     await inMemoryAppointmentRepository.create(appointment);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: appointment.id.toString(),
     });
 
@@ -56,13 +78,19 @@ describe('Cancel Appointment', () => {
   });
 
   it('should not be able to cancel an appointment with status canceled', async () => {
+    const organization = makeOrganization();
+
+    inMemoryOrganizationRepository.items.push(organization);
+
     const appointment = makeAppointment({
+      organizationId: organization.id,
       status: AppointmentStatus.CANCELED,
     });
 
     await inMemoryAppointmentRepository.create(appointment);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId: appointment.id.toString(),
     });
 

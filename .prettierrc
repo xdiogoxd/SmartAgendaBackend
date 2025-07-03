@@ -1,4 +1,7 @@
 {
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "rules": {
+    "max-len": ["error", { "code": 100 }]
+  }
 }

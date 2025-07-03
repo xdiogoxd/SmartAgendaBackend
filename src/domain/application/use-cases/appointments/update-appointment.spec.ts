@@ -10,10 +10,7 @@ import { makeUser } from 'test/factories/make-user';
 import { makeOrganization } from 'test/factories/make-organization';
 import { makeSpaceOfService } from 'test/factories/make-space-of-service';
 import { makeService } from 'test/factories/make-service';
-import { faker } from '@faker-js/faker';
 import { UserNotFoundError } from '../errors/user-not-found-error';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { InvalidAppointmentDateError } from '../errors/invalid-appointment-date-error';
 import { makeAppointment } from 'test/factories/make-appointment';
 
 let inMemoryUserRepository: InMemoryUserRepository;
@@ -64,6 +61,7 @@ describe('Update Appointment', () => {
     const appointmentId = appointment.id.toString();
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId,
       description: 'Appointment description updated',
       observations: 'Appointment observations updated',
@@ -107,6 +105,7 @@ describe('Update Appointment', () => {
     const appointmentId = appointment.id.toString();
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId,
       description: 'Appointment description',
       observations: 'Appointment observations',
@@ -140,6 +139,7 @@ describe('Update Appointment', () => {
     const appointmentId = appointment.id.toString();
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId,
       description: 'Appointment description',
       observations: 'Appointment observations',
@@ -172,6 +172,7 @@ describe('Update Appointment', () => {
     const appointmentId = appointment.id.toString();
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       appointmentId,
       description: 'Appointment description',
       observations: 'Appointment observations',

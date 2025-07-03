@@ -3,7 +3,6 @@ import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
 import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { DuplicatedSpaceOfServiceNameError } from '../errors/duplicated-space-of-service-name-error';

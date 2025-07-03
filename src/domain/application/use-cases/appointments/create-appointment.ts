@@ -7,7 +7,6 @@ import { UserRepository } from '@/domain/repositories/user-repository';
 
 import { UserNotFoundError } from '../errors/user-not-found-error';
 
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
@@ -50,15 +49,17 @@ export class CreateAppointmentUseCase {
   ) {}
 
   async execute({
+    organizationId,
     date,
     description,
     observations,
-    organizationId,
     serviceId,
     spaceOfServiceId,
     clientId,
   }: CreateAppointmentUseCaseRequest): Promise<CreateAppointmentUseCaseResponse> {
     const client = await this.userRepository.findById(clientId);
+
+    const appointmentDate = new Date(date);
 
     if (!client) {
       return left(new UserNotFoundError(clientId));
@@ -84,23 +85,28 @@ export class CreateAppointmentUseCase {
       return left(new ResourceNotFoundError(spaceOfServiceId));
     }
 
-    if (
-      !CheckDateAvaibility(
-        organizationId,
-        date,
-        spaceOfServiceId,
-        this.appointmentRepository,
-      )
-    ) {
-      return left(new AppointmentNotAvailableError(date.toDateString()));
+    const isDateAvailable = await CheckDateAvaibility(
+      organizationId,
+      date,
+      spaceOfServiceId,
+      this.appointmentRepository,
+    );
+
+    if (!isDateAvailable) {
+      console.log('Date is not available');
+      return left(
+        new AppointmentNotAvailableError(appointmentDate.toISOString()),
+      );
     }
 
     if (isPast(date)) {
-      return left(new InvalidAppointmentDateError(date.toDateString()));
+      return left(
+        new InvalidAppointmentDateError(appointmentDate.toISOString()),
+      );
     }
 
     const appointment = Appointment.create({
-      date,
+      date: appointmentDate,
       description,
       observations,
       status: AppointmentStatus.PENDING,

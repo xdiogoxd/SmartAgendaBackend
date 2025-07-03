@@ -44,6 +44,20 @@ export class InMemoryAppointmentRepository implements AppointmentRepository {
     return this.items;
   }
 
+  async listByMonth(
+    organizationId: string,
+    month: number,
+    year: number,
+  ): Promise<Appointment[]> {
+    const appointments = this.items.filter(
+      (item) =>
+        item.organizationId.toString() === organizationId &&
+        item.date.getMonth() === month &&
+        item.date.getFullYear() === year,
+    );
+    return appointments;
+  }
+
   async save(id: string, data: Appointment): Promise<Appointment> {
     const index = this.items.findIndex((item) => item.id.toString() === id);
     this.items[index] = data;

@@ -21,6 +21,7 @@ export async function CheckDateAvaibility(
       appointment.spaceOfServiceId.toString() === spaceOfServiceId,
   );
 
-  // If there are any appointments for this space at this time, the date is not available
-  return conflictingAppointments.length === 0;
+  const isAvailable = conflictingAppointments.length === 0;
+
+  return isAvailable;
 }

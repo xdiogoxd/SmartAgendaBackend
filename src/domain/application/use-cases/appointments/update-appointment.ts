@@ -12,7 +12,10 @@ import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { ServiceRepository } from '@/domain/repositories/service-repository';
 
+// todo: add validation if space of service is available and a possible block for completed/canceled appointments
+
 export interface UpdateAppointmentUseCaseRequest {
+  organizationId: string;
   appointmentId: string;
   description: string;
   observations: string;
@@ -38,6 +41,7 @@ export class UpdateAppointmentUseCase {
   ) {}
 
   async execute({
+    organizationId,
     appointmentId,
     description,
     observations,
@@ -50,6 +54,10 @@ export class UpdateAppointmentUseCase {
 
     if (!appointment) {
       return left(new ResourceNotFoundError(appointmentId));
+    }
+
+    if (organizationId != appointment.organizationId.toString()) {
+      return left(new ResourceNotFoundError(organizationId));
     }
 
     let updatedClientId = appointment.clientId;

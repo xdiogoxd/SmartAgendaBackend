@@ -6,22 +6,23 @@ import { Appointment } from '@/domain/enterprise/entities/appointment';
 
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { AppointmentDatesInvalidError } from '../errors/appointment-dates-invalid-error';
 
-export interface ListAppointmentByMonthUseCaseRequest {
+export interface ListAppointmentsByDateRangeUseCaseRequest {
   organizationId: string;
-  month: number;
-  year: number;
+  startDate: Date;
+  endDate: Date;
 }
 
-type ListAppointmentByMonthUseCaseResponse = Either<
-  OrganizationNotFoundError,
+type ListAppointmentsByDateRangeUseCaseResponse = Either<
+  OrganizationNotFoundError | AppointmentDatesInvalidError,
   {
     appointments: Appointment[];
   }
 >;
 
 @Injectable()
-export class ListAppointmentsByMonthUseCase {
+export class ListAppointmentsByDateRangeUseCase {
   constructor(
     private organizationRepository: OrganizationRepository,
     private appointmentRepository: AppointmentRepository,
@@ -29,9 +30,12 @@ export class ListAppointmentsByMonthUseCase {
 
   async execute({
     organizationId,
-    month,
-    year,
-  }: ListAppointmentByMonthUseCaseRequest): Promise<ListAppointmentByMonthUseCaseResponse> {
+    startDate,
+    endDate,
+  }: ListAppointmentsByDateRangeUseCaseRequest): Promise<ListAppointmentsByDateRangeUseCaseResponse> {
+    const convertedStartDate = new Date(startDate);
+    const convertedEndDate = new Date(endDate);
+
     const organization =
       await this.organizationRepository.findById(organizationId);
 
@@ -39,13 +43,20 @@ export class ListAppointmentsByMonthUseCase {
       return left(new OrganizationNotFoundError(organizationId));
     }
 
-    const appointments = await this.appointmentRepository.listByMonth(
-      organization.id.toString(),
-      month,
-      year,
-    );
+    if (startDate > endDate) {
+      return left(
+        new AppointmentDatesInvalidError(
+          convertedStartDate.toDateString(),
+          convertedEndDate.toDateString(),
+        ),
+      );
+    }
 
-    console.log(appointments);
+    const appointments = await this.appointmentRepository.findByDateRange(
+      organizationId,
+      convertedStartDate,
+      convertedEndDate,
+    );
 
     return right({
       appointments,

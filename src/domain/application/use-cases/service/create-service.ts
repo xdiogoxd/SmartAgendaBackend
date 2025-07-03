@@ -7,6 +7,8 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
+//todo: add filter by name on each organization
+
 export interface CreateServiceUseCaseRequest {
   organizationId: string;
   name: string;

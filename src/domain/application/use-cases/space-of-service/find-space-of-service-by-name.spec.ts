@@ -1,4 +1,3 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 import { makeSpaceOfService } from 'test/factories/make-space-of-service';

@@ -33,6 +33,22 @@ import { ListAllSpacesOfServiceByOrganizationController } from './controllers/sp
 import { UpdateSpaceOfServiceController } from './controllers/space-of-services/update-space-of-service.controller';
 import { FindSpaceOfServiceByIdController } from './controllers/space-of-services/find-space-of-service-by-id.controller';
 import { FindSpaceOfServiceByIdUseCase } from '@/domain/application/use-cases/space-of-service/find-space-of-service-by-id';
+import { CreateAppointmentController } from './controllers/appointments/create-appointment.controller';
+import { CancelAppointmentController } from './controllers/appointments/cancel-appointment.controller';
+import { CompleteAppointmentController } from './controllers/appointments/complete-appointment.controller';
+import { ListAppointmentsByDateRangeController } from './controllers/appointments/list-appointments-by-date-range.controller';
+import { RescheduleAppointmentController } from './controllers/appointments/reschedule-appointment.controller';
+import { UpdateAppointmentController } from './controllers/appointments/update-appointment.controller';
+import { ListAppointmentsByMonthController } from './controllers/appointments/list-appointments-by-month.controller';
+import { CreateAppointmentUseCase } from '@/domain/application/use-cases/appointments/create-appointment';
+import { UpdateAppointmentUseCase } from '@/domain/application/use-cases/appointments/update-appointment';
+import { RescheduleAppointmentUseCase } from '@/domain/application/use-cases/appointments/reschedule-appointment';
+import { CancelAppointmentUseCase } from '@/domain/application/use-cases/appointments/cancel-appointment';
+import { CompleteAppointmentUseCase } from '@/domain/application/use-cases/appointments/complete-appointment';
+import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-date-range';
+import { ListAppointmentsByMonthUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-month';
+import { DeleteAppointmentController } from './controllers/appointments/delete-appointment.controller';
+import { DeleteAppointmentUseCase } from '@/domain/application/use-cases/appointments/delete-appointment';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule), CryptographyModule],
@@ -53,6 +69,14 @@ import { FindSpaceOfServiceByIdUseCase } from '@/domain/application/use-cases/sp
     FindSpaceOfServiceByIdController,
     ListAllSpacesOfServiceByOrganizationController,
     UpdateSpaceOfServiceController,
+    CreateAppointmentController,
+    UpdateAppointmentController,
+    RescheduleAppointmentController,
+    CancelAppointmentController,
+    CompleteAppointmentController,
+    ListAppointmentsByDateRangeController,
+    ListAppointmentsByMonthController,
+    DeleteAppointmentController,
   ],
   providers: [
     CreateAccountUseCase,
@@ -71,6 +95,14 @@ import { FindSpaceOfServiceByIdUseCase } from '@/domain/application/use-cases/sp
     FindSpaceOfServiceByIdUseCase,
     ListAllSpacesOfServiceByOrganizationUseCase,
     UpdateSpaceOfServiceUseCase,
+    CreateAppointmentUseCase,
+    UpdateAppointmentUseCase,
+    RescheduleAppointmentUseCase,
+    CancelAppointmentUseCase,
+    CompleteAppointmentUseCase,
+    ListAppointmentsByDateRangeUseCase,
+    ListAppointmentsByMonthUseCase,
+    DeleteAppointmentUseCase,
   ],
 })
 export class HttpModule {}

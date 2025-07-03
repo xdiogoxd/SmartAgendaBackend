@@ -7,6 +7,12 @@ export abstract class AppointmentRepository {
     organizationId: string,
     date: Date,
   ): Promise<Appointment[]>;
+
+  abstract listByMonth(
+    organizationId: string,
+    month: number,
+    year: number,
+  ): Promise<Appointment[]>;
   abstract findByDateRange(
     organizationId: string,
     startDate: Date,

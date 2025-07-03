@@ -9,6 +9,7 @@ import { AppointmentStatus } from '@/core/types/appointment-status-enum';
 import { AppointmentStatusInvalidError } from '../errors/appointment-status-invalid-error';
 
 export interface CancelAppointmentUseCaseRequest {
+  organizationId: string;
   appointmentId: string;
 }
 
@@ -25,12 +26,17 @@ export class CancelAppointmentUseCase {
 
   async execute({
     appointmentId,
+    organizationId,
   }: CancelAppointmentUseCaseRequest): Promise<CancelAppointmentUseCaseResponse> {
     const appointment =
       await this.appointmentRepository.findById(appointmentId);
 
     if (!appointment) {
       return left(new ResourceNotFoundError(appointmentId));
+    }
+
+    if (appointment.organizationId.toString() !== organizationId) {
+      return left(new ResourceNotFoundError(organizationId));
     }
 
     if (

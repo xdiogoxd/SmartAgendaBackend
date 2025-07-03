@@ -13,7 +13,6 @@ import { CreateServiceUseCase } from '@/domain/application/use-cases/service/cre
 import { DuplicatedServiceNameError } from '@/domain/application/use-cases/errors/duplicated-service-name-error';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -46,7 +45,7 @@ export class CreateServiceController {
     const userId = user.sub;
 
     const result = await this.createService.execute({
-      organizationId: new UniqueEntityID(organizationId),
+      organizationId,
       name,
       description,
       price,
