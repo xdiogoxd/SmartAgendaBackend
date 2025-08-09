@@ -45,8 +45,6 @@ export class ListAppointmentsByMonthUseCase {
       year,
     );
 
-    console.log(appointments);
-
     return right({
       appointments,
     });

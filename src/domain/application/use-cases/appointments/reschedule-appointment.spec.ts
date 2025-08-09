@@ -102,8 +102,6 @@ describe('Reschedule Appointment', () => {
       date: faker.date.future(),
     });
 
-    console.log(result.value);
-
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(AppointmentStatusInvalidError);
   });
@@ -139,8 +137,6 @@ describe('Reschedule Appointment', () => {
       appointmentId: appointment2.id.toString(),
       date: date1,
     });
-
-    console.log(result.value);
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(AppointmentNotAvailableError);

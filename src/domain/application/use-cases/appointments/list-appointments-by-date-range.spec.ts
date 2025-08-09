@@ -127,8 +127,6 @@ describe('List Appointments by Date Range', () => {
       endDate,
     });
 
-    console.log(result.value);
-
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(OrganizationNotFoundError);
   });

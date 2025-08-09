@@ -64,9 +64,6 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
     month: number,
     year: number,
   ): Promise<Appointment[]> {
-    console.log(
-      `Searching for month: ${month}, year: ${year}, org: ${organizationId}`,
-    );
 
     const appointments = await this.prisma.appointment.findMany({
       where: {
@@ -77,8 +74,6 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
         },
       },
     });
-
-    console.log(appointments);
 
     return appointments.map(PrismaAppointmentMapper.toDomain);
   }

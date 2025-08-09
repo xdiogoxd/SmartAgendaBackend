@@ -27,6 +27,10 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
     return organization;
   }
 
+  async findAllByOwnerId(ownerId: string): Promise<Organization[]> {
+    return this.items.filter((item) => item.ownerId.toString() === ownerId);
+  }
+
   async findAll(): Promise<Organization[]> {
     return this.items;
   }

@@ -93,7 +93,6 @@ export class CreateAppointmentUseCase {
     );
 
     if (!isDateAvailable) {
-      console.log('Date is not available');
       return left(
         new AppointmentNotAvailableError(appointmentDate.toISOString()),
       );

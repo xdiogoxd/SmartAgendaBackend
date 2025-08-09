@@ -81,8 +81,6 @@ describe('Delete appointment (E2E)', () => {
         organizationId,
       });
 
-    console.log(response.body);
-
     expect(response.statusCode).toBe(204);
 
     const deletedAppointment = await prisma.appointment.findUnique({

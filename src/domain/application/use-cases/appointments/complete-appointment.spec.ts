@@ -52,8 +52,6 @@ describe('Complete Appointment', () => {
       appointmentId: 'invalid-id',
     });
 
-    console.log(result.value);
-
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });

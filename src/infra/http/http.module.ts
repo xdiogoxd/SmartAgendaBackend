@@ -10,7 +10,7 @@ import { CreateServiceUseCase } from '@/domain/application/use-cases/service/cre
 import { UpdateServiceController } from './controllers/services/update-service.controller';
 import { UpdateServiceUseCase } from '@/domain/application/use-cases/service/update-service';
 import { FindServiceByIdController } from './controllers/services/find-service-by-id.controller';
-import { FindServiceByNameController } from './controllers/services/find-servive-by-name.controller';
+import { FindServiceByNameController } from './controllers/services/find-service-by-name.controller';
 import { CreateOrganizationController } from './controllers/organizations/create-organization.controller';
 import { UpdateOrganizationController } from './controllers/organizations/update-organization.controller';
 import { CreateScheduleController } from './controllers/schedules/create-schedule.controller';
@@ -49,6 +49,8 @@ import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cas
 import { ListAppointmentsByMonthUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-month';
 import { DeleteAppointmentController } from './controllers/appointments/delete-appointment.controller';
 import { DeleteAppointmentUseCase } from '@/domain/application/use-cases/appointments/delete-appointment';
+import { GetAllOrganizationsByUserController } from './controllers/organizations/get-all-organizations-by-user';
+import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases/organization/get-all-organizations-by-user';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule), CryptographyModule],
@@ -56,6 +58,7 @@ import { DeleteAppointmentUseCase } from '@/domain/application/use-cases/appoint
     CreateAccountController,
     AuthenticateController,
     CreateOrganizationController,
+    GetAllOrganizationsByUserController,
     UpdateOrganizationController,
     CreateScheduleController,
     UpdateScheduleController,
@@ -82,6 +85,7 @@ import { DeleteAppointmentUseCase } from '@/domain/application/use-cases/appoint
     CreateAccountUseCase,
     AuthenticateAccountUseCase,
     CreateOrganizationUseCase,
+    GetAllOrganizationsByUserUseCase,
     UpdateOrganizationUseCase,
     CreateScheduleUseCase,
     UpdateScheduleUseCase,

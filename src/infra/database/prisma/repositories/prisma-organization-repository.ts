@@ -50,6 +50,16 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     return organizations.map(PrismaOrganizationMapper.toDomain);
   }
 
+  async findAllByOwnerId(ownerId: string): Promise<Organization[]> {
+    const organizations = await this.prisma.organization.findMany({
+      where: {
+        ownerId,
+      },
+    });
+
+    return organizations.map(PrismaOrganizationMapper.toDomain);
+  }
+
   async save(id: string, data: Organization): Promise<Organization> {
     const prismaOrganization = PrismaOrganizationMapper.toPrisma(data);
 
