@@ -51,12 +51,15 @@ import { DeleteAppointmentController } from './controllers/appointments/delete-a
 import { DeleteAppointmentUseCase } from '@/domain/application/use-cases/appointments/delete-appointment';
 import { GetAllOrganizationsByUserController } from './controllers/organizations/get-all-organizations-by-user';
 import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases/organization/get-all-organizations-by-user';
+import { GetUserController } from './controllers/accounts/get-user.controller';
+import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule), CryptographyModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
+    GetUserController,
     CreateOrganizationController,
     GetAllOrganizationsByUserController,
     UpdateOrganizationController,
@@ -84,6 +87,7 @@ import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases
   providers: [
     CreateAccountUseCase,
     AuthenticateAccountUseCase,
+    GetUserUseCase,
     CreateOrganizationUseCase,
     GetAllOrganizationsByUserUseCase,
     UpdateOrganizationUseCase,

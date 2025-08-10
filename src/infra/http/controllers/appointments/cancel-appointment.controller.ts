@@ -34,12 +34,12 @@ export class CancelAppointmentController {
   @HttpCode(200)
   async handle(
     @Body(bodyValidationPipe) body: CancelAppointmentBodySchema,
-    @CurrentUser() user: UserPayload,
+    
     @Param('appointmentId') appointmentId: string,
   ) {
     const { organizationId } = body;
 
-    const userId = user.sub;
+    // const userId = user.sub;
 
     const result = await this.cancelAppointment.execute({
       organizationId,
