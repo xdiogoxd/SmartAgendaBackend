@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 import { FindSpaceOfServiceByIdUseCase } from './find-space-of-service-by-id';
 import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+import { makeOrganization } from 'test/factories/make-organization';
 
 let inMemorySpaceOfServiceRepository: InMemorySpaceOfServiceRepository;
 let sut: FindSpaceOfServiceByIdUseCase;
@@ -14,14 +15,18 @@ describe('Find SpaceOfService By Id', () => {
   });
 
   it('should be able to find a spaceofservice by id', async () => {
+    const organization = makeOrganization();
     const newSpaceOfService = makeSpaceOfService(
-      {},
+      {
+        organizationId: organization.id,
+      },
       new UniqueEntityID('spaceofservice-1'),
     );
 
     await inMemorySpaceOfServiceRepository.create(newSpaceOfService);
 
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       id: 'spaceofservice-1',
     });
 
@@ -32,7 +37,9 @@ describe('Find SpaceOfService By Id', () => {
   });
 
   it('should not be able to find a spaceofservice with wrong id', async () => {
+    const organization = makeOrganization();
     const result = await sut.execute({
+      organizationId: organization.id.toString(),
       id: 'non-existing-id',
     });
 

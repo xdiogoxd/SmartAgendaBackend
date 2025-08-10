@@ -33,7 +33,7 @@ describe('Find spaceofservice by id (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /spaceofservices/id/:spaceofserviceId - should be able to get a spaceofservice by id', async () => {
+  test('[GET] /organizations/:organizationId/spaceofservices/id/:spaceofserviceId - should be able to get a spaceofservice by id', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -49,13 +49,13 @@ describe('Find spaceofservice by id (E2E)', () => {
     );
 
     const organizationId = organization.id.toString();
+    const spaceofserviceId = spaceofservice.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/spaceofservices/id/${spaceofservice.id}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .get(
+        `/organizations/${organizationId}/spaceofservices/id/${spaceofserviceId}`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
@@ -65,7 +65,7 @@ describe('Find spaceofservice by id (E2E)', () => {
     });
   });
 
-  test('[GET] /spaceofservices/id/:spaceofserviceId - should not be able to get a non-existing spaceofservice', async () => {
+  test('[GET] /organizations/:organizationId/spaceofservices/id/:spaceofserviceId - should not be able to get a non-existing spaceofservice', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -76,11 +76,10 @@ describe('Find spaceofservice by id (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get('/spaceofservices/id/non-existing-id')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .get(
+        `/organizations/${organizationId}/spaceofservices/id/non-existing-id`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(404);
   });

@@ -18,9 +18,13 @@ export class PrismaSpaceOfServiceRepository
     return PrismaSpaceOfServiceMapper.toDomain(prismaSpaceOfService);
   }
 
-  async findById(id: string): Promise<SpaceOfService | null> {
+  async findById(
+    organizationId: string,
+    id: string,
+  ): Promise<SpaceOfService | null> {
     const spaceofservice = await this.prisma.spaceOfService.findUnique({
       where: {
+        organizationId,
         id,
       },
     });
@@ -32,9 +36,13 @@ export class PrismaSpaceOfServiceRepository
     return PrismaSpaceOfServiceMapper.toDomain(spaceofservice);
   }
 
-  async findByName(name: string): Promise<SpaceOfService | null> {
+  async findByName(
+    organizationId: string,
+    name: string,
+  ): Promise<SpaceOfService | null> {
     const spaceOfService = await this.prisma.spaceOfService.findFirst({
       where: {
+        organizationId,
         name,
       },
     });
@@ -64,11 +72,16 @@ export class PrismaSpaceOfServiceRepository
     return spaceofservices.map(PrismaSpaceOfServiceMapper.toDomain);
   }
 
-  async save(id: string, data: SpaceOfService): Promise<SpaceOfService> {
+  async save(
+    organizationId: string,
+    id: string,
+    data: SpaceOfService,
+  ): Promise<SpaceOfService> {
     const prismaSpaceOfService = PrismaSpaceOfServiceMapper.toPrisma(data);
 
     const spaceOfService = await this.prisma.spaceOfService.update({
       where: {
+        organizationId,
         id,
       },
       data: prismaSpaceOfService,
@@ -77,9 +90,10 @@ export class PrismaSpaceOfServiceRepository
     return PrismaSpaceOfServiceMapper.toDomain(spaceOfService);
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(organizationId: string, id: string): Promise<void> {
     await this.prisma.spaceOfService.delete({
       where: {
+        organizationId,
         id,
       },
     });

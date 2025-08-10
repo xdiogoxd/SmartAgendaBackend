@@ -16,31 +16,23 @@ import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/res
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
-const findSpaceOfServiceByIdParamsSchema = z.object({
-  organizationId: z.string().nullable(), // todo: add a filter per organization
-});
 
-const bodyValidationPipe = new ZodValidationPipe(
-  findSpaceOfServiceByIdParamsSchema,
-);
-
-type FindSpaceOfServiceByIdParamsSchema = z.infer<
-  typeof findSpaceOfServiceByIdParamsSchema
->;
-
-@Controller('/spaceofservices/id/:spaceofserviceId')
+@Controller(
+  'organizations/:organizationId/spaceofservices/id/:spaceofserviceId',
+)
 export class FindSpaceOfServiceByIdController {
   constructor(private findSpaceOfServiceById: FindSpaceOfServiceByIdUseCase) {}
 
   @Get()
   @HttpCode(200)
   async handle(
-    @Body(bodyValidationPipe) body: FindSpaceOfServiceByIdParamsSchema,
     @CurrentUser() user: UserPayload,
     @Param('spaceofserviceId') spaceofserviceId: string,
+    @Param('organizationId') organizationId: string,
   ) {
     const userId = user.sub;
     const result = await this.findSpaceOfServiceById.execute({
+      organizationId,
       id: spaceofserviceId,
     });
 

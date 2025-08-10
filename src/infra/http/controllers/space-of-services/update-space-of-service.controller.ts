@@ -17,9 +17,10 @@ import { UpdateSpaceOfServiceUseCase } from '@/domain/application/use-cases/spac
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const updateSpaceOfServiceBodySchema = z.object({
-  organizationId: z.string(),
-  name: z.string(),
-  description: z.string(),
+  name: z.string().min(1),
+  description: z.string().min(1),
+  price: z.number().optional(),
+  duration: z.number().optional(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(
@@ -30,7 +31,9 @@ type UpdateSpaceOfServiceBodySchema = z.infer<
   typeof updateSpaceOfServiceBodySchema
 >;
 
-@Controller('/spaceofservices/id/:spaceofserviceId')
+@Controller(
+  'organizations/:organizationId/spaceofservices/id/:spaceofserviceId',
+)
 export class UpdateSpaceOfServiceController {
   constructor(private updateSpaceOfService: UpdateSpaceOfServiceUseCase) {}
 
@@ -40,8 +43,9 @@ export class UpdateSpaceOfServiceController {
     @Body(bodyValidationPipe) body: UpdateSpaceOfServiceBodySchema,
     @CurrentUser() user: UserPayload,
     @Param('spaceofserviceId') spaceofserviceId: string,
+    @Param('organizationId') organizationId: string,
   ) {
-    const { organizationId, name, description } = body;
+    const { name, description } = body;
 
     const result = await this.updateSpaceOfService.execute({
       organizationId,

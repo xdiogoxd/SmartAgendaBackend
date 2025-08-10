@@ -39,7 +39,7 @@ describe('Update SpaceOfService (E2E)', () => {
     await app.init();
   });
 
-  test('[PATCH] /spaceOfServices/id/:id', async () => {
+  test('[PATCH] /organizations/:organizationId/spaceofservices/id/:spaceofserviceId', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -58,10 +58,11 @@ describe('Update SpaceOfService (E2E)', () => {
     );
 
     const response = await request(app.getHttpServer())
-      .patch(`/spaceOfServices/id/${spaceOfService.id}`)
+      .patch(
+        `/organizations/${organizationId}/spaceofservices/id/${spaceOfService.id}`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: 'Updated SpaceOfService',
         description: 'Updated Description',
         price: 150,
@@ -81,7 +82,7 @@ describe('Update SpaceOfService (E2E)', () => {
     expect(spaceOfServiceOnDatabase?.description).toBe('Updated Description');
   });
 
-  test('[PATCH] /spaceOfServices/id/:id (spaceOfService not found)', async () => {
+  test('[PATCH] /organizations/:organizationId/spaceofservices/id/:spaceofserviceId (spaceOfService not found)', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -93,10 +94,9 @@ describe('Update SpaceOfService (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch('/spaceOfServices/id/invalid-id')
+      .patch(`/organizations/${organizationId}/spaceofservices/id/invalid-id`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: 'Updated SpaceOfService',
         description: 'Updated Description',
         price: 150,
@@ -107,7 +107,7 @@ describe('Update SpaceOfService (E2E)', () => {
     expect(response.status).toBe(404);
   });
 
-  test('[PATCH] /spaceOfServices/id/:id (invalid body)', async () => {
+  test('[PATCH] /organizations/:organizationId/spaceofservices/id/:spaceofserviceId (invalid body)', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -123,8 +123,12 @@ describe('Update SpaceOfService (E2E)', () => {
       },
     );
 
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
-      .patch(`/spaceOfServices/id/${spaceOfService.id}`)
+      .patch(
+        `/organizations/${organizationId}/spaceofservices/id/${spaceOfService.id}`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         name: '',
@@ -132,6 +136,8 @@ describe('Update SpaceOfService (E2E)', () => {
         price: 'invalid-price',
         duration: 'invalid-duration',
       });
+
+    console.log(response.body);
 
     expect(response.status).toBe(400);
   });

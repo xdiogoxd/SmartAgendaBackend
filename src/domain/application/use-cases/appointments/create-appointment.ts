@@ -78,8 +78,10 @@ export class CreateAppointmentUseCase {
       return left(new ResourceNotFoundError(serviceId));
     }
 
-    const spaceOfService =
-      await this.spaceOfServiceRepository.findById(spaceOfServiceId);
+    const spaceOfService = await this.spaceOfServiceRepository.findById(
+      organizationId,
+      spaceOfServiceId,
+    );
 
     if (!spaceOfService) {
       return left(new ResourceNotFoundError(spaceOfServiceId));

@@ -44,14 +44,19 @@ export class UpdateSpaceOfServiceUseCase {
       return left(new OrganizationNotFoundError(organizationId.toString()));
     }
 
-    const spaceOfService = await this.spaceOfServiceRepository.findById(id);
+    const spaceOfService = await this.spaceOfServiceRepository.findById(
+      organizationId,
+      id,
+    );
 
     if (!spaceOfService) {
       return left(new ResourceNotFoundError(id.toString()));
     }
 
-    const spaceWithSameName =
-      await this.spaceOfServiceRepository.findByName(name);
+    const spaceWithSameName = await this.spaceOfServiceRepository.findByName(
+      organizationId,
+      name,
+    );
 
     if (
       spaceWithSameName &&
@@ -64,6 +69,7 @@ export class UpdateSpaceOfServiceUseCase {
     spaceOfService.description = description;
 
     await this.spaceOfServiceRepository.save(
+      organizationId,
       spaceOfService.id.toString(),
       spaceOfService,
     );

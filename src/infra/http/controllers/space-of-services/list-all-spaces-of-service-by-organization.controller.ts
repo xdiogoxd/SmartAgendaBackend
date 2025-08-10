@@ -1,33 +1,17 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   Get,
   HttpCode,
+  Param,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { z } from 'zod';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { OrganizationNotFoundError } from '@/domain/application/use-cases/errors/organization-not-found-error';
 import { ListAllSpacesOfServiceByOrganizationUseCase } from '@/domain/application/use-cases/space-of-service/list-all-spaces-of-service-by-organization';
 import { SpaceOfServicePresenter } from '../../presenters/spaces-of-service-presenter';
 
-// todo: add a filter per organization and check autorization to
-//  perform actions based on user role inside of the organization
-const listAllSpacesOfServiceParamsSchema = z.object({
-  organizationId: z.string().nullable(), // todo: add a filter per organization
-});
-
-const bodyValidationPipe = new ZodValidationPipe(
-  listAllSpacesOfServiceParamsSchema,
-);
-
-type ListAllSpacesOfServiceParamsSchema = z.infer<
-  typeof listAllSpacesOfServiceParamsSchema
->;
-
-@Controller('/spaceofservices')
+@Controller('/organizations/:organizationId/spaceofservices')
 export class ListAllSpacesOfServiceByOrganizationController {
   constructor(
     private listAllSpacesOfService: ListAllSpacesOfServiceByOrganizationUseCase,
@@ -36,10 +20,9 @@ export class ListAllSpacesOfServiceByOrganizationController {
   @Get()
   @HttpCode(200)
   async handle(
-    @Body(bodyValidationPipe) body: ListAllSpacesOfServiceParamsSchema,
+    @Param('organizationId') organizationId: string,
     @CurrentUser() user: UserPayload,
   ) {
-    const { organizationId } = body;
 
     const userId = user.sub;
     const result = await this.listAllSpacesOfService.execute({

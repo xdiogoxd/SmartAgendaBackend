@@ -79,10 +79,12 @@ describe('Create spaceofservice (E2E)', () => {
       ownerId: user.id,
     });
 
-    await spaceofserviceFactory.makePrismaSpaceOfService({
-      name: 'Space 1',
-      organizationId: organization.id,
-    });
+    const spaceOfService = await spaceofserviceFactory.makePrismaSpaceOfService(
+      {
+        organizationId: organization.id,
+        name: 'Space 1',
+      },
+    );
 
     const organizationId = organization.id.toString();
 

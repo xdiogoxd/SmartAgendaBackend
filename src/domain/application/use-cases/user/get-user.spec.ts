@@ -34,11 +34,15 @@ describe('Create User', () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       user: {
-        id: user.id.toString(),
-        name: user.name,
-        email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        _id: {
+          value: user.id.toString(),
+        },
+        props: {
+          name: user.name,
+          email: user.email,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
       },
     });
   });

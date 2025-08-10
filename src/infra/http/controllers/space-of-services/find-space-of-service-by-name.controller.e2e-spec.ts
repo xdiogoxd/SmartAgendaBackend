@@ -34,7 +34,7 @@ describe('Find spaceOfService by name (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /spaceOfServices/name/:name - should be able to get a spaceOfService by name', async () => {
+  test('[GET] /organizations/:organizationId/spaceofservices/name/:spaceofserviceName - should be able to get a spaceOfService by name', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -52,11 +52,10 @@ describe('Find spaceOfService by name (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/spaceOfServices/name/${spaceOfService.name}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .get(
+        `/organizations/${organizationId}/spaceofservices/name/${spaceOfService.name}`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
@@ -66,7 +65,7 @@ describe('Find spaceOfService by name (E2E)', () => {
     });
   });
 
-  test('[GET] /spaceOfServices/name/:name - should not be able to get a non-existing spaceOfService', async () => {
+  test('[GET] /organizations/:organizationId/spaceofservices/name/:spaceofserviceName - should not be able to get a non-existing spaceOfService', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -74,13 +73,14 @@ describe('Find spaceOfService by name (E2E)', () => {
       ownerId: user.id,
     });
 
-    const response = await request(app.getHttpServer())
-      .get('/spaceOfServices/name/non-existing-spaceOfService')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId: organization.id.toString(),
-      });
+    const organizationId = organization.id.toString();
 
-    expect(response.statusCode).toBe(400);
+    const response = await request(app.getHttpServer())
+      .get(
+        `/organizations/${organizationId}/spaceofservices/name/non-existing-spaceOfService`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    expect(response.statusCode).toBe(404);
   });
 });

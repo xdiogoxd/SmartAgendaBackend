@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
 
 export interface FindSpaceOfServiceByNameUseCaseRequest {
+  organizationId: string;
   name: string;
 }
 
@@ -25,10 +26,13 @@ export class FindSpaceOfServiceByNameUseCase {
   constructor(private spaceofservicesRepository: SpaceOfServiceRepository) {}
 
   async execute({
+    organizationId,
     name,
   }: FindSpaceOfServiceByNameUseCaseRequest): Promise<FindSpaceOfServiceByNameUseCaseResponse> {
-    const spaceOfService =
-      await this.spaceofservicesRepository.findByName(name);
+    const spaceOfService = await this.spaceofservicesRepository.findByName(
+      organizationId,
+      name,
+    );
 
     if (!spaceOfService) {
       return left(new ResourceNotFoundError(name));

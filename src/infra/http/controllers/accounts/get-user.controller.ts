@@ -35,7 +35,6 @@ export class GetUserController {
       }
     }
 
-    console.log(result.value);
     return { user: result.value.user };
   }
 }

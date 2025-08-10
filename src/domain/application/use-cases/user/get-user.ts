@@ -11,20 +11,22 @@ type GetUserUseCaseResponse = Either<
   UserNotFoundError,
   {
     user: {
-      id: string;
-      name: string;
-      email: string;
-      createdAt: Date;
-      updatedAt: Date;
+      _id: {
+        value: string;
+      };
+      props: {
+        name: string;
+        email: string;
+        createdAt: Date;
+        updatedAt: Date;
+      };
     };
   }
 >;
 
 @Injectable()
 export class GetUserUseCase {
-  constructor(
-    private usersRepository: UserRepository,
-  ) {}
+  constructor(private usersRepository: UserRepository) {}
 
   async execute({
     id,
@@ -37,11 +39,15 @@ export class GetUserUseCase {
 
     return right({
       user: {
-        id: user.id.toString(),
-        name: user.name,
-        email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
+        _id: {
+          value: user.id.toString(),
+        },
+        props: {
+          name: user.name,
+          email: user.email,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
       },
     });
   }

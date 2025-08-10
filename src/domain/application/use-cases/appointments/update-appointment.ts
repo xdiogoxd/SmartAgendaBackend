@@ -81,8 +81,10 @@ export class UpdateAppointmentUseCase {
     }
 
     if (spaceOfServiceId != appointment.spaceOfServiceId.toString()) {
-      const spaceOfService =
-        await this.spaceOfServiceRepository.findById(spaceOfServiceId);
+      const spaceOfService = await this.spaceOfServiceRepository.findById(
+        organizationId,
+        spaceOfServiceId,
+      );
       if (!spaceOfService) {
         return left(new ResourceNotFoundError(spaceOfServiceId));
       }

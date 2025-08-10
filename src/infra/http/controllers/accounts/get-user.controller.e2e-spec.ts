@@ -36,15 +36,17 @@ describe('Get user (E2E)', () => {
       .get('/users')
       .set('Authorization', `Bearer ${accessToken}`);
 
-    console.log(response.body);
-
     expect(response.statusCode).toBe(201);
     expect(response.body.user).toEqual({
-      id: user.id.toString(),
-      name: user.name,
-      email: user.email,
-      createdAt: expect.any(String),
-      updatedAt: null,
+      _id: {
+        value: user.id.toString(),
+      },
+      props: {
+        name: user.name,
+        email: user.email,
+        createdAt: expect.any(String),
+        updatedAt: null,
+      },
     });
 
     expect(user).toBeTruthy();

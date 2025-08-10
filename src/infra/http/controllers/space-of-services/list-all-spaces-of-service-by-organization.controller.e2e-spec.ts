@@ -35,7 +35,7 @@ describe('List all spaceOfServices (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /spaceOfServices - should be able to list spaceOfServices from specific organization', async () => {
+  test('[GET] /organizations/:organizationId/spaceOfServices - should be able to list spaceOfServices from specific organization', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -64,11 +64,8 @@ describe('List all spaceOfServices (E2E)', () => {
     const organizationId = organization1.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get('/spaceOfServices')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .get(`/organizations/${organizationId}/spaceOfServices`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.spacesOfService).toHaveLength(2);
@@ -79,21 +76,18 @@ describe('List all spaceOfServices (E2E)', () => {
     });
   });
 
-  test('[GET] /spaceOfServices - should not be able to list spaceOfServices from non-existing organization', async () => {
+  test('[GET] /organizations/:organizationId/spaceOfServices - should not be able to list spaceOfServices from non-existing organization', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
     const response = await request(app.getHttpServer())
-      .get('/spaceOfServices')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId: 'non-existing-id',
-      });
+      .get('/organizations/non-existing-id/spaceOfServices')
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });
 
-  test('[GET] /spaceOfServices - should return a empty array if organization has no spaceOfServices', async () => {
+  test('[GET] /organizations/:organizationId/spaceOfServices - should return a empty array if organization has no spaceOfServices', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -104,11 +98,8 @@ describe('List all spaceOfServices (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get('/spaceOfServices')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .get(`/organizations/${organizationId}/spaceOfServices`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.spacesOfService).toHaveLength(0);

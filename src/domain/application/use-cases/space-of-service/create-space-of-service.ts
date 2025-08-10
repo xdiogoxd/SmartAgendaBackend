@@ -41,8 +41,10 @@ export class CreateSpaceOfServiceUseCase {
       return left(new OrganizationNotFoundError(organizationId.toString()));
     }
 
-    const spaceWithSameName =
-      await this.spaceOfServiceRepository.findByName(name);
+    const spaceWithSameName = await this.spaceOfServiceRepository.findByName(
+      organizationId,
+      name,
+    );
 
     if (spaceWithSameName) {
       return left(new DuplicatedSpaceOfServiceNameError(name));
