@@ -49,7 +49,7 @@ import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cas
 import { ListAppointmentsByMonthUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-month';
 import { DeleteAppointmentController } from './controllers/appointments/delete-appointment.controller';
 import { DeleteAppointmentUseCase } from '@/domain/application/use-cases/appointments/delete-appointment';
-import { GetAllOrganizationsByUserController } from './controllers/organizations/get-all-organizations-by-user';
+import { GetAllOrganizationsByUserController } from './controllers/organizations/get-all-organizations-by-user.controller';
 import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases/organization/get-all-organizations-by-user';
 import { GetUserController } from './controllers/accounts/get-user.controller';
 import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
