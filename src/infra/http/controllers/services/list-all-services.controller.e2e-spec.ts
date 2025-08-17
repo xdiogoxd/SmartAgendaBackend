@@ -35,7 +35,7 @@ describe('List all services (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /services - should be able to list services from specific organization', async () => {
+  test('[GET] /organizations/:organizationId/services - should be able to list services from specific organization', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -64,11 +64,8 @@ describe('List all services (E2E)', () => {
     const organizationId = organization1.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get('/services')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .get(`/organizations/${organizationId}/services`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.services).toHaveLength(2);
@@ -79,21 +76,18 @@ describe('List all services (E2E)', () => {
     });
   });
 
-  test('[GET] /services - should not be able to list services from non-existing organization', async () => {
+  test('[GET] /organizations/:organizationId/services - should not be able to list services from non-existing organization', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
     const response = await request(app.getHttpServer())
-      .get('/services')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId: 'non-existing-id',
-      });
+      .get('/organizations/non-existing-id/services')
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });
 
-  test('[GET] /services - should return a empty array if organization has no services', async () => {
+  test('[GET] /organizations/:organizationId/services - should return a empty array if organization has no services', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -104,7 +98,7 @@ describe('List all services (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get('/services')
+      .get(`/organizations/${organizationId}/services`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         organizationId,

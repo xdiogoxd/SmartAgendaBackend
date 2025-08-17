@@ -4,6 +4,7 @@ import {
   ConflictException,
   Controller,
   HttpCode,
+  Param,
   Post,
 } from '@nestjs/common';
 
@@ -13,24 +14,24 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { CreateAppointmentUseCase } from '@/domain/application/use-cases/appointments/create-appointment';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const createAppointmentBodySchema = z.object({
-  date: z.string().transform((dateString) => new Date(dateString)),
-  description: z.string(),
-  observations: z.string(),
-  organizationId: z.string(),
   serviceId: z.string(),
   spaceOfServiceId: z.string(),
   clientId: z.string(),
+  date: z.string().transform((dateString) => new Date(dateString)),
+  description: z.string(),
+  observations: z.string(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(createAppointmentBodySchema);
 
 type CreateAppointmentBodySchema = z.infer<typeof createAppointmentBodySchema>;
 
-@Controller('/appointments')
+@Controller('/organizations/:organizationId/appointments')
 export class CreateAppointmentController {
   constructor(private createAppointment: CreateAppointmentUseCase) {}
 
@@ -39,9 +40,9 @@ export class CreateAppointmentController {
   async handle(
     @Body(bodyValidationPipe) body: CreateAppointmentBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
   ) {
     const {
-      organizationId,
       date,
       description,
       observations,
@@ -72,7 +73,7 @@ export class CreateAppointmentController {
     }
 
     return {
-      appointment: result.value.appointment,
+      appointment: AppointmentPresenter.toHTTP(result.value.appointment),
     };
   }
 }

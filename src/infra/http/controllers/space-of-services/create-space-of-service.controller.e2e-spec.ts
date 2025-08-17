@@ -39,7 +39,7 @@ describe('Create spaceofservice (E2E)', () => {
     await app.init();
   });
 
-  test('[POST] /spaceofservices - should be able to create a spaceofservice', async () => {
+  test('[POST] /organizations/:organizationId/spaceofservices - should be able to create a spaceofservice', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -51,7 +51,7 @@ describe('Create spaceofservice (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .post('/spaceofservices')
+      .post(`/organizations/${organizationId}/spaceofservices`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         organizationId,
@@ -70,7 +70,7 @@ describe('Create spaceofservice (E2E)', () => {
     expect(spaceOfService).toBeTruthy();
   });
 
-  test('[POST] /spaceofservices - should not be able to create a spaceofservice with a name already used', async () => {
+  test('[POST] /organizations/:organizationId/spaceofservices - should not be able to create a spaceofservice with a name already used', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -89,7 +89,7 @@ describe('Create spaceofservice (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .post('/spaceofservices')
+      .post(`/organizations/${organizationId}/spaceofservices`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         organizationId,

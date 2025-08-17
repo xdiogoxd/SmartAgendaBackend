@@ -13,6 +13,7 @@ import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/res
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { UpdateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/update-space-of-service';
+import { SpaceOfServicePresenter } from '../../presenters/spaces-of-service-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -62,5 +63,10 @@ export class UpdateSpaceOfServiceController {
           throw new BadRequestException(result.value.message);
       }
     }
+    return {
+      spaceOfService: SpaceOfServicePresenter.toHTTP(
+        result.value.spaceOfService,
+      ),
+    };
   }
 }

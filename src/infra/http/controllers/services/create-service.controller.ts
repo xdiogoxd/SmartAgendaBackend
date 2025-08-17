@@ -4,6 +4,7 @@ import {
   ConflictException,
   Controller,
   HttpCode,
+  Param,
   Post,
 } from '@nestjs/common';
 
@@ -13,11 +14,11 @@ import { CreateServiceUseCase } from '@/domain/application/use-cases/service/cre
 import { DuplicatedServiceNameError } from '@/domain/application/use-cases/errors/duplicated-service-name-error';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ServicePresenter } from '../../presenters/services-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const createServiceBodySchema = z.object({
-  organizationId: z.string(),
   name: z.string(),
   description: z.string(),
   price: z.number(),
@@ -29,7 +30,7 @@ const bodyValidationPipe = new ZodValidationPipe(createServiceBodySchema);
 
 type CreateServiceBodySchema = z.infer<typeof createServiceBodySchema>;
 
-@Controller('/services')
+@Controller('/organizations/:organizationId/services')
 export class CreateServiceController {
   constructor(private createService: CreateServiceUseCase) {}
 
@@ -38,9 +39,9 @@ export class CreateServiceController {
   async handle(
     @Body(bodyValidationPipe) body: CreateServiceBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
   ) {
-    const { organizationId, name, description, price, duration, observations } =
-      body;
+    const { name, description, price, duration, observations } = body;
 
     const userId = user.sub;
 
@@ -63,7 +64,7 @@ export class CreateServiceController {
     }
 
     return {
-      service: result.value.service,
+      service: ServicePresenter.toHTTP(result.value.service),
     };
   }
 }

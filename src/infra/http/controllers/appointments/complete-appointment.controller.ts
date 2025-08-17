@@ -15,32 +15,23 @@ import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { CompleteAppointmentUseCase } from '@/domain/application/use-cases/appointments/complete-appointment';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
-const completeAppointmentBodySchema = z.object({
-  organizationId: z.string(),
-});
-
-const bodyValidationPipe = new ZodValidationPipe(completeAppointmentBodySchema);
-
-type CompleteAppointmentBodySchema = z.infer<
-  typeof completeAppointmentBodySchema
->;
-
-@Controller('/appointments/:appointmentId/complete')
+@Controller(
+  '/organizations/:organizationId/appointments/:appointmentId/complete',
+)
 export class CompleteAppointmentController {
   constructor(private completeAppointment: CompleteAppointmentUseCase) {}
 
   @Patch()
   @HttpCode(200)
   async handle(
-    @Body(bodyValidationPipe) body: CompleteAppointmentBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
     @Param('appointmentId') appointmentId: string,
   ) {
-    const { organizationId } = body;
-
     const userId = user.sub;
 
     const result = await this.completeAppointment.execute({
@@ -60,7 +51,7 @@ export class CompleteAppointmentController {
     }
 
     return {
-      appointment: result.value.appointment,
+      appointment: AppointmentPresenter.toHTTP(result.value.appointment),
     };
   }
 }

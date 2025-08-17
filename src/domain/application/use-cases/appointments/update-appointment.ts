@@ -97,10 +97,13 @@ export class UpdateAppointmentUseCase {
     appointment.spaceOfServiceId = updatedSpaceOfServiceId;
     appointment.clientId = updatedClientId;
 
-    await this.appointmentRepository.save(appointmentId, appointment);
+    const responseAppointment = await this.appointmentRepository.save(
+      appointmentId,
+      appointment,
+    );
 
     return right({
-      appointment,
+      appointment: responseAppointment,
     });
   }
 }

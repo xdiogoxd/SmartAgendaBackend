@@ -37,7 +37,7 @@ describe('Create service (E2E)', () => {
     await app.init();
   });
 
-  test('[POST] /services - should be able to create a service', async () => {
+  test('[POST] /organizations/:organizationId/services - should be able to create a service', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -49,10 +49,9 @@ describe('Create service (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .post('/services')
+      .post(`/organizations/${organizationId}/services`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: 'Hair cut',
         description: 'Hair cut description',
         price: 50,
@@ -71,7 +70,7 @@ describe('Create service (E2E)', () => {
     expect(service).toBeTruthy();
   });
 
-  test('[POST] /services - should not be able to create a service with a name already used', async () => {
+  test('[POST] /organizations/:organizationId/services - should not be able to create a service with a name already used', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -88,10 +87,9 @@ describe('Create service (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .post('/services')
+      .post(`/organizations/${organizationId}/services`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: 'New Hair cut',
         description: 'Hair cut description',
         price: 50,

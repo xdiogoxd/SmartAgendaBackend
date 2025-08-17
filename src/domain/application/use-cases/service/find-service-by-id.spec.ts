@@ -24,7 +24,7 @@ describe('Find Service By Id', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.service.id).toEqual('service-1');
+      expect(result.value.service.id.toString()).toEqual('service-1');
     }
   });
 

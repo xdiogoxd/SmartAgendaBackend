@@ -47,7 +47,7 @@ describe('Reschedule appointment (E2E)', () => {
     await app.init();
   });
 
-  test('[RESCHEDULE] /appointments/:id/reschedule - should be able to reschedule an appointment', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/reschedule - should be able to reschedule an appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -79,11 +79,12 @@ describe('Reschedule appointment (E2E)', () => {
     const date = faker.date.future();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/reschedule`)
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointmentId}/reschedule`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         date,
-        organizationId,
       });
 
     expect(response.statusCode).toBe(200);
@@ -98,7 +99,7 @@ describe('Reschedule appointment (E2E)', () => {
     expect(rescheduleedAppointment.date).toEqual(date);
   });
 
-  test('[RESCHEDULE] /appointments/:id/reschedule - should not be able to reschedule a non-existing appointment', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/reschedule - should not be able to reschedule a non-existing appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -111,17 +112,18 @@ describe('Reschedule appointment (E2E)', () => {
     const date = faker.date.future();
 
     const response = await request(app.getHttpServer())
-      .patch('/appointments/non-existing-id/reschedule')
+      .patch(
+        `/organizations/${organizationId}/appointments/non-existing-id/reschedule`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         date,
-        organizationId,
       });
 
     expect(response.statusCode).toBe(404);
   });
 
-  test('[RESCHEDULE] /appointments/:id - should not be able to reschedule an completed appointement', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/reschedule - should not be able to reschedule an completed appointement', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -153,16 +155,15 @@ describe('Reschedule appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/reschedule`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointmentId}/reschedule`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });
 
-  test('[RESCHEDULE] /appointments/:id - should not be able to reschedule with date already taken', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/reschedule - should not be able to reschedule with date already taken', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -206,11 +207,12 @@ describe('Reschedule appointment (E2E)', () => {
     const appointment1Id = appointment1.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointment1Id}/reschedule`)
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointment1Id}/reschedule`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         date,
-        organizationId,
       });
 
     expect(response.statusCode).toBe(409);

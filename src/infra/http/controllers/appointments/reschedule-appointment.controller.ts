@@ -16,12 +16,12 @@ import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { RescheduleAppointmentUseCase } from '@/domain/application/use-cases/appointments/reschedule-appointment';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const rescheduleAppointmentBodySchema = z.object({
   date: z.coerce.date(),
-  organizationId: z.string(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(
@@ -32,7 +32,9 @@ type RescheduleAppointmentBodySchema = z.infer<
   typeof rescheduleAppointmentBodySchema
 >;
 
-@Controller('/appointments/:appointmentId/reschedule')
+@Controller(
+  '/organizations/:organizationId/appointments/:appointmentId/reschedule',
+)
 export class RescheduleAppointmentController {
   constructor(private rescheduleAppointment: RescheduleAppointmentUseCase) {}
 
@@ -41,9 +43,10 @@ export class RescheduleAppointmentController {
   async handle(
     @Body(bodyValidationPipe) body: RescheduleAppointmentBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
     @Param('appointmentId') appointmentId: string,
   ) {
-    const { date, organizationId } = body;
+    const { date } = body;
 
     const userId = user.sub;
 
@@ -65,7 +68,7 @@ export class RescheduleAppointmentController {
     }
 
     return {
-      appointment: result.value.appointment,
+      appointment: AppointmentPresenter.toHTTP(result.value.appointment),
     };
   }
 }

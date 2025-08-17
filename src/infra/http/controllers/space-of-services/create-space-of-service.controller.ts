@@ -4,6 +4,7 @@ import {
   ConflictException,
   Controller,
   HttpCode,
+  Param,
   Post,
 } from '@nestjs/common';
 
@@ -13,11 +14,11 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { CreateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/create-space-of-service';
 import { DuplicatedSpaceOfServiceNameError } from '@/domain/application/use-cases/errors/duplicated-space-of-service-name-error';
+import { SpaceOfServicePresenter } from '../../presenters/spaces-of-service-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const createSpaceOfServiceBodySchema = z.object({
-  organizationId: z.string(),
   name: z.string(),
   description: z.string(),
 });
@@ -30,7 +31,7 @@ type CreateSpaceOfServiceBodySchema = z.infer<
   typeof createSpaceOfServiceBodySchema
 >;
 
-@Controller('/spaceofservices')
+@Controller('organizations/:organizationId/spaceofservices')
 export class CreateSpaceOfServiceController {
   constructor(private createSpaceOfService: CreateSpaceOfServiceUseCase) {}
 
@@ -39,8 +40,9 @@ export class CreateSpaceOfServiceController {
   async handle(
     @Body(bodyValidationPipe) body: CreateSpaceOfServiceBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
   ) {
-    const { organizationId, name, description } = body;
+    const { name, description } = body;
 
     const userId = user.sub;
 
@@ -60,7 +62,9 @@ export class CreateSpaceOfServiceController {
     }
 
     return {
-      spaceOfService: result.value.spaceOfService,
+      spaceOfService: SpaceOfServicePresenter.toHTTP(
+        result.value.spaceOfService,
+      ),
     };
   }
 }

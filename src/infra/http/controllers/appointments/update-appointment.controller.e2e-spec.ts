@@ -45,7 +45,7 @@ describe('Update appointment (E2E)', () => {
     await app.init();
   });
 
-  test('[UPDATE] /appointments/:id/update - should be able to update an appointment', async () => {
+  test('[PATCH] organizations/:organizationId/appointments/:id - should be able to update an appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -75,10 +75,9 @@ describe('Update appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/update`)
+      .patch(`/organizations/${organizationId}/appointments/${appointmentId}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         description: 'Updated description',
         observations: 'Updated observations',
         serviceId: service.id.toString(),
@@ -89,7 +88,7 @@ describe('Update appointment (E2E)', () => {
     expect(response.statusCode).toBe(200);
   });
 
-  test('[UPDATE] /appointments/:id/update - should not be able to update a non-existing appointment', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id - should not be able to update a non-existing appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -110,10 +109,9 @@ describe('Update appointment (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch('/appointments/non-existing-id/update')
+      .patch(`/organizations/${organizationId}/appointments/non-existing-id`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         description: 'Updated description',
         observations: 'Updated observations',
         serviceId: service.id.toString(),

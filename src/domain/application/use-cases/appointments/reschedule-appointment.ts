@@ -77,13 +77,13 @@ export class RescheduleAppointmentUseCase {
 
     appointment.date = date;
 
-    await this.appointmentRepository.save(
+    const responseAppointment = await this.appointmentRepository.save(
       appointment.id.toString(),
       appointment,
     );
 
     return right({
-      appointment,
+      appointment: responseAppointment,
     });
   }
 }

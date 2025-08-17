@@ -46,7 +46,7 @@ describe('Cancel appointment (E2E)', () => {
     await app.init();
   });
 
-  test('[CANCEL] /appointments/:id/cancel - should be able to cancel an appointment', async () => {
+  test('[CANCEL] organizations/:organizationId/appointments/:id/cancel - should be able to cancel an appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -76,11 +76,10 @@ describe('Cancel appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/cancel`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointmentId}/cancel`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
 
@@ -105,11 +104,10 @@ describe('Cancel appointment (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch('/appointments/non-existing-id/cancel')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/non-existing-id/cancel`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(404);
   });
@@ -146,11 +144,10 @@ describe('Cancel appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/cancel`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointmentId}/cancel`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });

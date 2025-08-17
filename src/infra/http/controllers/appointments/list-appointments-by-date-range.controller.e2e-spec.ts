@@ -47,7 +47,7 @@ describe('List appointments by date range (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /appointments/list/:organizationId/date - should be able to list appointments by date range', async () => {
+  test('[GET] /organizations/:organizationId/appointments/list/:startDate/:endDate - should be able to list appointments by date range', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -104,50 +104,56 @@ describe('List appointments by date range (E2E)', () => {
       date: addDays(firstDay, 3),
     });
 
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
-      .get(`/appointments/list/${organization.id.toString()}/date`)
+      .get(`/organizations/${organizationId}/appointments/list/`)
       .set('Authorization', `Bearer ${accessToken}`)
       .query({
-        startDate,
-        endDate,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
       });
 
     expect(response.statusCode).toBe(200);
     expect(response.body.appointments.length).toBe(4);
   });
 
-  test('[GET] /appointments/list/:organizationId/date - should not be able to list appointments without required fields', async () => {
+  test('[GET] /organizations/:organizationId/appointments/list/:startDate/:endDate - should not be able to list appointments without required fields', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
     const organization = await organizationFactory.makePrismaOrganization({
       ownerId: user.id,
     });
 
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
-      .get(`/appointments/list/${organization.id.toString()}/date`)
+      .get(`/organizations/${organizationId}/appointments/list/`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({});
+      .query({});
 
     expect(response.statusCode).toBe(400);
   });
 
-  test('[GET] /appointments/list/:organizationId/date - should not be able to list appointments with invalid date range', async () => {
+  test('[GET] /organizations/:organizationId/appointments/list/:startDate/:endDate - should not be able to list appointments with invalid date range', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
     const organization = await organizationFactory.makePrismaOrganization({
       ownerId: user.id,
     });
+
+    const organizationId = organization.id.toString();
 
     const startDate = new Date();
     const endDate = new Date();
     endDate.setDate(endDate.getDate() - 7); // End date before start date
 
     const response = await request(app.getHttpServer())
-      .get(`/appointments/list/${organization.id.toString()}/date`)
+      .get(`/organizations/${organizationId}/appointments/list/`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        startDate,
-        endDate,
+      .query({
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
       });
 
     expect(response.statusCode).toBe(400);

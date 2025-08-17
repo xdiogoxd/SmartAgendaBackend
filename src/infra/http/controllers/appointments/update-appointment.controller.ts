@@ -14,11 +14,11 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { UpdateAppointmentUseCase } from '@/domain/application/use-cases/appointments/update-appointment';
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const updateAppointmentBodySchema = z.object({
-  organizationId: z.string(),
   description: z.string(),
   observations: z.string(),
   serviceId: z.string(),
@@ -30,7 +30,7 @@ const bodyValidationPipe = new ZodValidationPipe(updateAppointmentBodySchema);
 
 type UpdateAppointmentBodySchema = z.infer<typeof updateAppointmentBodySchema>;
 
-@Controller('/appointments/:appointmentId/update')
+@Controller('/organizations/:organizationId/appointments/:appointmentId')
 export class UpdateAppointmentController {
   constructor(private updateAppointment: UpdateAppointmentUseCase) {}
 
@@ -39,16 +39,11 @@ export class UpdateAppointmentController {
   async handle(
     @Body(bodyValidationPipe) body: UpdateAppointmentBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
     @Param('appointmentId') appointmentId: string,
   ) {
-    const {
-      organizationId,
-      description,
-      observations,
-      serviceId,
-      spaceOfServiceId,
-      clientId,
-    } = body;
+    const { description, observations, serviceId, spaceOfServiceId, clientId } =
+      body;
 
     const userId = user.sub;
 
@@ -72,7 +67,7 @@ export class UpdateAppointmentController {
     }
 
     return {
-      appointment: result.value.appointment,
+      appointment: AppointmentPresenter.toHTTP(result.value.appointment),
     };
   }
 }

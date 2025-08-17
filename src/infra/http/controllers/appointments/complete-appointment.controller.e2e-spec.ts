@@ -47,7 +47,7 @@ describe('Complete appointment (E2E)', () => {
     await app.init();
   });
 
-  test('[COMPLETE] /appointments/:id/complete - should be able to complete an appointment', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/complete - should be able to complete an appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -77,11 +77,10 @@ describe('Complete appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/complete`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointmentId}/complete`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
 
@@ -95,7 +94,7 @@ describe('Complete appointment (E2E)', () => {
     expect(completeedAppointment.finishedAt).toBeTruthy();
   });
 
-  test('[COMPLETE] /appointments/:id/complete - should not be able to complete a non-existing appointment', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/complete - should not be able to complete a non-existing appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -106,16 +105,15 @@ describe('Complete appointment (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch('/appointments/non-existing-id/complete')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/non-existing-id/complete`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(404);
   });
 
-  test('[COMPLETE] /appointments/:id - should not be able to complete an completed appointement', async () => {
+  test('[PATCH] /organizations/:organizationId/appointments/:id/complete - should not be able to complete an completed appointement', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -147,11 +145,10 @@ describe('Complete appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch(`/appointments/${appointmentId}/complete`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .patch(
+        `/organizations/${organizationId}/appointments/${appointmentId}/complete`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });

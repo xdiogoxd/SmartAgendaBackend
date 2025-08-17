@@ -32,7 +32,9 @@ describe('Find SpaceOfService By Id', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.spaceOfService.id).toEqual('spaceofservice-1');
+      expect(result.value.spaceOfService.id.toString()).toEqual(
+        'spaceofservice-1',
+      );
     }
   });
 

@@ -46,7 +46,7 @@ describe('Delete appointment (E2E)', () => {
     await app.init();
   });
 
-  test('[DELETE] /appointments/:id/delete - should be able to delete an appointment', async () => {
+  test('[DELETE] /organizations/:organizationId/appointments/:id - should be able to delete an appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -75,11 +75,8 @@ describe('Delete appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .delete(`/appointments/${appointmentId}/delete`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .delete(`/organizations/${organizationId}/appointments/${appointmentId}`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(204);
 
@@ -92,7 +89,7 @@ describe('Delete appointment (E2E)', () => {
     expect(deletedAppointment).toBeNull();
   });
 
-  test('[DELETE] /appointments/:id/delete - should not be able to delete a non-existing appointment', async () => {
+  test('[DELETE] /organizations/:organizationId/appointments/:id - should not be able to delete a non-existing appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -103,16 +100,13 @@ describe('Delete appointment (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .delete('/appointments/non-existing-id/delete')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .delete(`/organizations/${organizationId}/appointments/non-existing-id`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(404);
   });
 
-  test('[DELETE] /appointments/:id/delete - should not be able to delete a finished appointment', async () => {
+  test('[DELETE] /organizations/:organizationId/appointments/:id - should not be able to delete a finished appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -143,11 +137,8 @@ describe('Delete appointment (E2E)', () => {
     const appointmentId = appointment.id.toString();
 
     const response = await request(app.getHttpServer())
-      .delete(`/appointments/${appointmentId}/delete`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId,
-      });
+      .delete(`/organizations/${organizationId}/appointments/${appointmentId}`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });

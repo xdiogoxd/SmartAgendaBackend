@@ -34,7 +34,7 @@ describe('Find service by name (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /services/name/:name - should be able to get a service by name', async () => {
+  test('[GET] /organizations/:organizationId/services/name/:name - should be able to get a service by name', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -47,12 +47,11 @@ describe('Find service by name (E2E)', () => {
       organizationId: organization.id,
     });
 
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
-      .get(`/services/name/${service.name}`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        organizationId: organization.id.toString(),
-      });
+      .get(`/organizations/${organizationId}/services/name/${service.name}`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
@@ -63,7 +62,7 @@ describe('Find service by name (E2E)', () => {
     });
   });
 
-  test('[GET] /services/name/:name - should not be able to get a non-existing service', async () => {
+  test('[GET] /organizations/:organizationId/services/name/:name - should not be able to get a non-existing service', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -71,8 +70,12 @@ describe('Find service by name (E2E)', () => {
       ownerId: user.id,
     });
 
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
-      .get('/services/name/non-existing-service')
+      .get(
+        `/organizations/${organizationId}/services/name/non-existing-service`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         organizationId: organization.id.toString(),

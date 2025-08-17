@@ -1,19 +1,18 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   Get,
   HttpCode,
   Param,
-  Query,
 } from '@nestjs/common';
-
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { ListAppointmentsByMonthUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-month';
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -28,20 +27,21 @@ type ListAppointmentsByMonthParamSchema = z.infer<
   typeof listAppointmentsByMonthParamSchema
 >;
 
-@Controller('/appointments/list/:organizationId/month')
+@Controller(
+  '/organizations/:organizationId/appointments/monthYear/:month/:year',
+)
 export class ListAppointmentsByMonthController {
   constructor(private listAppointmentByMonth: ListAppointmentsByMonthUseCase) {}
 
   @Get()
   @HttpCode(200)
   async handle(
-    @Query(new ZodValidationPipe(listAppointmentsByMonthParamSchema))
+    @Param(new ZodValidationPipe(listAppointmentsByMonthParamSchema))
     params: ListAppointmentsByMonthParamSchema,
     @CurrentUser() user: UserPayload,
     @Param('organizationId') organizationId: string,
   ) {
     const { month, year } = params;
-
     const userId = user.sub;
 
     const result = await this.listAppointmentByMonth.execute({
@@ -60,7 +60,7 @@ export class ListAppointmentsByMonthController {
     }
 
     return {
-      appointments: result.value.appointments,
+      appointments: result.value.appointments.map(AppointmentPresenter.toHTTP),
     };
   }
 }

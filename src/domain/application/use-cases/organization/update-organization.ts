@@ -59,10 +59,13 @@ export class UpdateOrganizationUseCase {
     organization.name = name;
     organization.ownerId = new UniqueEntityID(ownerId);
 
-    await this.organizationRepository.save(id, organization);
+    const responseOrganization = await this.organizationRepository.save(
+      id,
+      organization,
+    );
 
     return right({
-      organization,
+      organization: responseOrganization,
     });
   }
 }

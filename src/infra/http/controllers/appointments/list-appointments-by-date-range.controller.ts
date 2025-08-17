@@ -14,19 +14,21 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-date-range';
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
 
 // todo: add a filter per organization and check autorization to
-//  perform actions based on user role inside of the organization
-const listAppointmentsByDateRangeParamSchema = z.object({
+//  perform actions based on user role inside of the organizatio
+
+const listAppointmentsByDateRangeQuerySchema = z.object({
   startDate: z.coerce.date(),
   endDate: z.coerce.date(),
 });
 
-type ListAppointmentssByDateRangeBodySchema = z.infer<
-  typeof listAppointmentsByDateRangeParamSchema
+type ListAppointmentsByDateRangeQuerySchema = z.infer<
+  typeof listAppointmentsByDateRangeQuerySchema
 >;
 
-@Controller('/appointments/list/:organizationId/date')
+@Controller('/organizations/:organizationId/appointments/list')
 export class ListAppointmentsByDateRangeController {
   constructor(
     private listAppointmentsByDateRange: ListAppointmentsByDateRangeUseCase,
@@ -35,13 +37,12 @@ export class ListAppointmentsByDateRangeController {
   @Get()
   @HttpCode(200)
   async handle(
-    @Query(new ZodValidationPipe(listAppointmentsByDateRangeParamSchema))
-    params: ListAppointmentssByDateRangeBodySchema,
+    @Query(new ZodValidationPipe(listAppointmentsByDateRangeQuerySchema))
+    query: ListAppointmentsByDateRangeQuerySchema,
     @CurrentUser() user: UserPayload,
     @Param('organizationId') organizationId: string,
   ) {
-    const { startDate, endDate } = params;
-
+    const { startDate, endDate } = query;
     const userId = user.sub;
 
     const result = await this.listAppointmentsByDateRange.execute({
@@ -60,7 +61,7 @@ export class ListAppointmentsByDateRangeController {
     }
 
     return {
-      appointments: result.value.appointments,
+      appointments: result.value.appointments.map(AppointmentPresenter.toHTTP),
     };
   }
 }

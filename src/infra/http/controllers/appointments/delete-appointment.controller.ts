@@ -18,27 +18,18 @@ import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/res
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
-const deleteAppointmentBodySchema = z.object({
-  organizationId: z.string(),
-});
 
-const bodyValidationPipe = new ZodValidationPipe(deleteAppointmentBodySchema);
-
-type DeleteAppointmentBodySchema = z.infer<typeof deleteAppointmentBodySchema>;
-
-@Controller('/appointments/:appointmentId/delete')
+@Controller('/organizations/:organizationId/appointments/:appointmentId')
 export class DeleteAppointmentController {
   constructor(private deleteAppointment: DeleteAppointmentUseCase) {}
 
   @Delete()
   @HttpCode(204)
   async handle(
-    @Body(bodyValidationPipe) body: DeleteAppointmentBodySchema,
     @CurrentUser() user: UserPayload,
+    @Param('organizationId') organizationId: string,
     @Param('appointmentId') appointmentId: string,
   ) {
-    const { organizationId } = body;
-
     const userId = user.sub;
 
     const result = await this.deleteAppointment.execute({

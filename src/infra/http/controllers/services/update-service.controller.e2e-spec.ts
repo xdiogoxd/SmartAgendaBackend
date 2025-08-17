@@ -37,7 +37,7 @@ describe('Update Service (E2E)', () => {
     await app.init();
   });
 
-  test('[PATCH] /services/id/:id', async () => {
+  test('[PATCH] /organizations/:organizationId/services/id/:id', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -54,10 +54,9 @@ describe('Update Service (E2E)', () => {
     });
 
     const response = await request(app.getHttpServer())
-      .patch(`/services/id/${service.id}`)
+      .patch(`/organizations/${organizationId}/services/id/${service.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: 'Updated Service',
         description: 'Updated Description',
         price: 150,
@@ -77,7 +76,7 @@ describe('Update Service (E2E)', () => {
     expect(serviceOnDatabase?.description).toBe('Updated Description');
   });
 
-  test('[PATCH] /services/id/:id (service not found)', async () => {
+  test('[PATCH] /organizations/:organizationId/services/id/:id (service not found)', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -89,10 +88,9 @@ describe('Update Service (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .patch('/services/id/invalid-id')
+      .patch(`/organizations/${organizationId}/services/id/invalid-id`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: 'Updated Service',
         description: 'Updated Description',
         price: 150,
@@ -103,7 +101,7 @@ describe('Update Service (E2E)', () => {
     expect(response.status).toBe(404);
   });
 
-  test('[PATCH] /services/id/:id (invalid body)', async () => {
+  test('[PATCH] /organizations/:organizationId/services/id/:id (invalid body)', async () => {
     const user = await userFactory.makePrismaUser();
 
     const accessToken = await userFactory.makeToken(user.id.toString());
@@ -120,10 +118,9 @@ describe('Update Service (E2E)', () => {
     });
 
     const response = await request(app.getHttpServer())
-      .patch(`/services/id/${service.id}`)
+      .patch(`/organizations/${organizationId}/services/id/${service.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        organizationId,
         name: '',
         description: '',
         price: 'invalid-price',

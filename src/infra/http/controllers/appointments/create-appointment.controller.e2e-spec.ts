@@ -46,7 +46,7 @@ describe('Create appointment (E2E)', () => {
     await app.init();
   });
 
-  test('[POST] /appointments - should be able to create an appointment', async () => {
+  test('[POST] /organizations/:organizationId/appointments - should be able to create an appointment', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -73,13 +73,12 @@ describe('Create appointment (E2E)', () => {
     const date = faker.date.future();
 
     const response = await request(app.getHttpServer())
-      .post('/appointments')
+      .post(`/organizations/${organizationId.toString()}/appointments`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         date,
         description: 'Appointment Test',
         observations: 'Appointment Test',
-        organizationId: organizationId.toString(),
         serviceId: serviceId.toString(),
         spaceOfServiceId: spaceOfServiceId.toString(),
         clientId: user.id.toString(),
@@ -95,9 +94,9 @@ describe('Create appointment (E2E)', () => {
     expect(appointment.description).toBe('Appointment Test');
   });
 
-  test('[POST] /appointments - should not be able to create an appointment without authentication', async () => {
+  test('[POST] /organizations/:organizationId/appointments - should not be able to create an appointment without authentication', async () => {
     const response = await request(app.getHttpServer())
-      .post('/appointments')
+      .post(`/organizations/randomId/appointments`)
       .send({
         name: 'Appointment Test',
       });
@@ -105,19 +104,25 @@ describe('Create appointment (E2E)', () => {
     expect(response.statusCode).toBe(401);
   });
 
-  test('[POST] /appointments - should not be able to create an appointment without required fields', async () => {
+  test('[POST] /organizations/:organizationId/appointments - should not be able to create an appointment without required fields', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
+    const organization = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
+
+    const organizationId = organization.id.toString();
+
     const response = await request(app.getHttpServer())
-      .post('/appointments')
+      .post(`/organizations/${organizationId}/appointments`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({});
 
     expect(response.statusCode).toBe(400);
   });
 
-  test('[POST] /appointments - should not be able to create an appointment with duplicated date', async () => {
+  test('[POST] /organizations/:organizationId/appointments - should not be able to create an appointment with duplicated date', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -152,7 +157,7 @@ describe('Create appointment (E2E)', () => {
     });
 
     await request(app.getHttpServer())
-      .post('/appointments')
+      .post(`/organizations/${organizationId.toString()}/appointments`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         date,
@@ -165,13 +170,12 @@ describe('Create appointment (E2E)', () => {
       });
 
     const response = await request(app.getHttpServer())
-      .post('/appointments')
+      .post(`/organizations/${organizationId.toString()}/appointments`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         date,
         description: 'Appointment Test',
         observations: 'Appointment Test',
-        organizationId: organizationId.toString(),
         serviceId: serviceId.toString(),
         spaceOfServiceId: spaceOfServiceId.toString(),
         clientId: user.id.toString(),

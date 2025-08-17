@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { FindServiceByIdUseCase } from '@/domain/application/use-cases/service/find-service-by-id';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { ServicePresenter } from '../../presenters/services-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -49,6 +50,6 @@ export class FindServiceByIdController {
       }
     }
 
-    return { service: result.value.service };
+    return { service: ServicePresenter.toHTTP(result.value.service) };
   }
 }

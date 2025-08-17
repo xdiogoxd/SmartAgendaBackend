@@ -49,7 +49,7 @@ describe('Update Service', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.service.id).toEqual('service-1');
+      expect(result.value.service.id.toString()).toEqual('service-1');
       expect(result.value.service.name).toEqual('New Service Name');
       expect(result.value.service.description).toEqual('New Description');
       expect(result.value.service.duration).toEqual(60);

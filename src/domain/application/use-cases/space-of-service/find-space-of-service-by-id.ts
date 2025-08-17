@@ -2,6 +2,7 @@ import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
 
 export interface FindSpaceOfServiceByIdUseCaseRequest {
   organizationId: string;
@@ -11,13 +12,7 @@ export interface FindSpaceOfServiceByIdUseCaseRequest {
 type FindSpaceOfServiceByIdUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    spaceOfService: {
-      id: string;
-      name: string;
-      description: string;
-      createdAt?: Date;
-      updatedAt?: Date | null;
-    };
+    spaceOfService: SpaceOfService;
   }
 >;
 
@@ -39,13 +34,7 @@ export class FindSpaceOfServiceByIdUseCase {
     }
 
     return right({
-      spaceOfService: {
-        id: spaceofservice.id.toString(),
-        name: spaceofservice.name,
-        description: spaceofservice.description,
-        createdAt: spaceofservice.createdAt,
-        updatedAt: spaceofservice.updatedAt,
-      },
+      spaceOfService: spaceofservice,
     });
   }
 }

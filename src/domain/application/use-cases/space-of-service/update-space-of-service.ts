@@ -68,14 +68,14 @@ export class UpdateSpaceOfServiceUseCase {
     spaceOfService.name = name;
     spaceOfService.description = description;
 
-    await this.spaceOfServiceRepository.save(
+    const responseService = await this.spaceOfServiceRepository.save(
       organizationId,
       spaceOfService.id.toString(),
       spaceOfService,
     );
 
     return right({
-      spaceOfService,
+      spaceOfService: responseService,
     });
   }
 }

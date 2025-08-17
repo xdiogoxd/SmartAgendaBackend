@@ -2,6 +2,7 @@ import { ServiceRepository } from '@/domain/repositories/service-repository';
 import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { Service } from '@/domain/enterprise/entities/service';
 
 export interface FindServiceByNameUseCaseRequest {
   name: string;
@@ -10,14 +11,7 @@ export interface FindServiceByNameUseCaseRequest {
 type FindServiceByNameUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    service: {
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      duration: number;
-      observations: string | null;
-    } | null;
+    service: Service;
   }
 >;
 
@@ -35,14 +29,7 @@ export class FindServiceByNameUseCase {
     }
 
     return right({
-      service: {
-        id: service.id.toString(),
-        name: service.name,
-        description: service.description,
-        price: service.price,
-        duration: service.duration,
-        observations: service.observations ?? null,
-      },
+      service: service,
     });
   }
 }

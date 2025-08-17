@@ -48,6 +48,8 @@ export class UpdateScheduleUseCase {
     const schedules =
       await this.scheduleRepository.findAllByOrganizationId(organizationId);
 
+    let responseSchedules = [];
+
     for (let i = 0; i < days.length; i++) {
       const weekDay = days[i].weekDay;
 
@@ -67,12 +69,16 @@ export class UpdateScheduleUseCase {
       scheduleToUpdate.startHour = days[i].startHour;
       scheduleToUpdate.endHour = days[i].endHour;
 
-      await this.scheduleRepository.save(scheduleId, scheduleToUpdate);
+      const responseSchedule = await this.scheduleRepository.save(
+        scheduleId,
+        scheduleToUpdate,
+      );
+      responseSchedules.push(responseSchedule);
     }
 
     return right({
       schedule: {
-        schedules,
+        schedules: responseSchedules,
       },
     });
   }

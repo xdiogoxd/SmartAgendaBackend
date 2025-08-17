@@ -51,13 +51,13 @@ export class CompleteAppointmentUseCase {
     appointment.status = AppointmentStatus.FINISHED;
     appointment.finishedAt = new Date();
 
-    await this.appointmentRepository.save(
+    const responseAppointment = await this.appointmentRepository.save(
       appointment.id.toString(),
       appointment,
     );
 
     return right({
-      appointment,
+      appointment: responseAppointment,
     });
   }
 }

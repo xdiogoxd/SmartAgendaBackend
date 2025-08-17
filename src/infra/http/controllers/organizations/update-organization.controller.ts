@@ -14,6 +14,7 @@ import { UpdateOrganizationUseCase } from '@/domain/application/use-cases/organi
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { OrganizationAlreadyExistsError } from '@/domain/application/use-cases/errors/organization-already-exist-error';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { OrganizationPresenter } from '../../presenters/organizations-presenter';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -57,6 +58,8 @@ export class UpdateOrganizationController {
       }
     }
 
-    return { organization: result.value.organization };
+    return {
+      organization: OrganizationPresenter.toHTTP(result.value.organization),
+    };
   }
 }
