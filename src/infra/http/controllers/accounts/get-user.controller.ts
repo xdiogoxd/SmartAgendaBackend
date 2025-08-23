@@ -10,6 +10,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { UserNotFoundError } from '@/domain/application/use-cases/errors/user-not-found-error';
 import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
+import { UserPresenter } from '../../presenters/users-presenter';
 
 @Controller('/users')
 export class GetUserController {
@@ -35,6 +36,6 @@ export class GetUserController {
       }
     }
 
-    return { user: result.value.user };
+    return { user: UserPresenter.toHTTP(result.value.user) };
   }
 }

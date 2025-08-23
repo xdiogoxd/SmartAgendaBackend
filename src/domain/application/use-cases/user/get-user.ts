@@ -2,6 +2,7 @@ import { UserRepository } from '@/domain/repositories/user-repository';
 import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 import { UserNotFoundError } from '../errors/user-not-found-error';
+import { User } from '@/domain/enterprise/entities/user';
 
 export interface GetUserUseCaseRequest {
   id: string;
@@ -10,17 +11,7 @@ export interface GetUserUseCaseRequest {
 type GetUserUseCaseResponse = Either<
   UserNotFoundError,
   {
-    user: {
-      _id: {
-        value: string;
-      };
-      props: {
-        name: string;
-        email: string;
-        createdAt: Date;
-        updatedAt: Date;
-      };
-    };
+    user: User;
   }
 >;
 
@@ -38,17 +29,7 @@ export class GetUserUseCase {
     }
 
     return right({
-      user: {
-        _id: {
-          value: user.id.toString(),
-        },
-        props: {
-          name: user.name,
-          email: user.email,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        },
-      },
+      user: user,
     });
   }
 }

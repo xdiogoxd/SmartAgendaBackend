@@ -36,7 +36,7 @@ import { FindSpaceOfServiceByIdUseCase } from '@/domain/application/use-cases/sp
 import { CreateAppointmentController } from './controllers/appointments/create-appointment.controller';
 import { CancelAppointmentController } from './controllers/appointments/cancel-appointment.controller';
 import { CompleteAppointmentController } from './controllers/appointments/complete-appointment.controller';
-import { ListAppointmentsByDateRangeController } from './controllers/appointments/list-appointments-by-date-range.controller';
+
 import { RescheduleAppointmentController } from './controllers/appointments/reschedule-appointment.controller';
 import { UpdateAppointmentController } from './controllers/appointments/update-appointment.controller';
 import { ListAppointmentsByMonthController } from './controllers/appointments/list-appointments-by-month.controller';
@@ -53,6 +53,9 @@ import { GetAllOrganizationsByUserController } from './controllers/organizations
 import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases/organization/get-all-organizations-by-user';
 import { GetUserController } from './controllers/accounts/get-user.controller';
 import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
+import { ListAppointmentsByDateRangeController } from './controllers/appointments/find-appointment-by-id.controller';
+import { FindAppointmentByIdController } from './controllers/appointments/list-appointments-by-date-range.controller';
+import { FindAppointmentByIdUseCase } from '@/domain/application/use-cases/appointments/find-appointment-by-id';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule), CryptographyModule],
@@ -76,6 +79,7 @@ import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
     ListAllSpacesOfServiceByOrganizationController,
     UpdateSpaceOfServiceController,
     CreateAppointmentController,
+    FindAppointmentByIdController,
     UpdateAppointmentController,
     RescheduleAppointmentController,
     CancelAppointmentController,
@@ -104,6 +108,7 @@ import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
     ListAllSpacesOfServiceByOrganizationUseCase,
     UpdateSpaceOfServiceUseCase,
     CreateAppointmentUseCase,
+    FindAppointmentByIdUseCase,
     UpdateAppointmentUseCase,
     RescheduleAppointmentUseCase,
     CancelAppointmentUseCase,

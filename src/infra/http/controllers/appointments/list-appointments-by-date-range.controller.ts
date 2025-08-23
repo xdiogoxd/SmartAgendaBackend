@@ -1,9 +1,9 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   Get,
   HttpCode,
+  NotFoundException,
   Param,
   Query,
 } from '@nestjs/common';
@@ -13,55 +13,45 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
-import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-date-range';
+import { FindAppointmentByIdUseCase } from '@/domain/application/use-cases/appointments/find-appointment-by-id';
 import { AppointmentPresenter } from '../../presenters/appointments-presenter';
+import { AppointmentNotFoundError } from '@/domain/application/use-cases/errors/appointment-not-found-error';
+import { OrganizationNotFoundError } from '@/domain/application/use-cases/errors/organization-not-found-error';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organizatio
 
-const listAppointmentsByDateRangeQuerySchema = z.object({
-  startDate: z.coerce.date(),
-  endDate: z.coerce.date(),
-});
-
-type ListAppointmentsByDateRangeQuerySchema = z.infer<
-  typeof listAppointmentsByDateRangeQuerySchema
->;
-
-@Controller('/organizations/:organizationId/appointments/list')
-export class ListAppointmentsByDateRangeController {
-  constructor(
-    private listAppointmentsByDateRange: ListAppointmentsByDateRangeUseCase,
-  ) {}
+@Controller('/organizations/:organizationId/appointments/id/:appointmentId')
+export class FindAppointmentByIdController {
+  constructor(private findAppointmentById: FindAppointmentByIdUseCase) {}
 
   @Get()
   @HttpCode(200)
   async handle(
-    @Query(new ZodValidationPipe(listAppointmentsByDateRangeQuerySchema))
-    query: ListAppointmentsByDateRangeQuerySchema,
     @CurrentUser() user: UserPayload,
     @Param('organizationId') organizationId: string,
+    @Param('appointmentId') appointmentId: string,
   ) {
-    const { startDate, endDate } = query;
     const userId = user.sub;
 
-    const result = await this.listAppointmentsByDateRange.execute({
+    const result = await this.findAppointmentById.execute({
       organizationId,
-      startDate,
-      endDate,
+      appointmentId,
     });
 
     if (result.isLeft()) {
       switch (result.value.constructor) {
-        case AppointmentNotAvailableError:
-          throw new BadRequestException(result.value.message);
+        case AppointmentNotFoundError:
+          throw new NotFoundException(result.value.message);
+        case OrganizationNotFoundError:
+          throw new NotFoundException(result.value.message);
         default:
           throw new BadRequestException(result.value.message);
       }
     }
 
     return {
-      appointments: result.value.appointments.map(AppointmentPresenter.toHTTP),
+      appointment: AppointmentPresenter.toHTTP(result.value.appointment),
     };
   }
 }

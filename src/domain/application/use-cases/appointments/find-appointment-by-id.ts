@@ -1,0 +1,56 @@
+import { Either, left, right } from '@/core/types/either';
+import { Injectable } from '@nestjs/common';
+
+import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+import { Appointment } from '@/domain/enterprise/entities/appointment';
+
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { AppointmentNotFoundError } from '../errors/appointment-not-found-error';
+
+export interface FindAppointmentByIdUseCaseRequest {
+  organizationId: string;
+  appointmentId: string;
+}
+
+type FindAppointmentByIdUseCaseResponse = Either<
+  OrganizationNotFoundError | AppointmentNotFoundError,
+  {
+    appointment: Appointment;
+  }
+>;
+
+@Injectable()
+export class FindAppointmentByIdUseCase {
+  constructor(
+    private organizationRepository: OrganizationRepository,
+    private appointmentRepository: AppointmentRepository,
+  ) {}
+
+  async execute({
+    organizationId,
+    appointmentId,
+  }: FindAppointmentByIdUseCaseRequest): Promise<FindAppointmentByIdUseCaseResponse> {
+    const organization =
+      await this.organizationRepository.findById(organizationId);
+
+    if (!organization) {
+      return left(new OrganizationNotFoundError(organizationId));
+    }
+
+    const appointment =
+      await this.appointmentRepository.findById(appointmentId);
+
+    if (!appointment) {
+      return left(new AppointmentNotFoundError(appointmentId));
+    }
+
+    if (appointment.organizationId.toString() !== organizationId) {
+      return left(new AppointmentNotFoundError(appointmentId));
+    }
+
+    return right({
+      appointment,
+    });
+  }
+}

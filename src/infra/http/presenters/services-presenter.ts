@@ -10,6 +10,7 @@ export class ServicePresenter {
       duration: service.duration,
       createdAt: service.createdAt,
       updatedAt: service.updatedAt,
+      observations: service.observations,
     };
   }
 }

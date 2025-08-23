@@ -8,16 +8,13 @@ import { UserNotFoundError } from '../errors/user-not-found-error';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 
-
 let sut: GetUserUseCase;
 
-describe('Create User', () => {
+describe('Get User', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
 
-    sut = new GetUserUseCase(
-      inMemoryUserRepository,
-    );
+    sut = new GetUserUseCase(inMemoryUserRepository);
   });
 
   it('should be able to get an user information', async () => {
@@ -37,12 +34,11 @@ describe('Create User', () => {
         _id: {
           value: user.id.toString(),
         },
-        props: {
+        props: expect.objectContaining({
           name: user.name,
           email: user.email,
           createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        },
+        }),
       },
     });
   });
