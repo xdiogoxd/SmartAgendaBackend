@@ -63,8 +63,6 @@ export class CreateAppointmentController {
       clientId,
     });
 
-    console.log(result);
-
     if (result.isLeft()) {
       switch (result.value.constructor) {
         case AppointmentNotAvailableError:
