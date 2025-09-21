@@ -24,7 +24,7 @@ const createAppointmentBodySchema = z.object({
   clientId: z.string(),
   date: z.string().transform((dateString) => new Date(dateString)),
   description: z.string(),
-  observations: z.string(),
+  observations: z.string().optional(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(createAppointmentBodySchema);
@@ -62,6 +62,8 @@ export class CreateAppointmentController {
       spaceOfServiceId,
       clientId,
     });
+
+    console.log(result);
 
     if (result.isLeft()) {
       switch (result.value.constructor) {

@@ -21,7 +21,7 @@ import { isPast } from 'date-fns';
 export interface CreateAppointmentUseCaseRequest {
   date: Date;
   description: string;
-  observations: string;
+  observations?: string;
   organizationId: string;
   serviceId: string;
   spaceOfServiceId: string;
@@ -109,7 +109,7 @@ export class CreateAppointmentUseCase {
     const appointment = Appointment.create({
       date: appointmentDate,
       description,
-      observations,
+      observations: observations ? observations : '',
       status: AppointmentStatus.PENDING,
       organizationId: organization.id,
       serviceId: service.id,
