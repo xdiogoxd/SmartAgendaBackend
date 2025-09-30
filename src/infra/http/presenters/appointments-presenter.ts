@@ -14,7 +14,7 @@ export class AppointmentPresenter {
       organizationId: appointment.organizationId,
       serviceId: appointment.serviceId.toString(),
       spaceOfServiceId: appointment.spaceOfServiceId.toString(),
-      clientId: appointment.clientId.toString(),
+      customerId: appointment.customerId.toString(),
     };
   }
 }

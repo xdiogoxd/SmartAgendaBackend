@@ -1,8 +1,10 @@
+import { Injectable } from '@nestjs/common';
+
 import { Appointment } from '@/domain/enterprise/entities/appointment';
 import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+
 import { PrismaAppointmentMapper } from '../mappers/prisma-appointment.mapper';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaAppointmentRepository implements AppointmentRepository {
@@ -64,7 +66,6 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
     month: number,
     year: number,
   ): Promise<Appointment[]> {
-
     const appointments = await this.prisma.appointment.findMany({
       where: {
         organizationId,

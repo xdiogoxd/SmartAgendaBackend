@@ -1,10 +1,12 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 import { UpdateSpaceOfServiceUseCase } from './update-space-of-service';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+
 import { makeOrganization } from 'test/factories/make-organization';
+import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 
 let inMemorySpaceOfServiceRepository: InMemorySpaceOfServiceRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

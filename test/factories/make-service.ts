@@ -1,11 +1,12 @@
-import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { Service, ServiceProps } from '@/domain/enterprise/entities/service';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { PrismaServiceMapper } from '@/infra/database/prisma/mappers/prisma-service.mapper';
 import { Optional } from '@/core/types/optional';
+import { Service, ServiceProps } from '@/domain/enterprise/entities/service';
+import { PrismaServiceMapper } from '@/infra/database/prisma/mappers/prisma-service.mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
+import { faker } from '@faker-js/faker';
 
 export function makeService(
   override: Partial<ServiceProps> = {},

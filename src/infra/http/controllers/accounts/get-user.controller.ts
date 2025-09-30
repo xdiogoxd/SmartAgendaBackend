@@ -6,10 +6,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { UserNotFoundError } from '@/domain/application/use-cases/errors/user-not-found-error';
 import { GetUserUseCase } from '@/domain/application/use-cases/user/get-user';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+
 import { UserPresenter } from '../../presenters/users-presenter';
 
 @Controller('/users')

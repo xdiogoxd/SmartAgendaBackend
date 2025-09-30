@@ -6,11 +6,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-
-import { UserPayload } from '@/infra/auth/jwt.strategy';
-import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases/organization/get-all-organizations-by-user';
 import { UserNotFoundError } from '@/domain/application/use-cases/errors/user-not-found-error';
+import { GetAllOrganizationsByUserUseCase } from '@/domain/application/use-cases/organization/get-all-organizations-by-user';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+
 import { OrganizationPresenter } from '../../presenters/organizations-presenter';
 
 // todo: add a filter per organization and check autorization to

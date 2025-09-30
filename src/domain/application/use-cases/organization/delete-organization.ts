@@ -1,8 +1,9 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { Either, left, right } from '@/core/types/either';
 import { Organization } from '@/domain/enterprise/entities/organization';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface DeleteOrganizationUseCaseRequest {

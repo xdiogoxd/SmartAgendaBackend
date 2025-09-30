@@ -1,11 +1,13 @@
+import { Injectable } from '@nestjs/common';
+
 import { Either, left, right } from '@/core/types/either';
 import { Schedule } from '@/domain/enterprise/entities/schedule';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { ScheduleRepository } from '@/domain/repositories/schedule-repository';
-import { Injectable } from '@nestjs/common';
+
 import { MissingDayOnScheduleError } from '../errors/missing-day-on-schedule-error';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 //In this use case the user will provide only the schedules that he intends to update, and only those will be updated
 

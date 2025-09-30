@@ -6,10 +6,12 @@ import {
   NotFoundException,
   Param,
 } from '@nestjs/common';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { FindServiceByNameUseCase } from '@/domain/application/use-cases/service/find-service-by-name';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
+
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
+import { FindServiceByNameUseCase } from '@/domain/application/use-cases/service/find-service-by-name';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+
 import { ServicePresenter } from '../../presenters/services-presenter';
 
 // todo: add a filter per organization and check autorization to

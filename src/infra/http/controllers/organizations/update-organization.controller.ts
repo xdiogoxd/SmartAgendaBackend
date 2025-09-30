@@ -8,13 +8,15 @@ import {
   Patch,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { OrganizationAlreadyExistsError } from '@/domain/application/use-cases/errors/organization-already-exist-error';
 import { UpdateOrganizationUseCase } from '@/domain/application/use-cases/organization/update-organization';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { OrganizationAlreadyExistsError } from '@/domain/application/use-cases/errors/organization-already-exist-error';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
 import { OrganizationPresenter } from '../../presenters/organizations-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization

@@ -1,8 +1,9 @@
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-import { makeOrganization } from 'test/factories/make-organization';
-import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
-import { CreateSpaceOfServiceUseCase } from './create-space-of-service';
 import { DuplicatedSpaceOfServiceNameError } from '../errors/duplicated-space-of-service-name-error';
+import { CreateSpaceOfServiceUseCase } from './create-space-of-service';
+
+import { makeOrganization } from 'test/factories/make-organization';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 
 let inMemorySpaceOfServiceRepository: InMemorySpaceOfServiceRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

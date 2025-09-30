@@ -1,9 +1,10 @@
-import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { ListAllServicesByOrganizationUseCase } from './list-all-services-by-organization';
+
+import { makeOrganization } from 'test/factories/make-organization';
 import { makeService } from 'test/factories/make-service';
 import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-import { makeOrganization } from 'test/factories/make-organization';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 
 describe('List All Services Use Case', () => {
   let inMemoryServiceRepository: InMemoryServiceRepository;

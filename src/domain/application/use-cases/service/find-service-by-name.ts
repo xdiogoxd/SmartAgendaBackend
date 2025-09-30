@@ -1,8 +1,10 @@
-import { ServiceRepository } from '@/domain/repositories/service-repository';
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+
+import { Either, left, right } from '@/core/types/either';
 import { Service } from '@/domain/enterprise/entities/service';
+import { ServiceRepository } from '@/domain/repositories/service-repository';
+
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 export interface FindServiceByNameUseCaseRequest {
   name: string;

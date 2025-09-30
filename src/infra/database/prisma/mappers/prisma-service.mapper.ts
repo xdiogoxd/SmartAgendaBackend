@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Service } from '@/domain/enterprise/entities/service';
+
 import { Prisma, service as PrismaService } from '@prisma/client';
 
 export class PrismaServiceMapper {

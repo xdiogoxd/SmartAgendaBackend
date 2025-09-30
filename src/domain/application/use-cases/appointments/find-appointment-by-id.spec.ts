@@ -1,20 +1,21 @@
-import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository';
+import { AppointmentDatesInvalidError } from '../errors/appointment-dates-invalid-error';
+import { AppointmentNotFoundError } from '../errors/appointment-not-found-error';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { FindAppointmentByIdUseCase } from './find-appointment-by-id';
 
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
+import { makeAppointment } from 'test/factories/make-appointment';
+import { makeOrganization } from 'test/factories/make-organization';
+import { makeService } from 'test/factories/make-service';
+import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+import { makeUser } from 'test/factories/make-user';
+import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository';
 import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
 import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
-import { makeUser } from 'test/factories/make-user';
-import { makeOrganization } from 'test/factories/make-organization';
-import { makeSpaceOfService } from 'test/factories/make-space-of-service';
-import { makeService } from 'test/factories/make-service';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
+
 import { faker } from '@faker-js/faker';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { makeAppointment } from 'test/factories/make-appointment';
 import { addDays, endOfMonth, startOfMonth } from 'date-fns';
-import { AppointmentDatesInvalidError } from '../errors/appointment-dates-invalid-error';
-import { FindAppointmentByIdUseCase } from './find-appointment-by-id';
-import { AppointmentNotFoundError } from '../errors/appointment-not-found-error';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

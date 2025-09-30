@@ -1,11 +1,13 @@
-import { ServiceRepository } from '@/domain/repositories/service-repository';
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
-import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { OrganizationRepository } from '@/domain/repositories/organization-repository';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+
+import { Either, left, right } from '@/core/types/either';
 import { Service } from '@/domain/enterprise/entities/service';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { ServiceRepository } from '@/domain/repositories/service-repository';
+
+import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 export interface UpdateServiceUseCaseRequest {
   organizationId: string;

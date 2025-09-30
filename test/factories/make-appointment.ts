@@ -1,15 +1,16 @@
-import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Optional } from '@/core/types/optional';
 import {
   Appointment,
   AppointmentProps,
 } from '@/domain/enterprise/entities/appointment';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { PrismaAppointmentMapper } from '@/infra/database/prisma/mappers/prisma-appointment.mapper';
-import { Optional } from '@/core/types/optional';
 import { convertAppointmentStringToEnum } from '@/domain/utils/convert-appointment-string-to-enum';
+import { PrismaAppointmentMapper } from '@/infra/database/prisma/mappers/prisma-appointment.mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
+import { faker } from '@faker-js/faker';
 
 export function makeAppointment(
   override: Partial<AppointmentProps> = {},
@@ -27,7 +28,7 @@ export function makeAppointment(
       organizationId: new UniqueEntityID(),
       serviceId: new UniqueEntityID(),
       spaceOfServiceId: new UniqueEntityID(),
-      clientId: new UniqueEntityID(),
+      customerId: new UniqueEntityID(),
       ...override,
     },
     id,

@@ -1,21 +1,21 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
-import { Appointment } from '@/domain/enterprise/entities/appointment';
-import { UserRepository } from '@/domain/repositories/user-repository';
-
-import { UserNotFoundError } from '../errors/user-not-found-error';
-
-import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
-import { OrganizationRepository } from '@/domain/repositories/organization-repository';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { CheckDateAvaibility } from '../../utils/check-date-avaibility';
-import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { AppointmentStatus } from '@/core/types/appointment-status-enum';
+import { Either, left, right } from '@/core/types/either';
+import { Appointment } from '@/domain/enterprise/entities/appointment';
+import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+import { CustomerRepository } from '@/domain/repositories/customer-repository';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { ServiceRepository } from '@/domain/repositories/service-repository';
+import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+
+import { CheckDateAvaibility } from '../../utils/check-date-avaibility';
+import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
+import { CustomerNotFoundError } from '../errors/customer-not-found-error';
 import { InvalidAppointmentDateError } from '../errors/invalid-appointment-date-error';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+
 import { isPast } from 'date-fns';
 
 export interface CreateAppointmentUseCaseRequest {
@@ -25,11 +25,11 @@ export interface CreateAppointmentUseCaseRequest {
   organizationId: string;
   serviceId: string;
   spaceOfServiceId: string;
-  clientId: string;
+  customerPhone: string;
 }
 
 type CreateAppointmentUseCaseResponse = Either<
-  | UserNotFoundError
+  | CustomerNotFoundError
   | AppointmentNotAvailableError
   | OrganizationNotFoundError
   | ResourceNotFoundError,
@@ -41,7 +41,7 @@ type CreateAppointmentUseCaseResponse = Either<
 @Injectable()
 export class CreateAppointmentUseCase {
   constructor(
-    private userRepository: UserRepository,
+    private customerRepository: CustomerRepository,
     private organizationRepository: OrganizationRepository,
     private spaceOfServiceRepository: SpaceOfServiceRepository,
     private serviceRepository: ServiceRepository,
@@ -55,21 +55,24 @@ export class CreateAppointmentUseCase {
     observations,
     serviceId,
     spaceOfServiceId,
-    clientId,
+    customerPhone,
   }: CreateAppointmentUseCaseRequest): Promise<CreateAppointmentUseCaseResponse> {
-    const client = await this.userRepository.findById(clientId);
-
     const appointmentDate = new Date(date);
-
-    if (!client) {
-      return left(new UserNotFoundError(clientId));
-    }
 
     const organization =
       await this.organizationRepository.findById(organizationId);
 
     if (!organization) {
       return left(new OrganizationNotFoundError(organizationId));
+    }
+
+    const customer = await this.customerRepository.findByPhoneAndOrganization(
+      customerPhone,
+      organizationId,
+    );
+
+    if (!customer) {
+      return left(new CustomerNotFoundError(customerPhone));
     }
 
     const service = await this.serviceRepository.findById(serviceId);
@@ -114,7 +117,7 @@ export class CreateAppointmentUseCase {
       organizationId: organization.id,
       serviceId: service.id,
       spaceOfServiceId: spaceOfService.id,
-      clientId: client.id,
+      customerId: customer.id,
     });
 
     await this.appointmentRepository.create(appointment);

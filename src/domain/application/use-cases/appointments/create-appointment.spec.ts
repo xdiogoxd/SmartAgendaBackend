@@ -1,21 +1,25 @@
-import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository';
-
-import { CreateAppointmentUseCase } from './create-appointment';
+import { CustomerNotFoundError } from '../errors/customer-not-found-error';
+import { InvalidAppointmentDateError } from '../errors/invalid-appointment-date-error';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
+import { CreateAppointmentUseCase } from './create-appointment';
+
+import { makeCustomer } from 'test/factories/make-customer';
+import { makeOrganization } from 'test/factories/make-organization';
+import { makeService } from 'test/factories/make-service';
+import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+import { makeUser } from 'test/factories/make-user';
+import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository';
+import { InMemoryCustomerRepository } from 'test/repositories/in-memory-customer-repository';
 import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
 import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
-import { makeUser } from 'test/factories/make-user';
-import { makeOrganization } from 'test/factories/make-organization';
-import { makeSpaceOfService } from 'test/factories/make-space-of-service';
-import { makeService } from 'test/factories/make-service';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
+
 import { faker } from '@faker-js/faker';
-import { UserNotFoundError } from '../errors/user-not-found-error';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { InvalidAppointmentDateError } from '../errors/invalid-appointment-date-error';
 
 let inMemoryUserRepository: InMemoryUserRepository;
+let inMemoryCustomerRepository: InMemoryCustomerRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let inMemoryServiceRepository: InMemoryServiceRepository;
 let inMemorySpaceOfServiceRepository: InMemorySpaceOfServiceRepository;
@@ -27,11 +31,12 @@ describe('Create Appointment', () => {
   beforeEach(() => {
     inMemoryAppointmentRepository = new InMemoryAppointmentRepository();
     inMemoryUserRepository = new InMemoryUserRepository();
+    inMemoryCustomerRepository = new InMemoryCustomerRepository();
     inMemoryOrganizationRepository = new InMemoryOrganizationRepository();
     inMemorySpaceOfServiceRepository = new InMemorySpaceOfServiceRepository();
     inMemoryServiceRepository = new InMemoryServiceRepository();
     sut = new CreateAppointmentUseCase(
-      inMemoryUserRepository,
+      inMemoryCustomerRepository,
       inMemoryOrganizationRepository,
       inMemorySpaceOfServiceRepository,
       inMemoryServiceRepository,
@@ -44,6 +49,10 @@ describe('Create Appointment', () => {
     const organization = makeOrganization({
       ownerId: user.id,
     });
+
+    const customer = makeCustomer({
+      organizationId: organization.id,
+    });
     const spaceOfService = makeSpaceOfService({
       organizationId: organization.id,
     });
@@ -52,6 +61,7 @@ describe('Create Appointment', () => {
     });
 
     await inMemoryUserRepository.create(user);
+    await inMemoryCustomerRepository.create(customer);
     await inMemoryOrganizationRepository.create(organization);
     await inMemorySpaceOfServiceRepository.create(spaceOfService);
     await inMemoryServiceRepository.create(service);
@@ -63,7 +73,7 @@ describe('Create Appointment', () => {
       organizationId: organization.id.toString(),
       spaceOfServiceId: spaceOfService.id.toString(),
       serviceId: service.id.toString(),
-      clientId: user.id.toString(),
+      customerPhone: customer.phone,
     });
 
     expect(result.isRight()).toBe(true);
@@ -78,6 +88,9 @@ describe('Create Appointment', () => {
     const organization = makeOrganization({
       ownerId: user.id,
     });
+    const customer = makeCustomer({
+      organizationId: organization.id,
+    });
     const spaceOfService = makeSpaceOfService({
       organizationId: organization.id,
     });
@@ -86,6 +99,7 @@ describe('Create Appointment', () => {
     });
 
     await inMemoryUserRepository.create(user);
+    await inMemoryCustomerRepository.create(customer);
     await inMemorySpaceOfServiceRepository.create(spaceOfService);
     await inMemoryServiceRepository.create(service);
 
@@ -96,17 +110,20 @@ describe('Create Appointment', () => {
       organizationId: 'invalid-organization-id',
       spaceOfServiceId: spaceOfService.id.toString(),
       serviceId: service.id.toString(),
-      clientId: user.id.toString(),
+      customerPhone: customer.phone,
     });
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(OrganizationNotFoundError);
   });
 
-  it('should not be able to create an appointment with invalid client id', async () => {
+  it('should not be able to create an appointment with invalid customer phone', async () => {
     const user = makeUser();
     const organization = makeOrganization({
       ownerId: user.id,
+    });
+    const customer = makeCustomer({
+      organizationId: organization.id,
     });
     const spaceOfService = makeSpaceOfService({
       organizationId: organization.id,
@@ -127,11 +144,11 @@ describe('Create Appointment', () => {
       organizationId: organization.id.toString(),
       spaceOfServiceId: spaceOfService.id.toString(),
       serviceId: service.id.toString(),
-      clientId: 'invalid-client-id',
+      customerPhone: customer.phone,
     });
 
     expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(UserNotFoundError);
+    expect(result.value).toBeInstanceOf(CustomerNotFoundError);
   });
 
   it('should not be able to create an appointment with invalid space of service id', async () => {
@@ -139,11 +156,15 @@ describe('Create Appointment', () => {
     const organization = makeOrganization({
       ownerId: user.id,
     });
+    const customer = makeCustomer({
+      organizationId: organization.id,
+    });
     const service = makeService({
       organizationId: organization.id,
     });
 
     await inMemoryUserRepository.create(user);
+    await inMemoryCustomerRepository.create(customer);
     await inMemoryOrganizationRepository.create(organization);
     await inMemoryServiceRepository.create(service);
 
@@ -154,7 +175,7 @@ describe('Create Appointment', () => {
       organizationId: organization.id.toString(),
       spaceOfServiceId: 'invalid-space-of-service-id',
       serviceId: service.id.toString(),
-      clientId: user.id.toString(),
+      customerPhone: customer.phone,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -166,12 +187,16 @@ describe('Create Appointment', () => {
     const organization = makeOrganization({
       ownerId: user.id,
     });
+    const customer = makeCustomer({
+      organizationId: organization.id,
+    });
     const spaceOfService = makeSpaceOfService({
       organizationId: organization.id,
     });
 
     await inMemoryUserRepository.create(user);
     await inMemoryOrganizationRepository.create(organization);
+    await inMemoryCustomerRepository.create(customer);
     await inMemorySpaceOfServiceRepository.create(spaceOfService);
 
     const result = await sut.execute({
@@ -181,7 +206,7 @@ describe('Create Appointment', () => {
       organizationId: organization.id.toString(),
       spaceOfServiceId: spaceOfService.id.toString(),
       serviceId: 'invalid-service-id',
-      clientId: user.id.toString(),
+      customerPhone: customer.phone,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -193,6 +218,9 @@ describe('Create Appointment', () => {
     const organization = makeOrganization({
       ownerId: user.id,
     });
+    const customer = makeCustomer({
+      organizationId: organization.id,
+    });
     const spaceOfService = makeSpaceOfService({
       organizationId: organization.id,
     });
@@ -202,6 +230,7 @@ describe('Create Appointment', () => {
 
     await inMemoryUserRepository.create(user);
     await inMemoryOrganizationRepository.create(organization);
+    await inMemoryCustomerRepository.create(customer);
     await inMemorySpaceOfServiceRepository.create(spaceOfService);
     await inMemoryServiceRepository.create(service);
 
@@ -212,7 +241,7 @@ describe('Create Appointment', () => {
       organizationId: organization.id.toString(),
       spaceOfServiceId: spaceOfService.id.toString(),
       serviceId: service.id.toString(),
-      clientId: user.id.toString(),
+      customerPhone: customer.phone,
     });
 
     expect(result.isLeft()).toBe(true);

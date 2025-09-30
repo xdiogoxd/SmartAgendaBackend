@@ -1,8 +1,10 @@
-import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
-import { FindServiceByIdUseCase } from './find-service-by-id';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { FindServiceByIdUseCase } from './find-service-by-id';
+
 import { makeService } from 'test/factories/make-service';
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 
 let inMemoryServiceRepository: InMemoryServiceRepository;
 let sut: FindServiceByIdUseCase;

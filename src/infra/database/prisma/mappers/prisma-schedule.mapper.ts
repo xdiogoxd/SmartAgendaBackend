@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Schedule } from '@/domain/enterprise/entities/schedule';
+
 import { Prisma, schedule as PrismaSchedule } from '@prisma/client';
 
 export class PrismaScheduleMapper {

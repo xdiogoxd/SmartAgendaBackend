@@ -1,15 +1,16 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 
-import request from 'supertest';
-
 import { AppModule } from '@/app.module';
-import { DatabaseModule } from '@/infra/database/database.module';
-import { UserFactory } from 'test/factories/make-user';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
-import { OrganizationFactory } from 'test/factories/make-organization';
+import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
+import { OrganizationFactory } from 'test/factories/make-organization';
 import { SpaceOfServiceFactory } from 'test/factories/make-space-of-service';
+import { UserFactory } from 'test/factories/make-user';
+
+import request from 'supertest';
 
 describe('Update SpaceOfService (E2E)', () => {
   let app: INestApplication;
@@ -136,8 +137,6 @@ describe('Update SpaceOfService (E2E)', () => {
         price: 'invalid-price',
         duration: 'invalid-duration',
       });
-
-    console.log(response.body);
 
     expect(response.status).toBe(400);
   });

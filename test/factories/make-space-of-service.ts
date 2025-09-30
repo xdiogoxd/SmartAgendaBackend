@@ -1,15 +1,15 @@
-import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-
-import { Injectable } from '@nestjs/common';
+import { Optional } from '@/core/types/optional';
 import {
   SpaceOfService,
   SpaceOfServiceProps,
 } from '@/domain/enterprise/entities/space-of-service';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaSpaceOfServiceMapper } from '@/infra/database/prisma/mappers/prisma-space-of-service.mapper';
-import { Optional } from '@/core/types/optional';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
+import { faker } from '@faker-js/faker';
 
 export function makeSpaceOfService(
   override: Partial<SpaceOfServiceProps> = {},

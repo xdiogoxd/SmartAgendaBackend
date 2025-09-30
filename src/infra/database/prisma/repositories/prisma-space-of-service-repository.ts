@@ -1,8 +1,10 @@
-import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
-import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
+
 import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
+import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+
 import { PrismaSpaceOfServiceMapper } from '../mappers/prisma-space-of-service.mapper';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaSpaceOfServiceRepository

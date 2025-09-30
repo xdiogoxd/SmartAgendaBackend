@@ -1,11 +1,12 @@
-import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { Schedule, ScheduleProps } from '@/domain/enterprise/entities/schedule';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { PrismaScheduleMapper } from '@/infra/database/prisma/mappers/prisma-schedule.mapper';
 import { Optional } from '@/core/types/optional';
+import { Schedule, ScheduleProps } from '@/domain/enterprise/entities/schedule';
+import { PrismaScheduleMapper } from '@/infra/database/prisma/mappers/prisma-schedule.mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
+import { faker } from '@faker-js/faker';
 
 export function makeSchedule(
   override: Partial<ScheduleProps> = {},

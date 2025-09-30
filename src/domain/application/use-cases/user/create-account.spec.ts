@@ -1,7 +1,8 @@
+import { UserAlreadyExistsError } from '../errors/user-already-exists-error';
+import { CreateAccountUseCase } from './create-account';
+
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
-import { CreateAccountUseCase } from './create-account';
-import { UserAlreadyExistsError } from '../errors/user-already-exists-error';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let fakeHasher: FakeHasher;

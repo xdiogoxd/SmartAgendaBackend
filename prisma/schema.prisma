@@ -20,20 +20,21 @@ model organization {
   service        service[]
   spaceOfService spaceOfService[]
   appointment    appointment[]
+  customer       customer[]
 
   @@map("organizations")
 }
 
 model schedule {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
-  weekDay   Int
-  startHour Int
-  endHour   Int
-
+  id             String    @id @default(uuid())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime?
+  weekDay        Int
+  startHour      Int
+  endHour        Int
   organizationId String
-  organization   organization @relation(fields: [organizationId], references: [id])
+
+  organization organization @relation(fields: [organizationId], references: [id])
 
   @@map("schedules")
 }
@@ -48,9 +49,22 @@ model user {
 
   ownedOrganizations organization[] @relation("OrganizationOwner")
   memberOf           organization[] @relation("OrganizationMembers")
-  appointment        appointment[]
 
   @@map("users")
+}
+
+model customer {
+  id             String    @id @default(uuid())
+  name           String
+  phone          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime?
+  organizationId String
+
+  appointment  appointment[]
+  organization organization  @relation(fields: [organizationId], references: [id])
+
+  @@map("customers")
 }
 
 model service {
@@ -98,11 +112,11 @@ model appointment {
   organizationId   String
   serviceId        String
   spaceOfServiceId String
-  clientId         String
+  customerId       String
 
   organization   organization   @relation(fields: [organizationId], references: [id])
   service        service        @relation(fields: [serviceId], references: [id])
-  user           user           @relation(fields: [clientId], references: [id])
+  customer       customer       @relation(fields: [customerId], references: [id])
   spaceOfService spaceOfService @relation(fields: [spaceOfServiceId], references: [id])
 
   @@map("appointments")

@@ -1,10 +1,11 @@
-import { UpdateScheduleUseCase } from './update-schedule';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { InMemoryScheduleRepository } from 'test/repositories/in-memory-schedule-repository';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { UpdateScheduleUseCase } from './update-schedule';
+
 import { makeOrganization } from 'test/factories/make-organization';
 import { makeSchedule } from 'test/factories/make-schedule';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemoryScheduleRepository } from 'test/repositories/in-memory-schedule-repository';
 
 let inMemoryScheduleRepository: InMemoryScheduleRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

@@ -1,8 +1,10 @@
-import { ServiceRepository } from '@/domain/repositories/service-repository';
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
+
+import { Either, left, right } from '@/core/types/either';
 import { Service } from '@/domain/enterprise/entities/service';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { ServiceRepository } from '@/domain/repositories/service-repository';
+
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface ListAllServicesByOrganizationUseCaseRequest {

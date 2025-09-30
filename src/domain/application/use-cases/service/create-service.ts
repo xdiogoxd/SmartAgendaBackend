@@ -1,10 +1,12 @@
-import { ServiceRepository } from '@/domain/repositories/service-repository';
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
-import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
-import { Service } from '@/domain/enterprise/entities/service';
+
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Either, left, right } from '@/core/types/either';
+import { Service } from '@/domain/enterprise/entities/service';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { ServiceRepository } from '@/domain/repositories/service-repository';
+
+import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 //todo: add filter by name on each organization

@@ -1,13 +1,16 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import request from 'supertest';
-import { ServiceFactory } from 'test/factories/make-service';
+
 import { AppModule } from '@/app.module';
-import { DatabaseModule } from '@/infra/database/database.module';
-import { UserFactory } from 'test/factories/make-user';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
+import { DatabaseModule } from '@/infra/database/database.module';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
 import { OrganizationFactory } from 'test/factories/make-organization';
+import { ServiceFactory } from 'test/factories/make-service';
+import { UserFactory } from 'test/factories/make-user';
+
+import request from 'supertest';
 
 describe('Update Service (E2E)', () => {
   let app: INestApplication;

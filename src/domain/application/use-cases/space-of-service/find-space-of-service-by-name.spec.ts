@@ -1,8 +1,9 @@
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
-import { makeSpaceOfService } from 'test/factories/make-space-of-service';
 import { FindSpaceOfServiceByNameUseCase } from './find-space-of-service-name';
+
 import { makeOrganization } from 'test/factories/make-organization';
+import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 
 let inMemorySpaceOfServiceRepository: InMemorySpaceOfServiceRepository;
 let sut: FindSpaceOfServiceByNameUseCase;

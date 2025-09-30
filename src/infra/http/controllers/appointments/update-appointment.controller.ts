@@ -8,13 +8,15 @@ import {
   Patch,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { UpdateAppointmentUseCase } from '@/domain/application/use-cases/appointments/update-appointment';
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
 import { AppointmentPresenter } from '../../presenters/appointments-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
@@ -23,7 +25,7 @@ const updateAppointmentBodySchema = z.object({
   observations: z.string(),
   serviceId: z.string(),
   spaceOfServiceId: z.string(),
-  clientId: z.string(),
+  customerPhone: z.string(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(updateAppointmentBodySchema);
@@ -42,8 +44,13 @@ export class UpdateAppointmentController {
     @Param('organizationId') organizationId: string,
     @Param('appointmentId') appointmentId: string,
   ) {
-    const { description, observations, serviceId, spaceOfServiceId, clientId } =
-      body;
+    const {
+      description,
+      observations,
+      serviceId,
+      spaceOfServiceId,
+      customerPhone,
+    } = body;
 
     const userId = user.sub;
 
@@ -54,7 +61,7 @@ export class UpdateAppointmentController {
       observations,
       serviceId,
       spaceOfServiceId,
-      clientId,
+      customerPhone,
     });
 
     if (result.isLeft()) {

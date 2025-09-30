@@ -1,11 +1,11 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
+import { AppointmentStatus } from '@/core/types/appointment-status-enum';
+import { Either, left, right } from '@/core/types/either';
 import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
 
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { AppointmentStatus } from '@/core/types/appointment-status-enum';
 import { AppointmentStatusInvalidError } from '../errors/appointment-status-invalid-error';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 export interface DeleteAppointmentUseCaseRequest {
   organizationId: string;

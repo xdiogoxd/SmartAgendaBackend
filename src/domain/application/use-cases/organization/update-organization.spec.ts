@@ -1,9 +1,10 @@
-import { UpdateOrganizationUseCase } from './update-organization';
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-import { makeOrganization } from 'test/factories/make-organization';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { UpdateOrganizationUseCase } from './update-organization';
+
+import { makeOrganization } from 'test/factories/make-organization';
 import { makeUser } from 'test/factories/make-user';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let inMemoryUserRepository: InMemoryUserRepository;

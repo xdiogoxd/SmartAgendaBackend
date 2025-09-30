@@ -8,13 +8,15 @@ import {
   Post,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { DuplicatedSpaceOfServiceNameError } from '@/domain/application/use-cases/errors/duplicated-space-of-service-name-error';
+import { CreateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/create-space-of-service';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
-import { CreateSpaceOfServiceUseCase } from '@/domain/application/use-cases/space-of-service/create-space-of-service';
-import { DuplicatedSpaceOfServiceNameError } from '@/domain/application/use-cases/errors/duplicated-space-of-service-name-error';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
 import { SpaceOfServicePresenter } from '../../presenters/spaces-of-service-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization

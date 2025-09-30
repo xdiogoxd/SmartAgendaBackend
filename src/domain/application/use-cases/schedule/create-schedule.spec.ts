@@ -1,9 +1,10 @@
-import { CreateScheduleUseCase } from './create-schedule';
 import { MissingDayOnScheduleError } from '../errors/missing-day-on-schedule-error';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { InMemoryScheduleRepository } from 'test/repositories/in-memory-schedule-repository';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { CreateScheduleUseCase } from './create-schedule';
+
 import { makeOrganization } from 'test/factories/make-organization';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemoryScheduleRepository } from 'test/repositories/in-memory-schedule-repository';
 
 let inMemoryScheduleRepository: InMemoryScheduleRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

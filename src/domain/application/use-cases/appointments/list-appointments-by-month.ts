@@ -1,10 +1,10 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+import { Either, left, right } from '@/core/types/either';
 import { Appointment } from '@/domain/enterprise/entities/appointment';
-
+import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface ListAppointmentByMonthUseCaseRequest {

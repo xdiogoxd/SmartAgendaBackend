@@ -1,10 +1,12 @@
-import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
-import { UpdateServiceUseCase } from './update-service';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { UpdateServiceUseCase } from './update-service';
+
+import { makeOrganization } from 'test/factories/make-organization';
 import { makeService } from 'test/factories/make-service';
 import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-import { makeOrganization } from 'test/factories/make-organization';
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 
 let inMemoryServiceRepository: InMemoryServiceRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

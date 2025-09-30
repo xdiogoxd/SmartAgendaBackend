@@ -8,13 +8,15 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-date-range';
+import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
-import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
-import { ListAppointmentsByDateRangeUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-date-range';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
 import { AppointmentPresenter } from '../../presenters/appointments-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organizatio

@@ -1,7 +1,16 @@
 {
   "singleQuote": true,
   "trailingComma": "all",
-  "rules": {
-    "max-len": ["error", { "code": 100 }]
-  }
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^@nestjs/(.*)$",
+    "^@/(.*)$",
+    "^[./]",
+    "^test/(.*)$",
+    "<THIRD_PARTY_MODULES>"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderParserPlugins": ["typescript", "decorators-legacy"],
+  "importOrderGroupNamespaceSpecifiers": true
 }

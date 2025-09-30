@@ -1,10 +1,11 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { OrganizationRepository } from '@/domain/repositories/organization-repository';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { Either, left, right } from '@/core/types/either';
 import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface ListAllSpacesOfServiceByOrganizationUseCaseRequest {
   organizationId: string;

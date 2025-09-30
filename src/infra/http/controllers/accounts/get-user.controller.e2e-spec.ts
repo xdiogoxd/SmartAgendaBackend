@@ -1,11 +1,14 @@
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+
 import { AppModule } from '@/app.module';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import request from 'supertest';
+
 import { UserFactory } from 'test/factories/make-user';
+
+import request from 'supertest';
 
 describe('Get user (E2E)', () => {
   let app: INestApplication;
@@ -38,15 +41,11 @@ describe('Get user (E2E)', () => {
 
     expect(response.statusCode).toBe(201);
     expect(response.body.user).toEqual({
-      _id: {
-        value: user.id.toString(),
-      },
-      props: {
-        name: user.name,
-        email: user.email,
-        createdAt: expect.any(String),
-        updatedAt: null,
-      },
+      id: user.id.toString(),
+      name: user.name,
+      email: user.email,
+      createdAt: expect.any(String),
+      updatedAt: null,
     });
 
     expect(user).toBeTruthy();

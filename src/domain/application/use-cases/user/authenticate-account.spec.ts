@@ -1,9 +1,10 @@
-import { FakeHasher } from 'test/cryptography/fake-hasher';
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
-import { AuthenticateAccountUseCase } from './authenticate-account';
-import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
-import { makeUser } from 'test/factories/make-user';
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error';
+import { AuthenticateAccountUseCase } from './authenticate-account';
+
+import { FakeEncrypter } from 'test/cryptography/fake-encryptor';
+import { FakeHasher } from 'test/cryptography/fake-hasher';
+import { makeUser } from 'test/factories/make-user';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let fakeHasher: FakeHasher;

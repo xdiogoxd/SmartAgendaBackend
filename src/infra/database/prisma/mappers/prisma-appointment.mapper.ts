@@ -1,7 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Appointment } from '@/domain/enterprise/entities/appointment';
-
 import { convertAppointmentStringToEnum } from '@/domain/utils/convert-appointment-string-to-enum';
+
 import { Prisma, appointment as PrismaAppointment } from '@prisma/client';
 
 export class PrismaAppointmentMapper {
@@ -17,7 +17,7 @@ export class PrismaAppointmentMapper {
         organizationId: new UniqueEntityID(raw.organizationId),
         serviceId: new UniqueEntityID(raw.serviceId),
         spaceOfServiceId: new UniqueEntityID(raw.spaceOfServiceId),
-        clientId: new UniqueEntityID(raw.clientId),
+        customerId: new UniqueEntityID(raw.customerId),
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
         canceledAt: raw.canceledAt,
@@ -43,7 +43,7 @@ export class PrismaAppointmentMapper {
       organizationId: appointment.organizationId.toString(),
       serviceId: appointment.serviceId.toString(),
       spaceOfServiceId: appointment.spaceOfServiceId.toString(),
-      clientId: appointment.clientId.toString(),
+      customerId: appointment.customerId.toString(),
     };
   }
 }

@@ -1,8 +1,9 @@
-import { CreateServiceUseCase } from './create-service';
 import { DuplicatedServiceNameError } from '../errors/duplicated-service-name-error';
-import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { CreateServiceUseCase } from './create-service';
+
 import { makeOrganization } from 'test/factories/make-organization';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 
 let inMemoryServiceRepository: InMemoryServiceRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

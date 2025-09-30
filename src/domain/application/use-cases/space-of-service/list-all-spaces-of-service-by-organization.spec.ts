@@ -1,9 +1,10 @@
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-import { makeOrganization } from 'test/factories/make-organization';
 import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 import { ListAllSpacesOfServiceByOrganizationUseCase } from './list-all-spaces-of-service-by-organization';
-import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
+
+import { makeOrganization } from 'test/factories/make-organization';
 import { makeSpaceOfService } from 'test/factories/make-space-of-service';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemorySpaceOfServiceRepository } from 'test/repositories/in-memory-space-of-service-repository';
 
 describe('List All SpaceOfServices Use Case', () => {
   let inMemorySpaceOfServiceRepository: InMemorySpaceOfServiceRepository;

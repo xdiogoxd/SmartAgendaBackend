@@ -7,7 +7,7 @@
 
 @spaceOfServiceId = {{create_space_of_service.response.body.spaceOfService._id.value}}
 
-@clientId = 0750bbf7-e91d-4e3a-8fc9-57a8603c0cac
+@customerId = 0750bbf7-e91d-4e3a-8fc9-57a8603c0cac
 
 # @name create_account
 POST {{baseUrl}}/accounts
@@ -159,7 +159,7 @@ Authorization: Bearer {{authToken}}
   "organizationId": "{{organizationId}}",
   "spaceOfServiceId": "{{spaceOfServiceId}}",
   "serviceId": "{{serviceId}}",
-  "clientId": "{{clientId}}"
+  "customerId": "{{customerId}}"
 }
 
 ###

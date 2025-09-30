@@ -1,13 +1,16 @@
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+
 import { AppModule } from '@/app.module';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import request from 'supertest';
+
 import { OrganizationFactory } from 'test/factories/make-organization';
 import { ServiceFactory } from 'test/factories/make-service';
 import { UserFactory } from 'test/factories/make-user';
+
+import request from 'supertest';
 
 describe('Create service (E2E)', () => {
   let app: INestApplication;

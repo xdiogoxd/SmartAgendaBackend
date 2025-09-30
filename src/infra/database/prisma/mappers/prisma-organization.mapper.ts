@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Organization } from '@/domain/enterprise/entities/organization';
+
 import { Prisma, organization as PrismaOrganization } from '@prisma/client';
 
 export class PrismaOrganizationMapper {

@@ -7,13 +7,16 @@ import {
   NotFoundException,
   Param,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { z } from 'zod';
-import { FindServiceByIdUseCase } from '@/domain/application/use-cases/service/find-service-by-id';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
+
 import { ResourceNotFoundError } from '@/domain/application/use-cases/errors/resource-not-found-error';
+import { FindServiceByIdUseCase } from '@/domain/application/use-cases/service/find-service-by-id';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+
+import { ZodValidationPipe } from '../../pipes/zod-validation-pipe';
 import { ServicePresenter } from '../../presenters/services-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization

@@ -1,12 +1,11 @@
-
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 import { OrganizationAlreadyExistsError } from '../errors/organization-already-exist-error';
-import { makeUser } from 'test/factories/make-user';
-import { makeOrganization } from 'test/factories/make-organization';
-import { GetAllOrganizationsByUserUseCase } from './get-all-organizations-by-user';
 import { UserNotFoundError } from '../errors/user-not-found-error';
+import { GetAllOrganizationsByUserUseCase } from './get-all-organizations-by-user';
+
+import { makeOrganization } from 'test/factories/make-organization';
+import { makeUser } from 'test/factories/make-user';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let inMemoryUserRepository: InMemoryUserRepository;
@@ -39,9 +38,7 @@ describe('Get all organizations by user', () => {
 
     expect(result.isRight()).toBe(true);
     expect(inMemoryOrganizationRepository.items).toHaveLength(2);
-    expect(inMemoryOrganizationRepository.items[0].ownerId).toEqual(
-      user.id,
-    );
+    expect(inMemoryOrganizationRepository.items[0].ownerId).toEqual(user.id);
   });
 
   it('should not locate any organization for user with non-existent organization', async () => {

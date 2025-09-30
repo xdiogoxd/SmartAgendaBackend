@@ -1,12 +1,13 @@
-import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Either, left, right } from '@/core/types/either';
+import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
 import { OrganizationRepository } from '@/domain/repositories/organization-repository';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+
 import { DuplicatedSpaceOfServiceNameError } from '../errors/duplicated-space-of-service-name-error';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
 
 export interface CreateSpaceOfServiceUseCaseRequest {
   organizationId: string;

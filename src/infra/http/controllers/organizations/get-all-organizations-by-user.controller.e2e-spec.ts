@@ -1,12 +1,15 @@
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+
 import { AppModule } from '@/app.module';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import request from 'supertest';
+
 import { OrganizationFactory } from 'test/factories/make-organization';
 import { UserFactory } from 'test/factories/make-user';
+
+import request from 'supertest';
 
 describe('Get all organizations by user (E2E)', () => {
   let app: INestApplication;
@@ -46,16 +49,14 @@ describe('Get all organizations by user (E2E)', () => {
 
     const response = await request(app.getHttpServer())
       .get('/organizations/')
-      .set('Authorization', `Bearer ${accessToken}`)
-      
+      .set('Authorization', `Bearer ${accessToken}`);
+
     expect(response.statusCode).toBe(201);
     expect(response.body.organizations.length).toBe(2);
   });
 
   test('[GET] /organizations/:organizationId - should not be able to get an organization without authentication', async () => {
-    const response = await request(app.getHttpServer())
-      .get('/organizations/')
-
+    const response = await request(app.getHttpServer()).get('/organizations/');
 
     expect(response.statusCode).toBe(401);
   });

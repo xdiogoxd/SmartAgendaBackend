@@ -1,10 +1,11 @@
-import { UserRepository } from '@/domain/repositories/user-repository';
+import { Injectable } from '@nestjs/common';
 
 import { Either, left, right } from '@/core/types/either';
-import { InvalidCredentialsError } from '../errors/invalid-credentials-error';
-import { HashComparer } from '../../cryptography/hash-comparer';
+import { UserRepository } from '@/domain/repositories/user-repository';
+
 import { Encrypter } from '../../cryptography/encrypter';
-import { Injectable } from '@nestjs/common';
+import { HashComparer } from '../../cryptography/hash-comparer';
+import { InvalidCredentialsError } from '../errors/invalid-credentials-error';
 
 export interface AuthenticateAccountUseCaseRequest {
   email: string;

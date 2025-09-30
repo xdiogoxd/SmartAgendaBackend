@@ -1,16 +1,15 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+import { Either, left, right } from '@/core/types/either';
 import { Appointment } from '@/domain/enterprise/entities/appointment';
-import { UserRepository } from '@/domain/repositories/user-repository';
-
-import { UserNotFoundError } from '../errors/user-not-found-error';
+import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+import { CustomerRepository } from '@/domain/repositories/customer-repository';
+import { ServiceRepository } from '@/domain/repositories/service-repository';
+import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
 
 import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
-import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { ServiceRepository } from '@/domain/repositories/service-repository';
+import { UserNotFoundError } from '../errors/user-not-found-error';
 
 // todo: add validation if space of service is available and a possible block for completed/canceled appointments
 
@@ -21,7 +20,7 @@ export interface UpdateAppointmentUseCaseRequest {
   observations: string;
   serviceId: string;
   spaceOfServiceId: string;
-  clientId: string;
+  customerPhone: string;
 }
 
 type UpdateAppointmentUseCaseResponse = Either<
@@ -34,7 +33,7 @@ type UpdateAppointmentUseCaseResponse = Either<
 @Injectable()
 export class UpdateAppointmentUseCase {
   constructor(
-    private userRepository: UserRepository,
+    private customerRepository: CustomerRepository,
     private spaceOfServiceRepository: SpaceOfServiceRepository,
     private serviceRepository: ServiceRepository,
     private appointmentRepository: AppointmentRepository,
@@ -45,7 +44,7 @@ export class UpdateAppointmentUseCase {
     appointmentId,
     description,
     observations,
-    clientId,
+    customerPhone,
     serviceId,
     spaceOfServiceId,
   }: UpdateAppointmentUseCaseRequest): Promise<UpdateAppointmentUseCaseResponse> {
@@ -60,16 +59,19 @@ export class UpdateAppointmentUseCase {
       return left(new ResourceNotFoundError(organizationId));
     }
 
-    let updatedClientId = appointment.clientId;
+    let updatedcustomerId = appointment.customerId;
     let updatedServiceId = appointment.serviceId;
     let updatedSpaceOfServiceId = appointment.spaceOfServiceId;
 
-    if (clientId != appointment.clientId.toString()) {
-      const client = await this.userRepository.findById(clientId);
-      if (!client) {
-        return left(new UserNotFoundError(clientId));
+    if (customerPhone != appointment.customerId.toString()) {
+      const customer = await this.customerRepository.findByPhoneAndOrganization(
+        customerPhone,
+        organizationId,
+      );
+      if (!customer) {
+        return left(new UserNotFoundError(customerPhone));
       }
-      updatedClientId = client.id;
+      updatedcustomerId = customer.id;
     }
 
     if (serviceId != appointment.serviceId.toString()) {
@@ -95,7 +97,7 @@ export class UpdateAppointmentUseCase {
     appointment.observations = observations;
     appointment.serviceId = updatedServiceId;
     appointment.spaceOfServiceId = updatedSpaceOfServiceId;
-    appointment.clientId = updatedClientId;
+    appointment.customerId = updatedcustomerId;
 
     const responseAppointment = await this.appointmentRepository.save(
       appointmentId,

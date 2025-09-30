@@ -8,20 +8,22 @@ import {
   Post,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { CreateAppointmentUseCase } from '@/domain/application/use-cases/appointments/create-appointment';
 import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
 import { AppointmentPresenter } from '../../presenters/appointments-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization
 const createAppointmentBodySchema = z.object({
   serviceId: z.string(),
   spaceOfServiceId: z.string(),
-  clientId: z.string(),
+  customerPhone: z.string(),
   date: z.string().transform((dateString) => new Date(dateString)),
   description: z.string(),
   observations: z.string().optional(),
@@ -48,7 +50,7 @@ export class CreateAppointmentController {
       observations,
       serviceId,
       spaceOfServiceId,
-      clientId,
+      customerPhone,
     } = body;
 
     const userId = user.sub;
@@ -60,7 +62,7 @@ export class CreateAppointmentController {
       observations,
       serviceId,
       spaceOfServiceId,
-      clientId,
+      customerPhone,
     });
 
     if (result.isLeft()) {

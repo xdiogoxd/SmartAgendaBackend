@@ -2,6 +2,7 @@ import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { AppointmentStatus } from '@/core/types/appointment-status-enum';
 import { Optional } from '@/core/types/optional';
+
 export interface AppointmentProps {
   date: Date;
   description: string;
@@ -14,7 +15,7 @@ export interface AppointmentProps {
   organizationId: UniqueEntityID;
   serviceId: UniqueEntityID;
   spaceOfServiceId: UniqueEntityID;
-  clientId: UniqueEntityID;
+  customerId: UniqueEntityID;
 }
 
 export class Appointment extends Entity<AppointmentProps> {
@@ -81,12 +82,12 @@ export class Appointment extends Entity<AppointmentProps> {
     this.touch();
   }
 
-  get clientId() {
-    return this.props.clientId;
+  get customerId() {
+    return this.props.customerId;
   }
 
-  set clientId(clientId: UniqueEntityID) {
-    this.props.clientId = clientId;
+  set customerId(customerId: UniqueEntityID) {
+    this.props.customerId = customerId;
     this.touch();
   }
 

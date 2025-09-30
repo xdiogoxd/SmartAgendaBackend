@@ -1,7 +1,8 @@
-import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
-import { FindServiceByNameUseCase } from './find-service-by-name';
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { FindServiceByNameUseCase } from './find-service-by-name';
+
 import { makeService } from 'test/factories/make-service';
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service-repository';
 
 let inMemoryServiceRepository: InMemoryServiceRepository;
 let sut: FindServiceByNameUseCase;

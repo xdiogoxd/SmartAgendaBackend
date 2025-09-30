@@ -1,14 +1,15 @@
-import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Optional } from '@/core/types/optional';
 import {
   Organization,
   OrganizationProps,
 } from '@/domain/enterprise/entities/organization';
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { PrismaOrganizationMapper } from '@/infra/database/prisma/mappers/prisma-organization.mapper';
-import { Optional } from '@/core/types/optional';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+
+import { faker } from '@faker-js/faker';
 
 export function makeOrganization(
   override: Partial<OrganizationProps> = {},

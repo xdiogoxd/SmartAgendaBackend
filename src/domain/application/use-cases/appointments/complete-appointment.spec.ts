@@ -1,12 +1,13 @@
-import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository';
-
-import { CompleteAppointmentUseCase } from './complete-appointment';
-import { makeAppointment } from 'test/factories/make-appointment';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { AppointmentStatus } from '@/core/types/appointment-status-enum';
+
 import { AppointmentStatusInvalidError } from '../errors/appointment-status-invalid-error';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { CompleteAppointmentUseCase } from './complete-appointment';
+
+import { makeAppointment } from 'test/factories/make-appointment';
 import { makeOrganization } from 'test/factories/make-organization';
+import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
 
 let inMemoryAppointmentRepository: InMemoryAppointmentRepository;
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;

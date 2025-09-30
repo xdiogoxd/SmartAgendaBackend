@@ -1,8 +1,10 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
-import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+
+import { Either, left, right } from '@/core/types/either';
 import { SpaceOfService } from '@/domain/enterprise/entities/space-of-service';
+import { SpaceOfServiceRepository } from '@/domain/repositories/space-of-service-repository';
+
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 
 export interface FindSpaceOfServiceByIdUseCaseRequest {
   organizationId: string;

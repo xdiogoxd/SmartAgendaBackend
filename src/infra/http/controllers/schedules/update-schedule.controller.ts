@@ -7,12 +7,13 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
 import { OrganizationNotFoundError } from '@/domain/application/use-cases/errors/organization-not-found-error';
 import { UpdateScheduleUseCase } from '@/domain/application/use-cases/schedule/update-schedule';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
+import { z } from 'zod';
 
 const daySchema = z.object({
   weekDay: z.number().min(0).max(6),

@@ -1,8 +1,10 @@
+import { Injectable } from '@nestjs/common';
+
 import { Schedule } from '@/domain/enterprise/entities/schedule';
 import { ScheduleRepository } from '@/domain/repositories/schedule-repository';
+
 import { PrismaScheduleMapper } from '../mappers/prisma-schedule.mapper';
 import { PrismaService } from '../prisma.service';
-import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PrismaScheduleRepository implements ScheduleRepository {

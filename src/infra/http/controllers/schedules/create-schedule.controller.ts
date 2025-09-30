@@ -7,14 +7,15 @@ import {
   Post,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { InvalidHourRangeError } from '@/domain/application/use-cases/errors/invalid-hour-range-error';
+import { MissingDayOnScheduleError } from '@/domain/application/use-cases/errors/missing-day-on-schedule-error';
 import { OrganizationAlreadyExistsError } from '@/domain/application/use-cases/errors/organization-already-exist-error';
 import { CreateScheduleUseCase } from '@/domain/application/use-cases/schedule/create-schedule';
-import { MissingDayOnScheduleError } from '@/domain/application/use-cases/errors/missing-day-on-schedule-error';
-import { InvalidHourRangeError } from '@/domain/application/use-cases/errors/invalid-hour-range-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organization

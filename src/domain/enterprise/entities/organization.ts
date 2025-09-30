@@ -1,8 +1,9 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
-import { User } from './user';
+
 import { Schedule } from './schedule';
+import { User } from './user';
 
 //todo: add description
 

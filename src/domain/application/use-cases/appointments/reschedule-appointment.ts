@@ -1,17 +1,16 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
-import { Appointment } from '@/domain/enterprise/entities/appointment';
-
-import { UserNotFoundError } from '../errors/user-not-found-error';
-
-import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
-import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
-import { CheckDateAvaibility } from '../../utils/check-date-avaibility';
-import { ResourceNotFoundError } from '../errors/resource-not-found-error';
 import { AppointmentStatus } from '@/core/types/appointment-status-enum';
+import { Either, left, right } from '@/core/types/either';
+import { Appointment } from '@/domain/enterprise/entities/appointment';
+import { AppointmentRepository } from '@/domain/repositories/appointment-repository';
+
+import { CheckDateAvaibility } from '../../utils/check-date-avaibility';
+import { AppointmentNotAvailableError } from '../errors/appointment-not-available-error';
 import { AppointmentStatusInvalidError } from '../errors/appointment-status-invalid-error';
+import { OrganizationNotFoundError } from '../errors/organization-not-found-error';
+import { ResourceNotFoundError } from '../errors/resource-not-found-error';
+import { UserNotFoundError } from '../errors/user-not-found-error';
 
 export interface RescheduleAppointmentUseCaseRequest {
   organizationId: string;

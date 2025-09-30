@@ -1,23 +1,28 @@
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+
 import { AppModule } from '@/app.module';
 import { AppointmentStatus } from '@/core/types/appointment-status-enum';
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encryptor';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { faker } from '@faker-js/faker';
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import request from 'supertest';
+
 import { AppointmentFactory } from 'test/factories/make-appointment';
+import { CustomerFactory } from 'test/factories/make-customer';
 import { OrganizationFactory } from 'test/factories/make-organization';
 import { ServiceFactory } from 'test/factories/make-service';
 import { SpaceOfServiceFactory } from 'test/factories/make-space-of-service';
 import { UserFactory } from 'test/factories/make-user';
+
+import { faker } from '@faker-js/faker';
+import request from 'supertest';
 
 describe('Reschedule appointment (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let userFactory: UserFactory;
   let organizationFactory: OrganizationFactory;
+  let customerFactory: CustomerFactory;
   let spaceOfServiceFactory: SpaceOfServiceFactory;
   let serviceFactory: ServiceFactory;
   let appointmentFactory: AppointmentFactory;
@@ -28,6 +33,7 @@ describe('Reschedule appointment (E2E)', () => {
       providers: [
         UserFactory,
         OrganizationFactory,
+        CustomerFactory,
         SpaceOfServiceFactory,
         ServiceFactory,
         AppointmentFactory,
@@ -40,6 +46,7 @@ describe('Reschedule appointment (E2E)', () => {
     prisma = moduleRef.get(PrismaService);
     userFactory = moduleRef.get(UserFactory);
     organizationFactory = moduleRef.get(OrganizationFactory);
+    customerFactory = moduleRef.get(CustomerFactory);
     spaceOfServiceFactory = moduleRef.get(SpaceOfServiceFactory);
     serviceFactory = moduleRef.get(ServiceFactory);
     appointmentFactory = moduleRef.get(AppointmentFactory);
@@ -53,6 +60,10 @@ describe('Reschedule appointment (E2E)', () => {
 
     const organization = await organizationFactory.makePrismaOrganization({
       ownerId: user.id,
+    });
+
+    const customer = await customerFactory.makePrismaCustomer({
+      organizationId: organization.id,
     });
 
     const spaceOfService = await spaceOfServiceFactory.makePrismaSpaceOfService(
@@ -69,7 +80,7 @@ describe('Reschedule appointment (E2E)', () => {
       organizationId: organization.id,
       spaceOfServiceId: spaceOfService.id,
       serviceId: service.id,
-      clientId: user.id,
+      customerId: customer.id,
     });
 
     const organizationId = organization.id.toString();
@@ -131,6 +142,10 @@ describe('Reschedule appointment (E2E)', () => {
       ownerId: user.id,
     });
 
+    const customer = await customerFactory.makePrismaCustomer({
+      organizationId: organization.id,
+    });
+
     const spaceOfService = await spaceOfServiceFactory.makePrismaSpaceOfService(
       {
         organizationId: organization.id,
@@ -145,7 +160,7 @@ describe('Reschedule appointment (E2E)', () => {
       organizationId: organization.id,
       spaceOfServiceId: spaceOfService.id,
       serviceId: service.id,
-      clientId: user.id,
+      customerId: customer.id,
       status: AppointmentStatus.FINISHED,
       finishedAt: new Date(),
     });
@@ -171,6 +186,10 @@ describe('Reschedule appointment (E2E)', () => {
       ownerId: user.id,
     });
 
+    const customer = await customerFactory.makePrismaCustomer({
+      organizationId: organization.id,
+    });
+
     const spaceOfService = await spaceOfServiceFactory.makePrismaSpaceOfService(
       {
         organizationId: organization.id,
@@ -191,7 +210,7 @@ describe('Reschedule appointment (E2E)', () => {
       organizationId: organization.id,
       spaceOfServiceId: spaceOfService.id,
       serviceId: service.id,
-      clientId: user.id,
+      customerId: customer.id,
       date,
     });
 
@@ -199,7 +218,7 @@ describe('Reschedule appointment (E2E)', () => {
       organizationId: organization.id,
       spaceOfServiceId: spaceOfService.id,
       serviceId: service.id,
-      clientId: user.id,
+      customerId: customer.id,
       date: unUsedDate,
     });
 

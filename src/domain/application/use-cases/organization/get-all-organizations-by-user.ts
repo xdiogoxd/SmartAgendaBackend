@@ -1,13 +1,13 @@
-import { Either, left, right } from '@/core/types/either';
 import { Injectable } from '@nestjs/common';
 
-import { OrganizationRepository } from '@/domain/repositories/organization-repository';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Either, left, right } from '@/core/types/either';
 import { Organization } from '@/domain/enterprise/entities/organization';
+import { OrganizationRepository } from '@/domain/repositories/organization-repository';
 import { UserRepository } from '@/domain/repositories/user-repository';
 
-import { UserNotFoundError } from '../errors/user-not-found-error';
 import { OrganizationAlreadyExistsError } from '../errors/organization-already-exist-error';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { UserNotFoundError } from '../errors/user-not-found-error';
 
 export interface GetAllOrganizationsByUserUseCaseRequest {
   ownerId: string;
@@ -36,7 +36,8 @@ export class GetAllOrganizationsByUserUseCase {
       return left(new UserNotFoundError(ownerId));
     }
 
-    const organizations = await this.organizationRepository.findAllByOwnerId(ownerId);
+    const organizations =
+      await this.organizationRepository.findAllByOwnerId(ownerId);
 
     return right({
       organizations,

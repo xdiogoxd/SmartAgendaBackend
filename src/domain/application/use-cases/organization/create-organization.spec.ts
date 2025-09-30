@@ -1,9 +1,9 @@
-import { CreateOrganizationUseCase } from './create-organization';
-import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
-
-import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 import { OrganizationAlreadyExistsError } from '../errors/organization-already-exist-error';
+import { CreateOrganizationUseCase } from './create-organization';
+
 import { makeUser } from 'test/factories/make-user';
+import { InMemoryOrganizationRepository } from 'test/repositories/in-memory-organization-repository';
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 
 let inMemoryOrganizationRepository: InMemoryOrganizationRepository;
 let inMemoryUserRepository: InMemoryUserRepository;

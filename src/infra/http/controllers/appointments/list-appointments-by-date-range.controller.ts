@@ -8,15 +8,17 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { CurrentUser } from '@/infra/auth/current-user-decorator';
-import { UserPayload } from '@/infra/auth/jwt.strategy';
-import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { FindAppointmentByIdUseCase } from '@/domain/application/use-cases/appointments/find-appointment-by-id';
-import { AppointmentPresenter } from '../../presenters/appointments-presenter';
+import { AppointmentNotAvailableError } from '@/domain/application/use-cases/errors/appointment-not-available-error';
 import { AppointmentNotFoundError } from '@/domain/application/use-cases/errors/appointment-not-found-error';
 import { OrganizationNotFoundError } from '@/domain/application/use-cases/errors/organization-not-found-error';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+
+import { AppointmentPresenter } from '../../presenters/appointments-presenter';
+
+import { z } from 'zod';
 
 // todo: add a filter per organization and check autorization to
 //  perform actions based on user role inside of the organizatio
