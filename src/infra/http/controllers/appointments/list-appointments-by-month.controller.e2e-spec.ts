@@ -54,7 +54,7 @@ describe('List appointments by month (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /organizations/:organizationId/appointments/list/:month/:year - should be able to list appointments by month', async () => {
+  test('[GET] /organizations/:organizationId/appointments/list/by-month - should be able to list appointments by month', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -122,15 +122,16 @@ describe('List appointments by month (E2E)', () => {
 
     const response = await request(app.getHttpServer())
       .get(
-        `/organizations/${organization.id.toString()}/appointments/monthYear/${month}/${year}`,
+        `/organizations/${organization.id.toString()}/appointments/by-month/`,
       )
+      .query({ month, year })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.appointments.length).toBe(4);
   });
 
-  test('[GET] /organizations/:organizationId/appointments/list/:month/:year - should not be able to list appointments without required fields', async () => {
+  test('[GET] /organizations/:organizationId/appointments/list/by-month - should not be able to list appointments without required fields', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
     const organization = await organizationFactory.makePrismaOrganization({
@@ -139,14 +140,15 @@ describe('List appointments by month (E2E)', () => {
 
     const response = await request(app.getHttpServer())
       .get(
-        `/organizations/${organization.id.toString()}/appointments/monthYear/invalid/invalid`,
+        `/organizations/${organization.id.toString()}/appointments/by-month/`,
       )
+      .query({ month: 'test', year: 'test' })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);
   });
 
-  test('[GET] /organizations/:organizationId/appointments/list/:month/:year - should not be able to list appointments with invalid month', async () => {
+  test('[GET] /organizations/:organizationId/appointments/list/by-month - should not be able to list appointments with invalid month', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
     const organization = await organizationFactory.makePrismaOrganization({
@@ -158,8 +160,9 @@ describe('List appointments by month (E2E)', () => {
 
     const response = await request(app.getHttpServer())
       .get(
-        `/organizations/${organization.id.toString()}/appointments/monthYear/${month}/${year}`,
+        `/organizations/${organization.id.toString()}/appointments/by-month/`,
       )
+      .query({ month, year })
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(400);

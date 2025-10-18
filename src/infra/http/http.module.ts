@@ -42,8 +42,8 @@ import { CancelAppointmentController } from './controllers/appointments/cancel-a
 import { CompleteAppointmentController } from './controllers/appointments/complete-appointment.controller';
 import { CreateAppointmentController } from './controllers/appointments/create-appointment.controller';
 import { DeleteAppointmentController } from './controllers/appointments/delete-appointment.controller';
-import { ListAppointmentsByDateRangeController } from './controllers/appointments/find-appointment-by-id.controller';
-import { FindAppointmentByIdController } from './controllers/appointments/list-appointments-by-date-range.controller';
+import { FindAppointmentByIdController } from './controllers/appointments/find-appointment-by-id.controller';
+import { ListAppointmentsByDateRangeController } from './controllers/appointments/list-appointments-by-date-range.controller';
 import { ListAppointmentsByMonthController } from './controllers/appointments/list-appointments-by-month.controller';
 import { RescheduleAppointmentController } from './controllers/appointments/reschedule-appointment.controller';
 import { UpdateAppointmentController } from './controllers/appointments/update-appointment.controller';

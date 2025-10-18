@@ -17,7 +17,7 @@ import { faker } from '@faker-js/faker';
 import { addDays, endOfMonth, startOfMonth } from 'date-fns';
 import request from 'supertest';
 
-describe('List appointments by date range (E2E)', () => {
+describe('List appointment by ID (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let userFactory: UserFactory;
@@ -54,7 +54,7 @@ describe('List appointments by date range (E2E)', () => {
     await app.init();
   });
 
-  test('[GET] /organizations/:organizationId/appointments/list/:startDate/:endDate - should be able to list appointments by date range', async () => {
+  test('[GET] /organizations/:organizationId/appointments/id/:appointmentId - should be able to list appointments by date range', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
 
@@ -83,7 +83,7 @@ describe('List appointments by date range (E2E)', () => {
     const startDate = firstDay;
     const endDate = endOfMonth(date);
 
-    await appointmentFactory.makePrismaAppointment({
+    const theAppointment = await appointmentFactory.makePrismaAppointment({
       organizationId: organization.id,
       spaceOfServiceId: spaceOfService.id,
       serviceId: service.id,
@@ -118,18 +118,16 @@ describe('List appointments by date range (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/organizations/${organizationId}/appointments/list/`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .query({
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-      });
+      .get(
+        `/organizations/${organizationId}/appointments/id/${theAppointment.id.toString()}`,
+      )
+      .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.appointments.length).toBe(4);
+    expect(response.body.appointment.id).toBe(theAppointment.id.toString());
   });
 
-  test('[GET] /organizations/:organizationId/appointments/list/:startDate/:endDate - should not be able to list appointments without required fields', async () => {
+  test('[GET] /organizations/:organizationId/appointments/id/:appointmentId - should not be able to find an appointment with invalid id', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
     const organization = await organizationFactory.makePrismaOrganization({
@@ -139,34 +137,61 @@ describe('List appointments by date range (E2E)', () => {
     const organizationId = organization.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/organizations/${organizationId}/appointments/list/`)
-      .set('Authorization', `Bearer ${accessToken}`)
-      .query({});
+      .get(`/organizations/${organizationId}/appointments/id/invalid-id`)
+      .set('Authorization', `Bearer ${accessToken}`);
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(404);
   });
 
-  test('[GET] /organizations/:organizationId/appointments/list/:startDate/:endDate - should not be able to list appointments with invalid date range', async () => {
+  test('[GET] /organizations/:organizationId/appointments/id/:appointmentId - should not be able to find an appointment from another organization', async () => {
     const user = await userFactory.makePrismaUser();
     const accessToken = await userFactory.makeToken(user.id.toString());
-    const organization = await organizationFactory.makePrismaOrganization({
+    const organization1 = await organizationFactory.makePrismaOrganization({
       ownerId: user.id,
     });
 
-    const organizationId = organization.id.toString();
+    const organization2 = await organizationFactory.makePrismaOrganization({
+      ownerId: user.id,
+    });
+
+    const service = await serviceFactory.makePrismaService({
+      organizationId: organization2.id,
+    });
+
+    const customer = await customerFactory.makePrismaCustomer({
+      organizationId: organization2.id,
+    });
+
+    const spaceOfService = await spaceOfServiceFactory.makePrismaSpaceOfService(
+      {
+        organizationId: organization2.id,
+      },
+    );
+
+    const appointment = await appointmentFactory.makePrismaAppointment({
+      organizationId: organization2.id,
+      spaceOfServiceId: spaceOfService.id,
+      serviceId: service.id,
+      customerId: customer.id,
+    });
+
+    //Using organization 1 to try to access appointment from organization 2
+    const organizationId = organization1.id.toString();
 
     const startDate = new Date();
     const endDate = new Date();
     endDate.setDate(endDate.getDate() - 7); // End date before start date
 
     const response = await request(app.getHttpServer())
-      .get(`/organizations/${organizationId}/appointments/list/`)
+      .get(
+        `/organizations/${organizationId}/appointments/id/${appointment.id.toString()}`,
+      )
       .set('Authorization', `Bearer ${accessToken}`)
       .query({
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
       });
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(404);
   });
 });

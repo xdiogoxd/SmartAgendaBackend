@@ -5,6 +5,7 @@ export class AppointmentPresenter {
     return {
       id: appointment.id.toString(),
       description: appointment.description,
+      date: appointment.date,
       observations: appointment.observations,
       status: appointment.status,
       createdAt: appointment.createdAt,

@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   Param,
+  Query,
 } from '@nestjs/common';
 
 import { ListAppointmentsByMonthUseCase } from '@/domain/application/use-cases/appointments/list-appointments-by-month';
@@ -29,21 +30,19 @@ type ListAppointmentsByMonthParamSchema = z.infer<
   typeof listAppointmentsByMonthParamSchema
 >;
 
-@Controller(
-  '/organizations/:organizationId/appointments/monthYear/:month/:year',
-)
+@Controller('/organizations/:organizationId/appointments/by-month')
 export class ListAppointmentsByMonthController {
   constructor(private listAppointmentByMonth: ListAppointmentsByMonthUseCase) {}
 
   @Get()
   @HttpCode(200)
   async handle(
-    @Param(new ZodValidationPipe(listAppointmentsByMonthParamSchema))
-    params: ListAppointmentsByMonthParamSchema,
+    @Query(new ZodValidationPipe(listAppointmentsByMonthParamSchema))
+    query: ListAppointmentsByMonthParamSchema,
     @CurrentUser() user: UserPayload,
     @Param('organizationId') organizationId: string,
   ) {
-    const { month, year } = params;
+    const { month, year } = query;
     const userId = user.sub;
 
     const result = await this.listAppointmentByMonth.execute({
